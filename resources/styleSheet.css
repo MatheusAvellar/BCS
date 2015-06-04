@@ -1,0 +1,16 @@
+
+
+/* Edits on plug.dj content */
+
+.cm.promo {  display: none !important;  }
+.level.earned.ep .label {  background: #009cdd !important;  }
+#user-rollover .meta .user-id {
+    opacity: 0;
+}
+#chat .delete-button{
+    padding: 3px;
+    height: 15px;
+    width: 32px;
+}
+
+/* ------------------------ */

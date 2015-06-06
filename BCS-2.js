@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "38",
+        "patch": "39",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -73,12 +73,12 @@ var bcs = {
         djupdates: false,
         afkmsg: false,
         /* Clear chat */
-        lockdown: false/*,
-        wootlog: false
+        lockdown: false,
+        wootlog: true,
         autograb: false,
         automeh: false,
         autoleave: false,
-        antispam: false*/
+        antispam: false
     },
     plugCode: {
         init: function () {
@@ -254,6 +254,14 @@ var bcs = {
                 setTimeout(function() {
                     API.setVolume(vol);
                 },1500);
+            },
+            woot: function() {
+                var _bAjax = bcs.main.utils.ajax;
+                _bAjax.get.historyID(_bAjax.post.woot(_bAjax.get.aux.historyID));
+            },
+            meh: function() {
+                var _bAjax = bcs.main.utils.ajax;
+                _bAjax.get.historyID(_bAjax.post.meh(_bAjax.get.aux.historyID));
             }
         },
         addChat: function(_text, _class1, _class2) {
@@ -478,12 +486,12 @@ var bcs = {
                 if (h < 10){h = "0" + h;}
                 if (m < 10){m = "0" + m;}
                 if (s < 10){s = "0" + s;}
-                if (bcs.settings.autowoot) {
-                    setTimeout(function() {
-                        var _bAjax = bcs.main.utils.ajax;
-                        _bAjax.get.historyID(_bAjax.post.woot(_bAjax.get.aux.historyID));
-                    }, 1000);
-                }
+                setTimeout(function() {
+                    if (bcs.settings.autowoot) {
+                        bcs.main.utils.woot();
+                    } else if (bcs.settings.automeh) {
+                        bcs.main.utils.woot();
+                }, 1000);
 
                 if (bcs.settings.djupdates) {
                     bcs.l(" ");

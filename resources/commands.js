@@ -1,13 +1,4 @@
 var _commands = {
-    v: {
-        "stage": "Alpha v",
-        "ultra": "2",
-        "major": "0",
-        "minor": "0",
-        "patch": "12",
-        "legal": "",
-        "_": function() {  return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];  }
-    },
     list: [
     {
         cmd: ["todo"],

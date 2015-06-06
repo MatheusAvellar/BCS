@@ -266,4 +266,33 @@ div.bcs-log._1 .init .authors.visible {
     background-color: rgb(255, 255, 255);
 }
 
+.bcs-log.bcs-woot-log {
+    color: #92AC3A;
+    border-left: 3px solid #92AC3A;
+}
+.bcs-log.bcs-meh-log {
+    color: #C42E3B;
+    border-left: 3px solid #C42E3B;
+}
+.bcs-log.bcs-grab-log {
+    color: #AA74FF;
+    border-left: 3px solid #AA74FF;
+}
+
+.bcs-log.bcs-woot-log i,
+.bcs-log.bcs-meh-log i,
+.bcs-log.bcs-grab-log i {
+    left: 5px;
+}
+
+span.bcs-vote-log {
+    margin-left: 30px;
+}
+
+a.bcs-timestamp {
+    color: #dddddd;
+    font-size: 11px;
+    margin-left: 30px;
+}
+
 /* ---------------------------------- */

@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "42",
+        "patch": "44",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -270,6 +270,9 @@ var bcs = {
                 var _bAjax = bcs.main.utils.ajax;
                 _bAjax.get.historyID(_bAjax.post.meh(_bAjax.get.aux.historyID));
             },
+            noperms: function() {
+                bcs.main.addChat();
+            },
             clearchat: function() {
                 if (bcs.u.role >= 2 || bcs.u.gRole >= 3) {
                     var msgs = $(".cm.message, .cm.emote, .cm.mention");
@@ -282,6 +285,8 @@ var bcs = {
                             }
                         }
                     }
+                } else {
+
                 }
             }
         },
@@ -340,7 +345,10 @@ var bcs = {
                         //CHECK// Do with others
                         _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
 
-                        if (_user.id == bcs.b) {
+                        if (_user.id == bcs.u.id
+                        && bcs.u.role >= 2
+                        || _user.id == bcs.u.id
+                        && bcs.u.gRole >= 3) {
                             _console.log("Appended DELETE BUTTON");
                             $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend("<div class='delete-button'>Delete</div>");
                         }
@@ -372,25 +380,34 @@ var bcs = {
                 var userName = data.user.username.replace("<", "&lt;").replace(">", "&gt;");
                 if (bcs.settings.mehlog && data.vote == -1) {//CHECK//
                     bcs.main.addChat(
-                    "<span class='bcs-vote-log' username='" + userName + "'>"
-                        + "<i class='icon icon-meh' style='left:5px;'></i>"
-                        + userName + " (ID " + data.user.id + ") meh'ed this <br />"
-                        + "<a style='color:#dddddd;font-size:11px;'>[" + h + ":" + m + ":" + s + "]</a>"
-                    + "</span>");
+                    "<div>"
+                    +    "<i class='icon icon-meh'></i>"
+                    +    "<span class='bcs-vote-log' username='" + userName "'>"
+                    +        "<b>" + userName + "</b> (ID " + data.user.id + ") meh'ed this"
+                    +        "<br />"
+                    +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
+                    +    "</span>"
+                    +"</div>","bcs-meh-log");
                 } else if (bcs.settings.wootlog && data.vote == 1) {
                     bcs.main.addChat(
-                    "<span class='bcs-vote-log' username='" + userName + "'>"
-                        + "<i class='icon icon-woot' style='left:5px;'></i>"
-                        + userName + " (ID " + data.user.id + ") woot'ed this <br />"
-                        + "<a style='color:#dddddd;font-size:11px;'>[" + h + ":" + m + ":" + s + "]</a>"
-                    + "</span>");
+                    "<div>"
+                    +    "<i class='icon icon-woot'></i>"
+                    +    "<span class='bcs-vote-log' username='" + userName "'>"
+                    +        "<b>" + userName + "</b> (ID " + data.user.id + ") woot'ed this"
+                    +        "<br />"
+                    +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
+                    +    "</span>"
+                    +"</div>","bcs-woot-log");
                 } else if (bcs.settings.grablog && !data.vote) {
                     bcs.main.addChat(
-                    "<span class='bcs-vote-log' username='" + userName + "'>"
-                        + "<i class='icon icon-grab' style='left:5px;'></i>"
-                        + userName + " (ID " + data.user.id + ") grab'ed this <br />"
-                        + "<a style='color:#dddddd;font-size:11px;'>[" + h + ":" + m + ":" + s + "]</a>"
-                    + "</span>");
+                    "<div>"
+                    +    "<i class='icon icon-meh'></i>"
+                    +    "<span class='bcs-vote-log' username='" + userName "'>"
+                    +        "<b>" + userName + "</b> (ID " + data.user.id + ") woot'ed this"
+                    +        "<br />"
+                    +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
+                    +    "</span>"
+                    +"</div>","bcs-grab-log");
                 }
             },
             onJoin: function(data) {
@@ -511,13 +528,16 @@ var bcs = {
                     if (bcs.settings.autowoot) {
                         bcs.main.utils.woot();
                     } else if (bcs.settings.automeh) {
-                        bcs.main.utils.woot();
+                        bcs.main.utils.meh();
                     }
-                }, 1000);
+                }, 2000);
 
                 if (bcs.settings.djupdates) {
                     bcs.l(" ");
-                    $(".log").remove();//CHECK//
+                    for (var i = 1, _log = $(".cm.log").length; i < _log; i++) {
+                        $(".cm.log")[i].remove();
+                    }
+                    //CHECK//
                     bcs.main.addChat("<br /><img src='https://i.imgur.com/fhagHZg.png' /><br />"
                         + "<b><a style='color:#90ad2f;'>" + data.lastPlay.score.positive
                         + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#aa74ff;'>"

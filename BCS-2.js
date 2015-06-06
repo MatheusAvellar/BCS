@@ -34,9 +34,7 @@ $("head").append(
 + ">"
 );
 
-$("#chat-popout-button").on("click", function() {
-    $(".bcs-log").remove();
-});
+$("#chat-popout-button").on("click", function() {  $(".bcs-log").remove();  });
 
 var _console = {
     log: function () {
@@ -55,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "32",
+        "patch": "33",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -247,7 +245,6 @@ var bcs = {
                 /*
                  *  Fix for the volume bug
                  */
-
                 var vol = $("#volume span").text().split("%")[0];
                 if (vol != 0) {
                     API.setVolume(0);
@@ -275,24 +272,24 @@ var bcs = {
         },
         events: {
             hook: function() {
-                API.on(API.CHAT, bcs.main.events.onChat);
-                API.on(API.VOTE_UPDATE, bcs.main.events.onVote);
-                API.on(API.GRAB_UPDATE, bcs.main.events.onVote);
-                API.on(API.USER_JOIN, bcs.main.events.onJoin);
-                API.on(API.ADVANCE, bcs.main.events.onAdvance);
-                API.on(API.WAITLIST_UPDATE, bcs.main.events.onWaitListUpdate);
-                API.on(API.USER_LEAVE, bcs.main.events.onLeave);
-                API.on(API.CHAT_COMMAND, bcs.main.events.onCommand);
+                API.on(API.CHAT,             bcs.main.events.onChat);
+                API.on(API.VOTE_UPDATE,      bcs.main.events.onVote);
+                API.on(API.GRAB_UPDATE,      bcs.main.events.onVote);
+                API.on(API.USER_JOIN,        bcs.main.events.onJoin);
+                API.on(API.ADVANCE,          bcs.main.events.onAdvance);
+                API.on(API.WAITLIST_UPDATE,  bcs.main.events.onWaitListUpdate);
+                API.on(API.USER_LEAVE,       bcs.main.events.onLeave);
+                API.on(API.CHAT_COMMAND,     bcs.main.events.onCommand);
             },
             unhook: function() {
-                API.off(API.CHAT, bcs.main.events.onChat);
-                API.off(API.VOTE_UPDATE, bcs.main.events.onVote);
-                API.off(API.GRAB_UPDATE, bcs.main.events.onVote);
-                API.off(API.USER_JOIN, bcs.main.events.onJoin);
-                API.off(API.ADVANCE, bcs.main.events.onAdvance);
+                API.off(API.CHAT,            bcs.main.events.onChat);
+                API.off(API.VOTE_UPDATE,     bcs.main.events.onVote);
+                API.off(API.GRAB_UPDATE,     bcs.main.events.onVote);
+                API.off(API.USER_JOIN,       bcs.main.events.onJoin);
+                API.off(API.ADVANCE,         bcs.main.events.onAdvance);
                 API.off(API.WAITLIST_UPDATE, bcs.main.events.onWaitListUpdate);
-                API.off(API.USER_LEAVE, bcs.main.events.onLeave);
-                API.off(API.CHAT_COMMAND, bcs.main.events.onCommand);
+                API.off(API.USER_LEAVE,      bcs.main.events.onLeave);
+                API.off(API.CHAT_COMMAND,    bcs.main.events.onCommand);
             },
             onChat: function(data) {
                 var t = data.type;
@@ -315,6 +312,7 @@ var bcs = {
                         _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
 
                         if (_user.id == bcs.b) {
+                            _console.log("Appended DELETE BUTTON");
                             $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend("<div class='delete-button'>Delete</div>");
                         }
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
@@ -322,7 +320,6 @@ var bcs = {
                         });
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .from").append(
                             "<span class='bcs-chat-info'> Lv. <a class='bcs-chat-lv'>" + _user.level + "</a></span>"
-
                             + "<span class='bcs-chat-info'> ID: <a class='bcs-chat-id'>" + _user.id + "</a></span>");
 
                         $("#chat-messages > .cm[data-cid='" + _cid + "']").hover(function() {
@@ -489,17 +486,7 @@ var bcs = {
                     );
                 }
 
-                var currentSong = API.getMedia();
-                var songtick;
-                clearTimeout(songtick);
-                if (autoskip && hasPerms) {
-                    songtick = setTimeout(function() {
-                        API.moderateForceSkip();
-                        API.chatLog("[Song was stuck, skipped it]");
-                    }, currentSong.duration * 1000 + 10000);
-                }
-
-                if (bcs.settings.log.song) {
+                if (bcs.settings.djupdates) {
                     bcs.l(" ");
                     $(".log").remove();//CHECK//
                     bcs.addChat("<br /><img src='https://i.imgur.com/fhagHZg.png' /><br />"
@@ -529,12 +516,10 @@ var bcs = {
                     if (secondsLong < 10){secondsLong = "0" + secondsLong;}
                     if (minutesLong < 10){minutesLong = "0" + minutesLong;}
                     var actuallength = hoursLong + minutesLong + ":" + secondsLong;
-                    if (timeskip && songup){
-                        if (hasPerms){
-                            if (currentSong.duration > 480){
-                                badoop.play();
-                                bcs.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);
-                            }
+                    if (djupdates) {
+                        if (currentSong.duration > 480) {
+                            badoop.play();
+                            bcs.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);
                         }
                     }
                     bcs.addChat("<a style='color:#e6ff99;'><b>Now playing:</b></a> " + obj.media.title + "<br />"
@@ -544,10 +529,10 @@ var bcs = {
                 }
             },
             onWaitListUpdate: function(data) {
-                if (bcs.settings.auto.join) {
+                if (bcs.settings.autojoin) {
                     var dj = API.getDJ();
                     if (API.getWaitListPosition() <= -1 && dj.username != bcs.user.username){
-                        bcs.joinWL();
+                        bcs.main.utils.post.waitList();
                         setTimeout(function(){
                             if (API.getWaitListPosition() <= -1 && dj.username != bcs.user.username){bcs.joinWL();}
                         },100);

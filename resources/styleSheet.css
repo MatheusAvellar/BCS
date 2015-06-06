@@ -308,6 +308,23 @@ span.bcs-vote-log {
     margin-left: 30px;
 }
 
+.bcs-log.bcs-friendJoin-log {
+    color: #91D2CF;
+    border-left: 3px solid #91D2CF;
+}
+.bcs-log.bcs-friendLeave-log {
+    color: #5B9B98;
+    border-left: 3px solid #5B9B98;
+}
+.bcs-log.bcs-userJoin-log {
+    color: #0699DD;
+    border-left: 3px solid #0699DD;
+}
+.bcs-log.bcs-userLeave-log {
+    color: #39589A;
+    border-left: 3px solid #39589A;
+}
+
 a.bcs-timestamp {
     color: #dddddd;
     font-size: 11px;

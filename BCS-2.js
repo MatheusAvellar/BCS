@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "50",
+        "patch": "51",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -227,7 +227,7 @@ var bcs = {
                             url: "https://plug.dj/_/rooms/state",
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.historyID = msg.data[0].playback.historyID;
-                            if (_arg) {  _arg();  }
+                            if (_arg) {  (_arg)();  }
                         });
                     },
                     friends: function() {
@@ -272,6 +272,17 @@ var bcs = {
                 setTimeout(function() {
                     API.setVolume(vol);
                 },1500);
+            },
+            percentage: function() {
+                /* Removes previous percentages */
+                $("div#footer-user .bcs-percentage").remove();
+
+                var _width = $("div#footer-user .progress").attr("style");
+                var _percentage = _width.substring(6, _width.indexOf('%') + 1);
+                $("div#footer-user .bar").append(
+                    "<div class='bcs-percentage'>"
+                    +   _percentage
+                    +"</div>");
             },
             woot: function() {
                 var _bAjax = bcs.main.utils.ajax;
@@ -484,11 +495,13 @@ var bcs = {
                 if (bcs.settings.trafficlog) {
                     var _user = {
                         username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
-                        color: data.friend ? "#c5ffcc" : "#74afff",
+                        color: data.friend ? "#B6A2FF" : "#0699DD",
                         intro: data.friend ? "Your friend " : "",
+                        id: data.id,
                         role: "",
                         gRole: ""
                     }
+                    var _class = data.friend ? "bcs-friendJoin-log" : "bcs-userJoin-log";
 
                     var d = new Date();
                     var h = d.getHours();
@@ -513,7 +526,7 @@ var bcs = {
                             _user.role = "<a class='bcs-styles-lRole'>Host</a> (5) |";    break;
                     }
 
-                    switch (user.gRole) {
+                    switch (data.gRole) {
                         case 3:
                             _user.gRole = " <a class='bcs-styles-gRole3'>BA</a> (3) |";    break;
                         case 5:
@@ -523,18 +536,30 @@ var bcs = {
                     }
 
                     //CHECK//
-                    bcs.main.addChat("<a style='color:" + c + ";'>" + f + "<b>" + thename + "</b> joined </a><br /> <a style='font-size:11px;'><b>ID</b> " + user.id + " |</a> " + userrole + " " + usergrole + " <a style='font-size:11px;'><b>Level</b> " + user.level + " | " + h + ":" + m + ":" + s + "</a>");
+                    bcs.main.addChat(
+                        "<a style='color:" + _user.color + ";'>"
+                        + _user.intro
+                        + "<b>"
+                        + _user.username
+                        + "</b> joined </a>"
+                        + "<br /> <a class='bcs-timestamp'><b>ID</b> "
+                        + _user.id + " |</a> "
+                        + _user.role + " "
+                        + _user.gRole + " <a class='bcs-timestamp'><b>Level</b> "
+                        + _user.level + " | " + h + ":" + m + ":" + s + "</a>", _class);
                 }
             },
             onLeave: function(data) {
                 if (bcs.settings.trafficlog) {
                     var _user = {
                         username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
-                        color: data.friend ? "#c5ffcc" : "#7774ff",
+                        color: data.friend ? "#B6A2FF" : "#39589A",
                         intro: data.friend ? "Your friend " : "",
+                        id: data.id,
                         role: "",
                         gRole: ""
                     }
+                    var _class = data.friend ? "bcs-friendLeave-log" : "bcs-userLeave-log";
 
                     var d = new Date();
                     var h = d.getHours();
@@ -559,7 +584,7 @@ var bcs = {
                             _user.role = "<a class='bcs-styles-lRole'>Host</a> (5) |";    break;
                     }
 
-                    switch (user.gRole) {
+                    switch (data.gRole) {
                         case 3:
                             _user.gRole = " <a class='bcs-styles-gRole3'>BA</a> (3) |";    break;
                         case 5:
@@ -569,7 +594,17 @@ var bcs = {
                     }
 
                     //CHECK//
-                    bcs.main.addChat("<a style='color:" + c + ";'>" + f + "<b>" + thename + "</b> left </a><br /> <a style='font-size:11px;'><b>ID</b> " + user.id + " |</a> " + userrole + " " + usergrole + " <a style='font-size:11px;'><b>Level</b> " + user.level + " | " + h + ":" + m + ":" + s + "</a>");
+                    bcs.main.addChat(
+                        "<a style='color:" + _user.color + ";'>"
+                        + _user.intro
+                        + "<b>"
+                        + _user.username
+                        + "</b> left </a>"
+                        + "<br /> <a class='bcs-timestamp'><b>ID</b> "
+                        + _user.id + " |</a> "
+                        + _user.role + " "
+                        + _user.gRole + " <a class='bcs-timestamp'><b>Level</b> "
+                        + _user.level + " | " + h + ":" + m + ":" + s + "</a>", _class);
                 }
             },
             onAdvance: function(data) {

@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "35",
+        "patch": "36",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -304,8 +304,8 @@ var bcs = {
                             break;
                         }
                     }
-                    if (bcs.settings.lockdown && user.role == 0 && user.gRole == 0
-                    || bcs.settings.superlockdown && user.gRole == 0) {
+                    if (bcs.settings.lockdown && _user.role == 0 && _user.gRole == 0
+                    || bcs.settings.superlockdown && _user.gRole == 0) {
                         bcs.main.utils.ajax.delete.chat(_cid);
                     } else {
                         //CHECK// Do with others

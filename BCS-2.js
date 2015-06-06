@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "46",
+        "patch": "47",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -533,8 +533,10 @@ var bcs = {
                 }, 2000);
 
                 if (bcs.settings.djupdates) {
+                    var _logLength = $(".cm.log").length;
                     bcs.l(" ");
-                    for (var i = 1, _log = $(".cm.log").length; i < _log; i++) {
+                    for (var i = _logLength; i < $(".cm.log").length;; i++) {
+                        // Yes, this is pretty stupid. But whatever.
                         $(".cm.log")[i].remove();
                     }
                     //CHECK//

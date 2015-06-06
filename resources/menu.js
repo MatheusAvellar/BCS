@@ -89,6 +89,7 @@ function _toggleSetting(className) {
 }
 
 $("div#playlist-meta").append(BCS_MENU);
+$("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
 
 $("div#bcs-menu .icon-star-white").on("click", function() {
     var menuElement = $("div#bcs-menu .menu");

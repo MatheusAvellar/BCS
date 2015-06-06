@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "47",
+        "patch": "49",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -98,8 +98,27 @@ var bcs = {
     },
     main: {
         init: function() {
+            /* Gets plug code shortcut */
             bcs.plugCode.init();
+
+            /* Hooks all events */
             bcs.main.events.hook();
+
+            /* Starts old footer events */
+            bcs.main.utils.oldFooter.init();
+
+            /* Changes YT / SC max length on search to 256 characters */
+            $("#search-input-field").attr({"maxlength": 256});
+
+            /* Scrollable volume slider */
+            $("#volume > .slider").on("mousewheel", function(e) {
+                if (e.originalEvent.wheelDelta == 120) {
+                    API.setVolume(API.getVolume() + 4);
+                } else {
+                    API.setVolume(API.getVolume() - 4);
+                }
+            });
+
             bcs.main.addChat(
                 "BCS - "
                 + bcs.v.stage
@@ -115,16 +134,8 @@ var bcs = {
                 + "</div>",
                 "_1",
                 "init");
-            $("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
             $("div.bcs-log._1 .init").on("click", function() {
                 $("div.bcs-log._1 .init .authors").toggleClass("visible");
-            });
-            $("#volume > .slider").on("mousewheel", function(e) {
-                if (e.originalEvent.wheelDelta == 120) {
-                    API.setVolume(API.getVolume() + 4);
-                } else {
-                    API.setVolume(API.getVolume() - 4);
-                }
             });
         },
         utils: {
@@ -271,7 +282,7 @@ var bcs = {
                 _bAjax.get.historyID(_bAjax.post.meh(_bAjax.get.aux.historyID));
             },
             noperms: function() {
-                bcs.main.addChat();
+                bcs.main.addChat("lol u aint got the perms m8");
             },
             clearchat: function() {
                 if (bcs.u.role >= 2 || bcs.u.gRole >= 3) {
@@ -287,6 +298,63 @@ var bcs = {
                     }
                 } else {
 
+                }
+            },
+            oldFooter: {
+                toggle: function(_arg) {
+                    var _footerButtons =
+                        $("#footer-user .badge,"
+                        + "#footer-user .store,"
+                        + "#footer-user .profile,"
+                        + "#footer-user .settings");
+
+                    if (_arg == "hide" || $("#footer-user .badge").css("display") == "block") {
+                        _footerButtons.hide();
+                        $("#footer-user .info").removeClass("open");
+                    } else {
+                        _footerButtons.show();
+                        $("#footer-user .info").addClass("open");
+                    }
+                },
+                init: function() {
+                    // So much jQuery :'D
+                    $("#footer-user .bar").mouseenter(function() {
+                        $("#footer-user .bcs-percentage")
+                            .removeClass("isActive")
+                            .addClass("isNotActive");
+                        $("#footer-user .bar .value")
+                            .addClass("isActive")
+                            .removeClass("isNotActive");
+                    });
+                    $("#footer-user .bar").mouseleave(function() {
+                        $("#footer-user .bcs-percentage")
+                            .addClass("isActive")
+                            .removeClass("isNotActive");
+                        $("#footer-user .bar .value")
+                            .removeClass("isActive")
+                            .addClass("isNotActive");
+                    });
+                    $("#footer-user .info .meta .level .label").text("Lv.");
+
+                    $("#footer-user .inventory").hover(function() {
+                        $("#footer-user .buttons").addClass("hover");
+                    }, function() {
+                        $("#footer-user .buttons").removeClass("hover");
+                    });
+                    $("#footer-user .button").hover(function() {
+                        $("#tooltip").remove();
+                    });
+                    $("#footer-user .badge").append("<div class='nothing'></div><span>My Badges</span>");
+                    $("#footer-user .store").append("<div class='nothing'></div><span>Shop</span>");
+                    $("#footer-user .profile").append("<div class='nothing'></div><span>My Profile</span>");
+                    $("#footer-user .settings").append("<div class='nothing'></div><span>Settings</span>");
+                    $("#footer-user .info").on("click", bcs.main.utils.oldFooter.toggle);
+                    $("#footer-user .button").on('click', bcs.main.utils.oldFooter.toggle("hide"));
+                    $("#app").on("click", function(e) {
+                        if (!$(e.target).closest("#footer-user .info").length){
+                            bcs.main.utils.oldFooter.toggle("hide");
+                        }
+                    });
                 }
             }
         },
@@ -535,7 +603,7 @@ var bcs = {
                 if (bcs.settings.djupdates) {
                     var _logLength = $(".cm.log").length;
                     bcs.l(" ");
-                    for (var i = _logLength; i < $(".cm.log").length;; i++) {
+                    for (var i = _logLength; i < $(".cm.log").length; i++) {
                         // Yes, this is pretty stupid. But whatever.
                         $(".cm.log")[i].remove();
                     }

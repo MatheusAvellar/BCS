@@ -103,3 +103,13 @@ $("div.bcs-on, div.bcs-off").on("click", function(data) {
     var _parent = data.currentTarget.parentElement.innerText.toString().replace(' ', "").trim().toLowerCase();
     _toggleSetting(_parent);
 });
+
+$("li.clearchat div.bcs-single").on("click", function(data) {
+    bcs.plugCode.plugMessage(
+        "Are you sure you want to clear the entire chat? This obviously cannot be undone."
++       "<br />"
++       "<h1>"
++           "<a class='bcs-clearchat' onclick='return bcs.main.utils.clearchat();'>Yes, delete it</a>"
++           "<a>&nbsp;</a>"
++       "</h1>");
+});

@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "40",
+        "patch": "41",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -262,6 +262,20 @@ var bcs = {
             meh: function() {
                 var _bAjax = bcs.main.utils.ajax;
                 _bAjax.get.historyID(_bAjax.post.meh(_bAjax.get.aux.historyID));
+            },
+            clearchat: function() {
+                if (bcs.u.role >= 2 || bcs.u.gRole >= 3) {
+                    var msgs = $(".cm.message, .cm.emote, .cm.mention");
+                    for (var i = 0; i < msgs.length; i++) {
+                        for (var j = 0; j < msgs[i].classList.length; j++) {
+                            if (!msgs[i].classList[j].indexOf("message")
+                            ||  !msgs[i].classList[j].indexOf("emote")
+                            ||  !msgs[i].classList[j].indexOf("mention")) {
+                                bcs.main.utils.ajax.delete.chat(msgs[i].getAttribute("data-cid"));
+                            }
+                        }
+                    }
+                }
             }
         },
         addChat: function(_text, _class1, _class2) {
@@ -324,7 +338,7 @@ var bcs = {
                             $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend("<div class='delete-button'>Delete</div>");
                         }
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
-                            bcs.ajax.delete.chat(_cid);
+                            bcs.main.utils.ajax.delete.chat(_cid);
                         });
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .from").append(
                             "<span class='bcs-chat-info'> Lv. <a class='bcs-chat-lv'>" + _user.level + "</a></span>"

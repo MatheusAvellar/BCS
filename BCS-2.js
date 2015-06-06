@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "37",
+        "patch": "38",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -521,7 +521,7 @@ var bcs = {
                     if (secondsLong < 10){secondsLong = "0" + secondsLong;}
                     if (minutesLong < 10){minutesLong = "0" + minutesLong;}
                     var actuallength = hoursLong + minutesLong + ":" + secondsLong;
-                    if (djupdates) {
+                    if (bcs.settings.djupdates) {
                         if (currentSong.duration > 480) {
                             badoop.play();
                             bcs.main.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);

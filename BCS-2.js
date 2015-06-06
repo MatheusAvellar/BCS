@@ -382,27 +382,27 @@ var bcs = {
                     bcs.main.addChat(
                     "<div>"
                     +    "<i class='icon icon-meh'></i>"
-                    +    "<span class='bcs-vote-log' username='" + userName "'>"
+                    +    "<span class='bcs-vote-log' username='" + userName + "'>"
                     +        "<b>" + userName + "</b> (ID " + data.user.id + ") meh'ed this"
                     +        "<br />"
                     +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
                     +    "</span>"
-                    +"</div>","bcs-meh-log");
+                    +"</div>", "bcs-meh-log");
                 } else if (bcs.settings.wootlog && data.vote == 1) {
                     bcs.main.addChat(
                     "<div>"
                     +    "<i class='icon icon-woot'></i>"
-                    +    "<span class='bcs-vote-log' username='" + userName "'>"
+                    +    "<span class='bcs-vote-log' username='" + userName + "'>"
                     +        "<b>" + userName + "</b> (ID " + data.user.id + ") woot'ed this"
                     +        "<br />"
                     +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
                     +    "</span>"
-                    +"</div>","bcs-woot-log");
+                    +"</div>", "bcs-woot-log");
                 } else if (bcs.settings.grablog && !data.vote) {
                     bcs.main.addChat(
                     "<div>"
                     +    "<i class='icon icon-meh'></i>"
-                    +    "<span class='bcs-vote-log' username='" + userName "'>"
+                    +    "<span class='bcs-vote-log' username='" + userName + "'>"
                     +        "<b>" + userName + "</b> (ID " + data.user.id + ") woot'ed this"
                     +        "<br />"
                     +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"

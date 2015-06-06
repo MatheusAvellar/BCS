@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "39",
+        "patch": "40",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -491,6 +491,7 @@ var bcs = {
                         bcs.main.utils.woot();
                     } else if (bcs.settings.automeh) {
                         bcs.main.utils.woot();
+                    }
                 }, 1000);
 
                 if (bcs.settings.djupdates) {

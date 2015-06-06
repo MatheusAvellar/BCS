@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "36",
+        "patch": "37",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -479,14 +479,16 @@ var bcs = {
                 if (m < 10){m = "0" + m;}
                 if (s < 10){s = "0" + s;}
                 if (bcs.settings.autowoot) {
-                    var _bAjax = bcs.main.utils.ajax;
-                    _bAjax.get.historyID(_bAjax.post.woot(_bAjax.get.aux.historyID));
+                    setTimeout(function() {
+                        var _bAjax = bcs.main.utils.ajax;
+                        _bAjax.get.historyID(_bAjax.post.woot(_bAjax.get.aux.historyID));
+                    }, 1000);
                 }
 
                 if (bcs.settings.djupdates) {
                     bcs.l(" ");
                     $(".log").remove();//CHECK//
-                    bcs.addChat("<br /><img src='https://i.imgur.com/fhagHZg.png' /><br />"
+                    bcs.main.addChat("<br /><img src='https://i.imgur.com/fhagHZg.png' /><br />"
                         + "<b><a style='color:#90ad2f;'>" + data.lastPlay.score.positive
                         + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#aa74ff;'>"
                         + data.lastPlay.score.grabs
@@ -502,7 +504,7 @@ var bcs = {
                                 var stats = previous.user.username + " (ID " + previous.user.id + ")";
                                 bcs.console.warn("Song in History | Played by " + stats + "<br />(History position " + pos + ")<br />[" + previous.media.title + "]");
                                 badoop.play();//CHECK//
-                                bcs.addChat("<a style='color:#ff3535; font-weight:bold;'>Song in History</a><br />Played by " + stats + " - (History position " + pos + ")<br />[" + previous.media.title + "]","#D04545",true);
+                                bcs.main.addChat("<a style='color:#ff3535; font-weight:bold;'>Song in History</a><br />Played by " + stats + " - (History position " + pos + ")<br />[" + previous.media.title + "]","#D04545",true);
                                 break;
                             }
                         }
@@ -522,11 +524,11 @@ var bcs = {
                     if (djupdates) {
                         if (currentSong.duration > 480) {
                             badoop.play();
-                            bcs.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);
+                            bcs.main.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);
                         }
                     }
                     //CHECK//
-                    bcs.addChat("<a style='color:#e6ff99;'><b>Now playing:</b></a> "
+                    bcs.main.addChat("<a style='color:#e6ff99;'><b>Now playing:</b></a> "
                         + data.media.title
                         + "<br />"
                         + "<a style='color:#e6ff99;'><b>Author:</b></a> "

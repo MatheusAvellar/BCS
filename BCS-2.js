@@ -23,14 +23,14 @@
 
 const BCS_DIR = "https://rawgit.com/Tetheu98/BCS/master/resources/";
 
-$.getScript(BCS_DIR + "commands.js");
+//$.getScript(BCS_DIR + "commands.js");
 $.getScript(BCS_DIR + "menu.js");
 
 $("head").append(
-"<link"
-+    "rel='stylesheet'"
-+    "type='text/css'"
-+    "href='" + BCS_DIR + "styleSheet.css'"
+"<link "
++    " rel='stylesheet' "
++    " type='text/css' "
++    " href='" + BCS_DIR + "styleSheet.css'"
 + ">"
 );
 
@@ -55,7 +55,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "30",
+        "patch": "32",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];

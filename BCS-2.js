@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "41",
+        "patch": "42",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -118,6 +118,13 @@ var bcs = {
             $("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
             $("div.bcs-log._1 .init").on("click", function() {
                 $("div.bcs-log._1 .init .authors").toggleClass("visible");
+            });
+            $("#volume > .slider").on("mousewheel", function(e) {
+                if (e.originalEvent.wheelDelta == 120) {
+                    API.setVolume(API.getVolume() + 4);
+                } else {
+                    API.setVolume(API.getVolume() - 4);
+                }
             });
         },
         utils: {
@@ -387,7 +394,7 @@ var bcs = {
                 }
             },
             onJoin: function(data) {
-                if (bcs.settings.tafficlog) {
+                if (bcs.settings.trafficlog) {
                     var _user = {
                         username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
                         color: data.friend ? "#c5ffcc" : "#74afff",
@@ -433,7 +440,7 @@ var bcs = {
                 }
             },
             onLeave: function(data) {
-                if (bcs.settings.tafficlog) {
+                if (bcs.settings.trafficlog) {
                     var _user = {
                         username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
                         color: data.friend ? "#c5ffcc" : "#7774ff",

@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "33",
+        "patch": "35",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -479,18 +479,21 @@ var bcs = {
                 if (m < 10){m = "0" + m;}
                 if (s < 10){s = "0" + s;}
                 if (bcs.settings.autowoot) {
-                    bcs.main.utils.ajax.get.historyID(
-                        bcs.main.utils.ajax.post.woot(
-                            bcs.main.utils.ajax.get.aux.historyID
-                        )
-                    );
+                    var _bAjax = bcs.main.utils.ajax;
+                    _bAjax.get.historyID(_bAjax.post.woot(_bAjax.get.aux.historyID));
                 }
 
                 if (bcs.settings.djupdates) {
                     bcs.l(" ");
                     $(".log").remove();//CHECK//
                     bcs.addChat("<br /><img src='https://i.imgur.com/fhagHZg.png' /><br />"
-                        + "<b><a style='color:#90ad2f;'>" + obj.lastPlay.score.positive + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#aa74ff;'>" + obj.lastPlay.score.grabs + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#c42e3b;'>" + obj.lastPlay.score.negative + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#646b7e;'>" + API.getUsers().length + "</a></b>","#ececec",true);
+                        + "<b><a style='color:#90ad2f;'>" + data.lastPlay.score.positive
+                        + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#aa74ff;'>"
+                        + data.lastPlay.score.grabs
+                        + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#c42e3b;'>"
+                        + data.lastPlay.score.negative
+                        + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#646b7e;'>"
+                        + API.getUsers().length + "</a></b>");
                     setTimeout(function() {
                         for (var i = 0; i< API.getHistory().length; i++) {
                             if (API.getHistory()[i].media.cid == currentSong.cid && i != 0){
@@ -522,10 +525,18 @@ var bcs = {
                             bcs.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);
                         }
                     }
-                    bcs.addChat("<a style='color:#e6ff99;'><b>Now playing:</b></a> " + obj.media.title + "<br />"
-                        + "<a style='color:#e6ff99;'><b>Author:</b></a> " + obj.media.author + "<br />"
-                        + "<a style='color:#e6ff99;'><b>Song length:</b></a> " + actuallength + "<br />"
-                        + "<a style='color:#e6ff99;'><b>Current DJ:</b></a> " + obj.dj.username + " (ID " + obj.dj.id + ")<br />","#ececec",true);
+                    //CHECK//
+                    bcs.addChat("<a style='color:#e6ff99;'><b>Now playing:</b></a> "
+                        + data.media.title
+                        + "<br />"
+                        + "<a style='color:#e6ff99;'><b>Author:</b></a> "
+                        + data.media.author
+                        + "<br />"
+                        + "<a style='color:#e6ff99;'><b>Song length:</b></a> "
+                        + actuallength + "<br />"
+                        + "<a style='color:#e6ff99;'><b>Current DJ:</b></a> "
+                        + data.dj.username
+                        + " (ID " + data.dj.id + ")<br />");
                 }
             },
             onWaitListUpdate: function(data) {

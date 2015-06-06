@@ -48,6 +48,25 @@ div.manager span.emoji {
     left: 3px !important;
 }
 
+div#woot .top .icon,
+div#grab .top .icon,
+div#meh .top .icon {
+    /* Cute vote buttons */    
+    left: 4%;
+}
+
+div#woot .top .label,
+div#grab .top .label,
+div#meh .top .label {
+    /* Cute vote buttons */
+    display: none;
+}
+
+    /* Cute vote buttons */
+div#meh  {  left: -1px;  }
+div#woot {  left: 1px;  }
+
+
 /* ---------------------------------- */
 
 

@@ -39,7 +39,7 @@ $("#chat-popout-button").on("click", function() {  $(".bcs-log").remove();  });
 var _console = {
     log: function () {
         var params = Array.prototype.slice.call(arguments, 1);
-        if (typeof arguments[0] == "object") {  arguments[0] = JSON.stringify(arguments[0]);  }
+        arguments[0] = JSON.stringify(arguments[0]);
         params.unshift("%cBCS%c ~ " + arguments[0],
             "color: #00bee8; font-weight: bold; font-size: 13px;",
             "color: black;");
@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "49",
+        "patch": "50",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -164,7 +164,7 @@ var bcs = {
                             url: "https://plug.dj/_/votes",
                             data: '{"direction": "1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
-                            _console.log("@bcs.main.utils.ajax.post.woot [" + msg + "]");
+                            _console.log("@bcs.main.utils.ajax.post.woot [" + JSON.stringify(msg) + "]");
                         });
                     },
                     meh: function(_hid) {
@@ -174,7 +174,7 @@ var bcs = {
                             url: "https://plug.dj/_/votes",
                             data: '{"direction": "-1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
-                            _console.log("@bcs.main.utils.ajax.post.woot [" + msg + "]");
+                            _console.log("@bcs.main.utils.ajax.post.woot [" + JSON.stringify(msg) + "]");
                         });
                     },
                     ban: function(_id, _dur) {
@@ -184,7 +184,7 @@ var bcs = {
                             url: "https://plug.dj/_/bans/add",
                             data: '{"userID":' + _id + ',"reason":1,"duration":"' + _dur + '"}'
                         }).done(function(msg) {
-                            _console.log("@bcs.main.utils.ajax.post.ban [" + msg + "]");
+                            _console.log("@bcs.main.utils.ajax.post.ban [" + JSON.stringify(msg) + "]");
                         });
                     },
                     mute: function(_id, _dur) {
@@ -194,7 +194,7 @@ var bcs = {
                             url: "https://plug.dj/_/mutes",
                             data: '{"userID":'+ _id +',"reason":1,"duration":"' + _dur + '"}'
                         }).done(function(msg) {
-                            _console.log("@bcs.main.utils.ajax.post.mute [" + msg + "]");
+                            _console.log("@bcs.main.utils.ajax.post.mute [" + JSON.stringify(msg) + "]");
                         });
                     },
                     staff: function(_id, _roleID) {
@@ -407,8 +407,9 @@ var bcs = {
                             break;
                         }
                     }
-                    if (bcs.settings.lockdown && _user.role == 0 && _user.gRole == 0
-                    || bcs.settings.superlockdown && _user.gRole == 0) {
+
+                    if (bcs.settings.lockdown && !_user.role && !_user.gRole
+                    || bcs.settings.superlockdown && !_user.gRole) {
                         bcs.main.utils.ajax.delete.chat(_cid);
                     } else {
                         //CHECK// Do with others
@@ -447,14 +448,14 @@ var bcs = {
                 if (m < 10) {  m = "0" + m;  }
                 if (s < 10) {  s = "0" + s;  }
                 var userName = data.user.username.replace("<", "&lt;").replace(">", "&gt;");
-                if (bcs.settings.mehlog && data.vote == -1) {//CHECK//
+                if (bcs.settings.mehlog && data.vote == -1) {
                     bcs.main.addChat(
                     "<div>"
                     +    "<i class='icon icon-meh'></i>"
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
-                    +        "<b>" + userName + "</b> (ID " + data.user.id + ") meh'ed this"
+                    +        "<b>" + userName + "</b> meh'ed this"
                     +        "<br />"
-                    +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
+                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
                     +    "</span>"
                     +"</div>", "bcs-meh-log");
                 } else if (bcs.settings.wootlog && data.vote == 1) {
@@ -462,19 +463,19 @@ var bcs = {
                     "<div>"
                     +    "<i class='icon icon-woot'></i>"
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
-                    +        "<b>" + userName + "</b> (ID " + data.user.id + ") woot'ed this"
+                    +        "<b>" + userName + "</b> woot'ed this"
                     +        "<br />"
-                    +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
+                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
                     +    "</span>"
                     +"</div>", "bcs-woot-log");
                 } else if (bcs.settings.grablog && !data.vote) {
                     bcs.main.addChat(
                     "<div>"
-                    +    "<i class='icon icon-meh'></i>"
+                    +    "<i class='icon icon-grab'></i>"
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
-                    +        "<b>" + userName + "</b> (ID " + data.user.id + ") woot'ed this"
+                    +        "<b>" + userName + "</b> grabbed'ed this"
                     +        "<br />"
-                    +        "<a class='bcs-timestamp'>[" + h + ":" + m + ":" + s + "]</a>"
+                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
                     +    "</span>"
                     +"</div>","bcs-grab-log");
                 }
@@ -513,16 +514,16 @@ var bcs = {
                     }
 
                     switch (user.gRole) {
-                        case 0:
-                            _user.gRole = ""; break;
                         case 3:
                             _user.gRole = " <a class='bcs-styles-gRole3'>BA</a> (3) |";    break;
                         case 5:
                             _user.gRole = " <a class='bcs-styles-gRole5'>Admin</a> (5) |"; break;
+                        default:
+                            _user.gRole = ""; break;
                     }
 
                     //CHECK//
-                    bcs.main.addChat("<a style='color:" + c + ";'>" + f + "<b>" + thename + "</b> joined </a><br /> <a style='font-size:11px;'><b>ID</b> " + user.id + " |</a> " + userrole + " " + usergrole + " <a style='font-size:11px;'><b>Level</b> " + user.level + " | " + h + ":" + m + ":" + s + "</a>","#ddd",false,false,true,true);
+                    bcs.main.addChat("<a style='color:" + c + ";'>" + f + "<b>" + thename + "</b> joined </a><br /> <a style='font-size:11px;'><b>ID</b> " + user.id + " |</a> " + userrole + " " + usergrole + " <a style='font-size:11px;'><b>Level</b> " + user.level + " | " + h + ":" + m + ":" + s + "</a>");
                 }
             },
             onLeave: function(data) {
@@ -559,20 +560,21 @@ var bcs = {
                     }
 
                     switch (user.gRole) {
-                        case 0:
-                            _user.gRole = ""; break;
                         case 3:
                             _user.gRole = " <a class='bcs-styles-gRole3'>BA</a> (3) |";    break;
                         case 5:
                             _user.gRole = " <a class='bcs-styles-gRole5'>Admin</a> (5) |"; break;
+                        default:
+                            _user.gRole = ""; break;
                     }
 
                     //CHECK//
-                    bcs.main.addChat("<a style='color:" + c + ";'>" + f + "<b>" + thename + "</b> left </a><br /> <a style='font-size:11px;'><b>ID</b> " + user.id + " |</a> " + userrole + " " + usergrole + " <a style='font-size:11px;'><b>Level</b> " + user.level + " | " + h + ":" + m + ":" + s + "</a>","#ddd",false,false,true,true);
+                    bcs.main.addChat("<a style='color:" + c + ";'>" + f + "<b>" + thename + "</b> left </a><br /> <a style='font-size:11px;'><b>ID</b> " + user.id + " |</a> " + userrole + " " + usergrole + " <a style='font-size:11px;'><b>Level</b> " + user.level + " | " + h + ":" + m + ":" + s + "</a>");
                 }
             },
             onAdvance: function(data) {
                 bcs.main.utils.volume();
+                bcs.main.utils.ajax.get.historyID();
                 var currentSong = API.getMedia();
                 if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){
                     $("#bcs-media-scroll").remove();
@@ -586,23 +588,21 @@ var bcs = {
                     $("#now-playing-media .bar-value").show();
                 }
 
+                setTimeout(function() {
+                    if (bcs.settings.autowoot) {
+                        bcs.main.utils.woot();
+                    } else if (bcs.settings.automeh) {
+                        bcs.main.utils.meh();
+                    }
+                }, 2000);
+
                 var d = new Date();
                 var h = d.getHours();
                 var m = d.getMinutes();
                 var s = d.getSeconds();
-                if (h < 10){h = "0" + h;}
-                if (m < 10){m = "0" + m;}
-                if (s < 10){s = "0" + s;}
-                setTimeout(function() {
-                    _console.log("AAA");
-                    if (bcs.settings.autowoot) {
-                        _console.log("Woot");
-                        bcs.main.utils.woot();
-                    } else if (bcs.settings.automeh) {
-                        _console.log("Meh");
-                        bcs.main.utils.meh();
-                    }
-                }, 2000);
+                if (h < 10){  h = "0" + h;  }
+                if (m < 10){  m = "0" + m;  }
+                if (s < 10){  s = "0" + s;  }
 
                 if (bcs.settings.djupdates) {
                     var _logLength = $(".cm.log").length;
@@ -1128,50 +1128,6 @@ var _commands = {
         }
     },
     {
-        cmd: ["readd"],
-        run: function(_arg, _cmd) {
-            var userID = API.getDJ().id;
-            readd(userID);
-        }
-    },
-    {
-        cmd: ["swap"],
-        run: function(_arg, _cmd) {
-            //BUGGED!
-            var arg = _arg;
-            var n1 = arg.indexOf('@');
-            var n2 = arg.lastIndexOf('@');
-            var u1 = arg.slice(n1 + 1,n2 - 1).trim();
-            var u2 = arg.slice(n2 + 1).trim();
-            var id1;var id2;
-            for (var i = 0; i < API.getUsers().length; i++) {
-                if (API.getUsers()[i].username == u1) {
-                    n1 = API.getWaitListPosition(API.getUsers()[i].id);
-                    id1 = API.getUsers()[i].id;
-                }
-                if (API.getUsers()[i].username == u2) {
-                    n2 = API.getWaitListPosition(API.getUsers()[i].id);
-                    id2 = API.getUsers()[i].id;
-                }
-            }
-            if (n1 == -1) {API.moderateAddDJ(id1);n1 = API.getWaitList().length;}
-            if (n2 == -1) {API.moderateAddDJ(id2);n2 = API.getWaitList().length;}
-            var posTime1 = setTimeout(function() {API.moderateMoveDJ(id1,n2);},750);
-            var posTime2 = setTimeout(function() {API.moderateMoveDJ(id2,n1 + 1);},1250);
-            switch ("undefined") {
-                case typeof n1:case typeof n2:
-                case typeof u1:case typeof u2:
-                case typeof id1:case typeof id2:
-                    clearTimeout(posTime1);
-                    clearTimeout(posTime2);
-                    bcs.console.warn("[ERROR]");
-                    bcs.console.warn("n1 " + n1 + " | n2 " + n2);
-                    bcs.console.warn("u1 " + u1 + " | u2 " + u2);
-                    bcs.console.warn("id1 " + id1 + " | id2 " + id2);
-            }
-        }
-    },
-    {
         cmd: ["wipe"],
         run: function(_arg, _cmd) {
             var msgs = $(".cm[data-cid^=" + _arg + "]");
@@ -1254,22 +1210,6 @@ var _commands = {
         cmd: ["ms", "smute"],
         run: function(_arg, _cmd) {
             dropHammer("m",_arg,"s");
-        }
-    },
-    {
-        cmd: ["lockdown"],
-        run: function(_arg, _cmd) {
-            if (bcs.user.role > 1 || bcs.user.gRole != 0) {
-                lockdown = !lockdown;
-                if (lockdown) {
-                    var ll = "enabled. Only staff may chat.";
-                }else{
-                    var ll = "disabled";
-                }
-                bcs.main.addChat("<b>Lockdown is now " + ll + "</b>","#FF3333");
-            }else{
-                bcs.main.addChat("<b>Sorry, but you are not cool enough for this command.</b>","#FF3333");
-            }
         }
     },
     {

@@ -21,6 +21,11 @@ div.cm.promo {
     display: none !important;
 }
 
+div.cm.moderation {
+    /* Cute border on moderation messages */
+    border-left: 3px solid #ac76ff;
+}
+
 div.level.earned.ep .label {
     /* Profile's earned PP levels > blue background */
     background: #009cdd !important;

@@ -74,17 +74,11 @@ function _toggleSetting(className) {
     if ($("li.options." + className + " div.bcs-on").hasClass("active")){
         $("li.options." + className + " div.bcs-on").removeClass("active");
         $("li.options." + className + " div.bcs-off").addClass("active");
-        console.log("B");
-        console.log(bcs.settings["" + className + ""]);
         bcs.settings["" + className + ""] = false;
-        console.log(bcs.settings["" + className + ""]);
     } else {
         $("li.options." + className + " div.bcs-on").addClass("active");
         $("li.options." + className + " div.bcs-off").removeClass("active");
-        console.log("A");
-        console.log(bcs.settings["" + className + ""]);
         bcs.settings["" + className + ""] = true;
-        console.log(bcs.settings["" + className + ""]);
     }
 }
 

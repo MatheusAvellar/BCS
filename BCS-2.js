@@ -296,6 +296,7 @@ var bcs = {
                             }
                         }
                     }
+                    $(".cm.system:contains('Yes, delete it')").remove();
                 } else {
 
                 }
@@ -593,9 +594,12 @@ var bcs = {
                 if (m < 10){m = "0" + m;}
                 if (s < 10){s = "0" + s;}
                 setTimeout(function() {
+                    _console.log("AAA");
                     if (bcs.settings.autowoot) {
+                        _console.log("Woot");
                         bcs.main.utils.woot();
                     } else if (bcs.settings.automeh) {
+                        _console.log("Meh");
                         bcs.main.utils.meh();
                     }
                 }, 2000);

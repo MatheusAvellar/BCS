@@ -331,6 +331,13 @@ a.bcs-timestamp {
     margin-left: 30px;
 }
 
+.bcs-log.bcs-friendJoin-log a.bcs-timestamp,
+.bcs-log.bcs-friendLeave-log a.bcs-timestamp,
+.bcs-log.bcs-userJoin-log a.bcs-timestamp,
+.bcs-log.bcs-userLeave-log a.bcs-timestamp, {
+    margin-left: 0px;
+}
+
 /* ---------------------------------- */
 
 

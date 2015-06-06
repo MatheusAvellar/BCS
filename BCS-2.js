@@ -53,7 +53,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "51",
+        "patch": "52",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -498,6 +498,7 @@ var bcs = {
                         color: data.friend ? "#B6A2FF" : "#0699DD",
                         intro: data.friend ? "Your friend " : "",
                         id: data.id,
+                        level: data.level,
                         role: "",
                         gRole: ""
                     }
@@ -535,18 +536,21 @@ var bcs = {
                             _user.gRole = ""; break;
                     }
 
-                    //CHECK//
                     bcs.main.addChat(
-                        "<a style='color:" + _user.color + ";'>"
-                        + _user.intro
-                        + "<b>"
-                        + _user.username
-                        + "</b> joined </a>"
-                        + "<br /> <a class='bcs-timestamp'><b>ID</b> "
-                        + _user.id + " |</a> "
+                        "<a>"
+                        +   _user.intro
+                        +   "<b>"
+                        +       _user.username
+                        +   "</b> joined </a>"
+                        +"<br />"
+                        +"<a class='bcs-timestamp'>"
+                        +    "<b>ID</b> "
+                        +    _user.id + " | " + h + ":" + m + ":" + s
+                        +    " | <b>Level</b> "
+                        +    _user.level
+                        +"</a> "
                         + _user.role + " "
-                        + _user.gRole + " <a class='bcs-timestamp'><b>Level</b> "
-                        + _user.level + " | " + h + ":" + m + ":" + s + "</a>", _class);
+                        + _user.gRole, _class);
                 }
             },
             onLeave: function(data) {
@@ -556,6 +560,7 @@ var bcs = {
                         color: data.friend ? "#B6A2FF" : "#39589A",
                         intro: data.friend ? "Your friend " : "",
                         id: data.id,
+                        level: data.level,
                         role: "",
                         gRole: ""
                     }
@@ -593,18 +598,21 @@ var bcs = {
                             _user.gRole = ""; break;
                     }
 
-                    //CHECK//
                     bcs.main.addChat(
-                        "<a style='color:" + _user.color + ";'>"
-                        + _user.intro
-                        + "<b>"
-                        + _user.username
-                        + "</b> left </a>"
-                        + "<br /> <a class='bcs-timestamp'><b>ID</b> "
-                        + _user.id + " |</a> "
+                        "<a>"
+                        +   _user.intro
+                        +   "<b>"
+                        +       _user.username
+                        +   "</b> left </a>"
+                        +"<br />"
+                        +"<a class='bcs-timestamp'>"
+                        +    "<b>ID</b> "
+                        +    _user.id + " | " + h + ":" + m + ":" + s
+                        +    " | <b>Level</b> "
+                        +    _user.level
+                        +"</a> "
                         + _user.role + " "
-                        + _user.gRole + " <a class='bcs-timestamp'><b>Level</b> "
-                        + _user.level + " | " + h + ":" + m + ":" + s + "</a>", _class);
+                        + _user.gRole, _class);
                 }
             },
             onAdvance: function(data) {

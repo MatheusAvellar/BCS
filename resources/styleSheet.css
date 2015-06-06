@@ -1,16 +1,253 @@
+/*
+ *               [BCS-2]
+ *   Cause #1 just wasn't good enough
+ *
+ * Coded by Matheus Avellar (Beta Tester)
+ * Help with ideas from Dean (DCV)
+ *
+ * Most of the stuff here is probably not
+ * the most efficient. But it works. So who cares.
+ *
+ *              sᴏᴏɴ™
+ * (https://tetheu98.github.io/bcs-2)
+ *
+ */
 
 
-/* Edits on plug.dj content */
+/* ---- Edits on plug.dj content ---- */
 
-.cm.promo {  display: none !important;  }
-.level.earned.ep .label {  background: #009cdd !important;  }
-#user-rollover .meta .user-id {
-    opacity: 0;
+div.cm.promo {
+    /* "Want to post images in chat? Subscribe now" */
+    display: none !important;
+}
+
+div.level.earned.ep .label {
+    /* Profile's earned PP levels > blue background */
+    background: #009cdd !important;
+}
+
+div#chat .delete-button{
+    /* That small and cute chat delete button again */
+    padding: 3px;
+    height: 15px;
+    width: 32px;
+}
+
+div#user-rollover .meta .user-id {
+    /* Leaving this here for future usage */
+    color: #808691;
+}
+
+div.manager span.emoji {
+    /* Leaving this here for future usage */
+    background: url("https://cdn.plug.dj/_/static/images/icons.d8b5eb442b3acb5ccfbbe2541b9db0756e45beba.png");
+    background-position: -210px -595px;
+    width: 30px;
+    height: 30px;
+    top: 3px !important;
+    left: 3px !important;
+}
+
+/* ---------------------------------- */
+
+
+/* ------------ BCS menu ------------ */
+
+div#bcs-menu {
+    right: calc(66px + 57px);
+    top: 0;
+    width: 54px;
+    height: 54px;
+    position: absolute;
+}
+
+div#bcs-menu i.icon-star-white {
+    top: 14px;
+    left: 14px;
+    cursor: pointer;
+}
+
+div#bcs-menu .menu {
+    top: -418px;
+    left: -4px;
+    position: absolute;
+}
+
+div#bcs-menu .menu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    border-right: 1px solid #282C35;
+}
+
+div#bcs-menu .menu ul li.bcs,
+div#bcs-menu .menu ul li.options {
+    background-color: #1C1F25;
+    border-bottom: 1px solid #282C35;
+    position: relative;
+    width: 180px;
+}
+
+div#bcs-menu .menu ul li.bcs     {  height: 66px;  }
+div#bcs-menu .menu ul li.options {  height: 38px;  }
+
+div#bcs-menu .menu ul li.bcs h1 {
+    text-align: center;
+    padding: 14px;
+    color: #00BEE8;
+}
+
+div#bcs-menu .menu ul li.bcs span.bcs-version {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 8px;
+    font-style: italic;
+}
+
+div#bcs-menu .menu ul li.options span {
+    left: 45px;
+    top: 9px;
+    position: absolute;
+    text-align: left;
+    font-weight: 400;
+    cursor: default;
+}
+
+div#bcs-menu .menu ul li.options i.icon {
+    top: 4px;
+    left: 7px;
+}
+
+div#bcs-menu .menu ul li.options i.icon.small {
+    top: 12px;
+    left: 15px;
+}
+
+div#bcs-menu .menu div.arrow-down {
+    border-top: 8px solid #1C1F25;
+    top: -1px;
+    left: 24px;
+    position: relative;
+}
+
+div.bcs-single {
+    background-color: #282C35;
+    cursor: pointer;
+    width: 50px;
+    height: 10px;
+    top: 15px;
+    left: 125px;
+    position: relative;
+}
+
+div.bcs-on {
+    background-color: #282C35;
+    cursor: pointer;
+    width: 25px;
+    height: 10px;
+    top: 15px;
+    left: 125px;
+    position: relative;
+}
+
+div.bcs-off {
+    background-color: #282C35;
+    cursor: pointer;
+    width: 25px;
+    height: 10px;   
+    top: 5px;   
+    left: 150px;
+    position: relative;
+}
+
+div.bcs-on.active     {  background-color: #009cdd;  }
+div.bcs-off.active    {  background-color: #f04f30;  }
+div.bcs-single:active {  background-color: #009cdd;  }
+
+/* ---------------------------------- */
+
+
+/* --------- BCS' chat logs --------- */
+
+div.bcs-log {
+    padding: 5px 0px 5px 10px;
+    font-size: 12px;
+    color: #eee;
+}
+div.bcs-log._1 {
+    color: #00BEE8;
+    background-color: #1C1F25;
+}
+span.bcs-chat-info {
+    color: #808691;
+    opacity: 0.2;
+    font-size: 7px;
+}
+a.bcs-chat-lv, a.bcs-chat-id {
+    font-size:9px;
+    color:#eee;
+}
+a.bcs-title {
+    color: #00BEE8;
+    font-weight: bold;
+}
+a.bcs-todo-nope {
+    color: #282C35;
+}
+a.bcs-todo-done {
+    color: #8694B2;
+}
+a.bcs-todo-todo {
+    color: #eeeeee;
+}
+a.bcs-styles-subscriber {
+    color: #c59840;
+    font-size: 11px;
+}
+a.bcs-styles-lRole {
+    color: #ac76ff;
+    font-size: 11px;
+}
+a.bcs-styles-gRole3 {
+    color: #89be6c;
+    font-size: 11px;
+}
+a.bcs-styles-gRole5 {
+    color: #42a5dc;
+    font-size: 11px;
 }
 #chat .delete-button{
     padding: 3px;
     height: 15px;
     width: 32px;
 }
+div.bcs-log._1 .init {
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+}
+div.bcs-log._1 .init .authors {
+    display: none;
+    transition: display 1s ease;
+}
+div.bcs-log._1 .init .authors.visible {
+    display: block;
+    transition: display 1s ease;
+}
+.authors a {
+    padding-left: 15px;
+    text-decoration: none;
+    font-size: 12px;
+}
+.authors a:hover {
+    text-decoration: underline;
+}
+.authors p i.icon-chat-ambassador {
+    margin-left: -1px;
+}
+.bcs-flip {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
 
-/* ------------------------ */
+/* ---------------------------------- */

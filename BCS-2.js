@@ -4,7 +4,7 @@
  *
  * Coded by Matheus Avellar (Beta Tester)
  * Help with ideas from Dean (DCV)
- *           as a fun project.
+ *
  * Most of the stuff here is probably not
  * the most efficient. But it works. So who cares.
  *
@@ -13,15 +13,30 @@
  *
  */
 
-
 //b2deb/c3d18/cc5ae plugMessage & functions
 
 //["b2deb/ebc3a/adb1a"]["map"]
 
 //b2deb/c7567/cd872"]["ModerateEvent"
 
+"use strict";
 
-//$.getScript("https://rawgit.com/Tetheu98/FunBotThing/master/BCS-2/commands.js");
+const BCS_DIR = "https://rawgit.com/Tetheu98/BCS/master/resources/";
+
+$.getScript(BCS_DIR + "commands.js");
+$.getScript(BCS_DIR + "menu.js");
+
+$("head").append(
+"<link"
++    "rel='stylesheet'"
++    "type='text/css'"
++    "href='" + BCS_DIR + "styleSheet.css'"
++ ">"
+);
+
+$("#chat-popout-button").on("click", function() {
+    $(".bcs-log").remove();
+});
 
 var _console = {
     log: function () {
@@ -40,7 +55,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "22",
+        "patch": "30",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -52,25 +67,20 @@ var bcs = {
     c: function (msg) {  API.sendChat(msg);  },
     l: function (msg) {  API.chatLog(msg);  },
     settings: {
-        chat: {
-            antiSpam: false,
-            lockdown: false
-        },
-        log: {
-            woot: false,
-            meh: false,
-            grab: false,
-            join: false,
-            leave: false,
-            song: false
-        },
-        auto: {
-            woot: false,
-            meh: false,
-            join: false,
-            leave: false,
-            respond: false
-        }
+        autowoot: false,
+        grablog: false,
+        mehlog: false,
+        autojoin: false,
+        trafficlog: false,
+        djupdates: false,
+        afkmsg: false,
+        /* Clear chat */
+        lockdown: false/*,
+        wootlog: false
+        autograb: false,
+        automeh: false,
+        autoleave: false,
+        antispam: false*/
     },
     plugCode: {
         init: function () {
@@ -107,6 +117,7 @@ var bcs = {
                 + "</div>",
                 "_1",
                 "init");
+            $("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
             $("div.bcs-log._1 .init").on("click", function() {
                 $("div.bcs-log._1 .init .authors").toggleClass("visible");
             });
@@ -136,6 +147,16 @@ var bcs = {
                             contentType: "application/json",
                             url: "https://plug.dj/_/votes",
                             data: '{"direction": "1","historyID": "' + _hid + '"}'
+                        }).done(function(msg) {
+                            _console.log("@bcs.main.utils.ajax.post.woot [" + msg + "]");
+                        });
+                    },
+                    meh: function(_hid) {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "https://plug.dj/_/votes",
+                            data: '{"direction": "-1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
                             _console.log("@bcs.main.utils.ajax.post.woot [" + msg + "]");
                         });
@@ -183,13 +204,14 @@ var bcs = {
                         staffList: [],
                         user: ""
                     },
-                    historyID: function() {
+                    historyID: function(_arg) {
                         $.ajax({
                             type: "GET",
                             contentType: "application/json",
                             url: "https://plug.dj/_/rooms/state",
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.historyID = msg.data[0].playback.historyID;
+                            if (_arg) {  _arg();  }
                         });
                     },
                     friends: function() {
@@ -285,9 +307,9 @@ var bcs = {
                             break;
                         }
                     }
-                    if (bcs.settings.chat.lockdown && user.role == 0 && user.gRole == 0
-                    || bcs.settings.chat.superLockdown && user.gRole == 0) {
-
+                    if (bcs.settings.lockdown && user.role == 0 && user.gRole == 0
+                    || bcs.settings.superlockdown && user.gRole == 0) {
+                        bcs.main.utils.ajax.delete.chat(_cid);
                     } else {
                         //CHECK// Do with others
                         _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
@@ -322,21 +344,21 @@ var bcs = {
                 if (m < 10) {  m = "0" + m;  }
                 if (s < 10) {  s = "0" + s;  }
                 var userName = data.user.username.replace("<", "&lt;").replace(">", "&gt;");
-                if (bcs.settings.log.meh && data.vote == -1) {//CHECK//
+                if (bcs.settings.mehlog && data.vote == -1) {//CHECK//
                     bcs.main.addChat(
                     "<span class='bcs-vote-log' username='" + userName + "'>"
                         + "<i class='icon icon-meh' style='left:5px;'></i>"
                         + userName + " (ID " + data.user.id + ") meh'ed this <br />"
                         + "<a style='color:#dddddd;font-size:11px;'>[" + h + ":" + m + ":" + s + "]</a>"
                     + "</span>");
-                } else if (bcs.settings.log.woot && data.vote == 1) {
+                } else if (bcs.settings.wootlog && data.vote == 1) {
                     bcs.main.addChat(
                     "<span class='bcs-vote-log' username='" + userName + "'>"
                         + "<i class='icon icon-woot' style='left:5px;'></i>"
                         + userName + " (ID " + data.user.id + ") woot'ed this <br />"
                         + "<a style='color:#dddddd;font-size:11px;'>[" + h + ":" + m + ":" + s + "]</a>"
                     + "</span>");
-                } else if (bcs.settings.log.grab && !data.vote) {
+                } else if (bcs.settings.grablog && !data.vote) {
                     bcs.main.addChat(
                     "<span class='bcs-vote-log' username='" + userName + "'>"
                         + "<i class='icon icon-grab' style='left:5px;'></i>"
@@ -346,7 +368,7 @@ var bcs = {
                 }
             },
             onJoin: function(data) {
-                if (bcs.settings.log.join) {
+                if (bcs.settings.tafficlog) {
                     var _user = {
                         username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
                         color: data.friend ? "#c5ffcc" : "#74afff",
@@ -392,7 +414,7 @@ var bcs = {
                 }
             },
             onLeave: function(data) {
-                if (bcs.settings.log.leave) {
+                if (bcs.settings.tafficlog) {
                     var _user = {
                         username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
                         color: data.friend ? "#c5ffcc" : "#7774ff",
@@ -459,8 +481,12 @@ var bcs = {
                 if (h < 10){h = "0" + h;}
                 if (m < 10){m = "0" + m;}
                 if (s < 10){s = "0" + s;}
-                if (bcs.settings.auto.woot) {
-                    //CHECK//
+                if (bcs.settings.autowoot) {
+                    bcs.main.utils.ajax.get.historyID(
+                        bcs.main.utils.ajax.post.woot(
+                            bcs.main.utils.ajax.get.aux.historyID
+                        )
+                    );
                 }
 
                 var currentSong = API.getMedia();
@@ -558,94 +584,9 @@ var bcs = {
     }
 }
 
-
-var s = "<style>\
-div.bcs-log {\
-    padding: 5px 0px 5px 10px;\
-    font-size: 12px;\
-    color: #eee;\
-}\
-div.bcs-log._1 {\
-    color: #00BEE8;\
-    background-color: #1C1F25;\
-}\
-span.bcs-chat-info {\
-    color: #808691;\
-    opacity: 0.2;\
-    font-size: 7px;\
-}\
-a.bcs-chat-lv, a.bcs-chat-id {\
-    font-size:9px;\
-    color:#eee;\
-}\
-a.bcs-title {\
-    color: #00BEE8;\
-    font-weight: bold;\
-}\
-a.bcs-todo-nope {\
-    color: #282C35;\
-}\
-a.bcs-todo-done {\
-    color: #8694B2;\
-}\
-a.bcs-todo-todo {\
-    color: #eeeeee;\
-}\
-a.bcs-styles-subscriber {\
-    color: #c59840;\
-    font-size: 11px;\
-    font-weight: bold;\
-}\
-a.bcs-styles-lRole {\
-    color: #ac76ff;\
-    font-size: 11px;\
-    font-weight: bold;\
-}\
-a.bcs-styles-gRole3 {\
-    color: #89be6c;\
-    font-size: 11px;\
-    font-weight: bold;\
-}\
-a.bcs-styles-gRole5 {\
-    color: #42a5dc;\
-    font-size: 11px;\
-    font-weight: bold;\
-}\
-#chat .delete-button{\
-    padding: 3px;\
-    height: 15px;\
-    width: 32px;\
-}\
-div.bcs-log._1 .init {\
-    cursor: pointer;\
-    font-family: 'Open Sans', sans-serif;\
-}\
-div.bcs-log._1 .init .authors {\
-    display: none;\
-    transition: display 1s ease;\
-}\
-div.bcs-log._1 .init .authors.visible {\
-    display: block;\
-    transition: display 1s ease;\
-}\
-.authors a {\
-    padding-left: 15px;\
-    text-decoration: none;\
-    font-size: 12px;\
-}\
-.authors a:hover {\
-    text-decoration: underline;\
-}\
-.bcs-flip {\
-    -webkit-transform: rotate(180deg);\
-    transform: rotate(180deg);\
-}\
-</style>";
-$("head").append(s);
-
 var _commands = {
     ct: function(_arg) {
-        bcs.temp = bcs.temp ? bcs.temp : "";
+        _arg = _arg || "";
         API.sendChat(bcs.temp + " " + _arg);
     },
     list: [
@@ -695,54 +636,21 @@ var _commands = {
         run: function(_arg, _cmd) {  _commands.ct(" Both. http://i.imgur.com/py7q8V7.gif");  }
     },
     {
-        cmd: ["spiderpig"],
-        run: function(_arg, _cmd) {  _commands.ct(" http://youtu.be/714-Ioa4XQw");  }
-    },
-    {
-        cmd: ["online", "users"],
-        run: function(_arg, _cmd) {
-            bcs.main.addChat("<a style='color:#2975ff;'><b>[Global User Count]</b></a> Started!","#CCC",false,false,true);
-            getAllUsers(1);
-        }
-    },
-    {
-        cmd: ["antilag"],
-        run: function(_arg, _cmd) {
-            antilag = !antilag;
-            if (antilag) {
-                API.off(API.VOTE_UPDATE, voteStuff);
-                bcs.c('/cap 1');
-            }else{
-                API.on(API.VOTE_UPDATE, voteStuff);
-            }
-            var antiOn = antilag ? "<a style='color:#90ad2f'><b>on</b></a>" : "<a style='color:#c42e3b'><b>off</b></a>";
-            bcs.main.addChat("AntiLag is now " + antiOn,"#ccc");
-        }
-    },
-    {
         cmd: ["skip"],
         run: function(_arg, _cmd) {
             API.moderateForceSkip();
         }
     },
     {
-        cmd: ["autoskip"],
-        run: function(_arg, _cmd) {
-            autoskip = !autoskip;
-            var willSkip = autoskip ? "<a style='color:#90ad2f'><b>on</b></a>" : "<a style='color:#c42e3b'><b>off</b></a>";
-            bcs.main.addChat("Song autoskipper is now " + willSkip,"#ccc");
-        }
-    },
-    {
         cmd: ["woot", "+1"],
         run: function(_arg, _cmd) {
-            bcs.getHistoryID(1);
+            bcs.main.utils.ajax.post.woot();
         }
     },
     {
         cmd: ["meh", "-1"],
         run: function(_arg, _cmd) {
-            bcs.getHistoryID(-1);
+            bcs.main.utils.ajax.post.meh();
         }
     },
     {
@@ -948,7 +856,7 @@ var _commands = {
     {
         cmd: ["shrug"],
         run: function(_arg, _cmd) {
-            bcs.c(_arg + " ¯\\_(ツ)_/¯");
+            _commands.ct(_arg + " ¯\\_(ツ)_/¯");
         }
     },
     {

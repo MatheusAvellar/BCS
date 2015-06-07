@@ -349,6 +349,14 @@ a.bcs-timestamp {
     display: none !important;
 }
 
+div.bcs-percentage {
+    font-size: 10px;
+    display: block;
+    margin-left: 50px;
+    margin-top: -1px;
+    position: absolute !important;
+}
+
 div.nothing {
     height: 16px;
 }

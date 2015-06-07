@@ -97,6 +97,7 @@ $("div#bcs-menu .icon-star-white").on("click", function() {
 $("div.bcs-on, div.bcs-off").on("click", function(data) {
     var _parent = data.currentTarget.parentElement.innerText.toString().replace(' ', "").trim().toLowerCase();
     _toggleSetting(_parent);
+    bcs.main.utils.settings.set();
 });
 
 $("li.clearchat div.bcs-single").on("click", function(data) {
@@ -108,3 +109,6 @@ $("li.clearchat div.bcs-single").on("click", function(data) {
 +           "<a>&nbsp;</a>"
 +       "</h1>");
 });
+
+/* Gets custom settings (if there are any) */
+bcs.main.utils.settings.get();

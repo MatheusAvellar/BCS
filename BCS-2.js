@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "55",
+        "patch": "56",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -70,9 +70,8 @@ var bcs = {
         trafficlog: false,
         djupdates: false,
         afkmsg: false,
-        /* Clear chat */
         lockdown: false,
-        wootlog: true,
+        wootlog: false,
         autograb: false,
         automeh: false,
         autoleave: false,
@@ -104,6 +103,9 @@ var bcs = {
 
             /* Starts old footer events */
             bcs.main.utils.oldFooter.init();
+
+            /* Runs percentage on XP bar script */
+            bcs.main.utils.percentage();
 
             /* Changes YT / SC max length on search to 256 characters */
             $("#search-input-field").attr({"maxlength": 256});
@@ -261,17 +263,12 @@ var bcs = {
                 }
             },
             volume: function() {
-                /*
-                 *  Fix for the volume bug
-                 */
-                var vol = $("#volume span").text().split("%")[0];
-                if (vol != 0) {
-                    API.setVolume(0);
-                } else {
-                    API.setVolume(1);
-                }
+                /* Fix for the volume bug */
+                var currentVolume = $("#volume span").text().split("%")[0];
+                var tempVolume = currentVolume != 0 ? 0 : 1;
+                API.setVolume(tempVolume);
                 setTimeout(function() {
-                    API.setVolume(vol);
+                    API.setVolume(currentVolume);
                 },1500);
             },
             percentage: function() {
@@ -279,11 +276,12 @@ var bcs = {
                 $("div#footer-user .bcs-percentage").remove();
 
                 var _width = $("div#footer-user .progress").attr("style");
-                var _percentage = _width.substring(6, _width.indexOf('%') + 1);
+                var _percentage = _width.substring(6, _width.indexOf('%') + 1).trim();
                 $("div#footer-user .bar").append(
                     "<div class='bcs-percentage'>"
                     +   _percentage
                     +"</div>");
+                API.chatLog("Wot");
             },
             woot: function() {
                 var _bAjax = bcs.main.utils.ajax;
@@ -368,6 +366,19 @@ var bcs = {
                             bcs.main.utils.oldFooter.toggle("hide");
                         }
                     });
+                }
+            },
+            settings: {
+                get: function() {
+                    bcs.settings = JSON.parse(localStorage.getItem("bcsSettings"));
+                    for (var i in bcs.settings) {
+                        if (bcs.settings[i] == true) {
+                            _toggleSetting(i);
+                        }
+                    }
+                },
+                set: function() {
+                    localStorage.setItem("bcsSettings", JSON.stringify(bcs.settings));
                 }
             }
         },
@@ -622,6 +633,7 @@ var bcs = {
             },
             onAdvance: function(data) {
                 bcs.main.utils.volume();
+                bcs.main.utils.percentage();
                 bcs.main.utils.ajax.get.historyID();
                 var currentSong = API.getMedia();
                 if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){

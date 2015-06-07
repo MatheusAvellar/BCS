@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "56",
+        "patch": "57",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -281,7 +281,6 @@ var bcs = {
                     "<div class='bcs-percentage'>"
                     +   _percentage
                     +"</div>");
-                API.chatLog("Wot");
             },
             woot: function() {
                 var _bAjax = bcs.main.utils.ajax;

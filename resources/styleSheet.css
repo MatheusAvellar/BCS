@@ -309,7 +309,8 @@ div.bcs-log._1 .init .authors.visible {
     left: 5px;
 }
 
-span.bcs-vote-log {
+span.bcs-vote-log,
+span.bcs-vote-log .bcs-timestamp {
     margin-left: 30px;
 }
 
@@ -333,14 +334,6 @@ span.bcs-vote-log {
 a.bcs-timestamp {
     color: #dddddd;
     font-size: 11px;
-    margin-left: 30px;
-}
-
-.bcs-log.bcs-friendJoin-log a.bcs-timestamp,
-.bcs-log.bcs-friendLeave-log a.bcs-timestamp,
-.bcs-log.bcs-userJoin-log a.bcs-timestamp,
-.bcs-log.bcs-userLeave-log a.bcs-timestamp, {
-    margin-left: 0px;
 }
 
 /* ---------------------------------- */

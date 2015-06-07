@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "54",
+        "patch": "55",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -485,7 +485,7 @@ var bcs = {
                     "<div>"
                     +    "<i class='icon icon-grab'></i>"
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
-                    +        "<b>" + userName + "</b> grabbed'ed this"
+                    +        "<b>" + userName + "</b> grabbed this"
                     +        "<br />"
                     +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
                     +    "</span>"
@@ -513,26 +513,28 @@ var bcs = {
                     if (m < 10) {  m = "0" + m;  }
                     if (s < 10) {  s = "0" + s;  }
 
+                    var _bcs_tmp = "<a class='bcs-timestamp'>";
+
                     switch (data.role) {
                         case 0:
                             _user.role = ""; break;
                         case 1:
-                            _user.role = "<a class='bcs-styles-lRole'>RDJ</a> (1) |";     break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>RDJ</a> " + _bcs_tmp + " (1)</a>";     break;
                         case 2:
-                            _user.role = "<a class='bcs-styles-lRole'>Bouncer</a> (2) |"; break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Bouncer</a> " + _bcs_tmp + " (2)</a>"; break;
                         case 3:
-                            _user.role = "<a class='bcs-styles-lRole'>Manager</a> (3) |"; break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Manager</a> " + _bcs_tmp + " (3)</a>"; break;
                         case 4:
-                            _user.role = "<a class='bcs-styles-lRole'>CoHost</a> (4) |";  break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>CoHost</a> " + _bcs_tmp + " (4)</a>";  break;
                         case 5:
-                            _user.role = "<a class='bcs-styles-lRole'>Host</a> (5) |";    break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
                     }
 
                     switch (data.gRole) {
                         case 3:
-                            _user.gRole = " <a class='bcs-styles-gRole3'>BA</a> (3) |";    break;
+                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole3'>BA</a> " + _bcs_tmp + " (3)</a>";    break;
                         case 5:
-                            _user.gRole = " <a class='bcs-styles-gRole5'>Admin</a> (5) |"; break;
+                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
                         default:
                             _user.gRole = ""; break;
                     }
@@ -575,26 +577,28 @@ var bcs = {
                     if (m < 10) {  m = "0" + m;  }
                     if (s < 10) {  s = "0" + s;  }
 
+                    var _bcs_tmp = "<a class='bcs-timestamp'>";
+
                     switch (data.role) {
                         case 0:
                             _user.role = ""; break;
                         case 1:
-                            _user.role = "<a class='bcs-styles-lRole'>RDJ</a> (1) |";     break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>RDJ</a> " + _bcs_tmp + " (1)</a>";     break;
                         case 2:
-                            _user.role = "<a class='bcs-styles-lRole'>Bouncer</a> (2) |"; break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Bouncer</a> " + _bcs_tmp + " (2)</a>"; break;
                         case 3:
-                            _user.role = "<a class='bcs-styles-lRole'>Manager</a> (3) |"; break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Manager</a> " + _bcs_tmp + " (3)</a>"; break;
                         case 4:
-                            _user.role = "<a class='bcs-styles-lRole'>CoHost</a> (4) |";  break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>CoHost</a> " + _bcs_tmp + " (4)</a>";  break;
                         case 5:
-                            _user.role = "<a class='bcs-styles-lRole'>Host</a> (5) |";    break;
+                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
                     }
 
                     switch (data.gRole) {
                         case 3:
-                            _user.gRole = " <a class='bcs-styles-gRole3'>BA</a> (3) |";    break;
+                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole3'>BA</a> " + _bcs_tmp + " (3)</a>";    break;
                         case 5:
-                            _user.gRole = " <a class='bcs-styles-gRole5'>Admin</a> (5) |"; break;
+                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
                         default:
                             _user.gRole = ""; break;
                     }

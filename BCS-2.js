@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "60",
+        "patch": "61",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -474,12 +474,12 @@ var bcs = {
 
                         // BOOTLEG INLINE IMAGES HYPE //
                         var pn = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
-                        var linked = $($(".cid-" + msgid + " a")[$("#chat-messages .cid-" + msgid + " a").length - 1]).text();
+                        var linked = $($(".cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).text();
                         var isItTheSame = msg.indexOf(linked);
                         for (var i = 0; i < pn.length; i++) {
                             var isItAPic = linked.indexOf(pn[i]);
                             if (linked != "" && isItTheSame != -1 && isItAPic != -1) {
-                                var hts = $($("#chat-messages .cid-" + msgid + " a")[$("#chat-messages .cid-" + msgid + " a").length - 1]).text();
+                                var hts = $($("#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).text();
                                 hts.split("http").join("https").split("httpss").join("https").split("gifv").join("gif");
                                 $.ajax({
                                     type: "GET",
@@ -487,11 +487,11 @@ var bcs = {
                                     url: hts,
                                     success: function(msg) {
                                         console.log(msg);
-                                        $($("#chat-messages .cid-" + msgid + " a")[$("#chat-messages .cid-" + msgid + " a").length - 1]).append("<br><img class='bcs-chat-img' src='" + hts + "'></img><br>");
+                                        $($("#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).append("<br><img class='bcs-chat-img' src='" + hts + "'></img><br>");
                                         setTimeout(function() {  bcs.scrollChat()}, 2000);
                                         setTimeout(function() {
-                                        if ($("div#chat-messages .cid-" + msgid + " img").width() == 18 && $("#chat-messages .cid-" + msgid + " img").height() == 20){
-                                            $("div#chat-messages .cid-" + msgid + " img").remove();
+                                        if ($("div#chat-messages .cid-" + _cid + " img").width() == 18 && $("#chat-messages .cid-" + _cid + " img").height() == 20){
+                                            $("div#chat-messages .cid-" + _cid + " img").remove();
                                         }},6000);
                                     },
                                     error: function(msg) {

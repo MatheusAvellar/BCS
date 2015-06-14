@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "62",
+        "patch": "63",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -388,7 +388,10 @@ var bcs = {
             unemojify: function() {
                 $("#chat-input-field").val(
                     $("#chat-input-field").val()
+                        .split(":)").join(":‌)")
+                        .split(":(").join(":‌(")
                         .split(":D").join(":‌D")
+                        .split("XD").join("X‌D")
                         .split(":O").join(":‌O")
                         .split(":/").join(":‌/")
                 );
@@ -475,7 +478,7 @@ var bcs = {
                         // BOOTLEG INLINE IMAGES HYPE //
                         var pn = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
                         var linked = $($(".cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).text();
-                        var isItTheSame = msg.indexOf(linked);
+                        var isItTheSame = _msg.indexOf(linked);
                         for (var i = 0; i < pn.length; i++) {
                             var isItAPic = linked.indexOf(pn[i]);
                             if (linked != "" && isItTheSame != -1 && isItAPic != -1) {

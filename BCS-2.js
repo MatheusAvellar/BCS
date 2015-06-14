@@ -70,6 +70,7 @@ var bcs = {
         trafficlog: false,
         djupdates: false,
         afkmsg: false,
+        unemojify: false,
         lockdown: false,
         wootlog: false,
         autograb: false,
@@ -109,6 +110,10 @@ var bcs = {
 
             /* Changes YT / SC max length on search to 256 characters */
             $("#search-input-field").attr({"maxlength": 256});
+
+
+            /* Sets unemojify event */
+            $("#chat-input-field").attr("onkeypress", "if (bcs.settings.unemojify) {  bcs.main.utils.unemojify()  }");
 
             /* Scrollable volume slider */
             $("#volume > .slider").on("mousewheel", function(e) {
@@ -379,6 +384,14 @@ var bcs = {
                 set: function() {
                     localStorage.setItem("bcsSettings", JSON.stringify(bcs.settings));
                 }
+            },
+            unemojify: function() {
+                $("div#chat-input-field").val(
+                    $("div#chat-input-field").val()
+                        .split(":D").join(":‌D")
+                        .split(":O").join(":‌O")
+                        .split(":/").join(":‌/");
+                );
             }
         },
         addChat: function(_text, _class1, _class2) {
@@ -469,7 +482,7 @@ var bcs = {
                 if (h < 10) {  h = "0" + h;  }
                 if (m < 10) {  m = "0" + m;  }
                 if (s < 10) {  s = "0" + s;  }
-                var userName = data.user.username.replace("<", "&lt;").replace(">", "&gt;");
+                var userName = data.user.username.split('<').join("&lt;").split('>').join("&gt;");
                 if (bcs.settings.mehlog && data.vote == -1) {
                     bcs.main.addChat(
                     "<div>"
@@ -505,7 +518,7 @@ var bcs = {
             onJoin: function(data) {
                 if (bcs.settings.trafficlog) {
                     var _user = {
-                        username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
+                        username: data.username.split('<').join("&lt;").split('>').join("&gt;");
                         color: data.friend ? "#B6A2FF" : "#0699DD",
                         intro: data.friend ? "Your friend " : "",
                         id: data.id,
@@ -569,7 +582,7 @@ var bcs = {
             onLeave: function(data) {
                 if (bcs.settings.trafficlog) {
                     var _user = {
-                        username: data.username.replace("<", "&lt;").replace(">", "&gt;"),
+                        username: data.username.split('<').join("&lt;").split('>').join("&gt;");
                         color: data.friend ? "#B6A2FF" : "#39589A",
                         intro: data.friend ? "Your friend " : "",
                         id: data.id,

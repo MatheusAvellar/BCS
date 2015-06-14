@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "59",
+        "patch": "60",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -548,7 +548,7 @@ var bcs = {
             onJoin: function(data) {
                 if (bcs.settings.trafficlog) {
                     var _user = {
-                        username: data.username.split('<').join("&lt;").split('>').join("&gt;");
+                        username: data.username.split('<').join("&lt;").split('>').join("&gt;"),
                         color: data.friend ? "#B6A2FF" : "#0699DD",
                         intro: data.friend ? "Your friend " : "",
                         id: data.id,
@@ -612,7 +612,7 @@ var bcs = {
             onLeave: function(data) {
                 if (bcs.settings.trafficlog) {
                     var _user = {
-                        username: data.username.split('<').join("&lt;").split('>').join("&gt;");
+                        username: data.username.split('<').join("&lt;").split('>').join("&gt;"),
                         color: data.friend ? "#B6A2FF" : "#39589A",
                         intro: data.friend ? "Your friend " : "",
                         id: data.id,

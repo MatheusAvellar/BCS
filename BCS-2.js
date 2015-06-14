@@ -113,7 +113,7 @@ var bcs = {
 
 
             /* Sets unemojify event */
-            $("#chat-input-field").attr("onkeypress", "if (bcs.settings.unemojify) {  bcs.main.utils.unemojify()  }");
+            $("#chat-input-field").attr("onkeypress", "if (bcs.settings.unemojify) {  bcs.main.utils.unemojify();  }");
 
             /* Scrollable volume slider */
             $("#volume > .slider").on("mousewheel", function(e) {
@@ -462,6 +462,7 @@ var bcs = {
                         }
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
                             bcs.main.utils.ajax.delete.chat(_cid);
+                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").remove();
                         });
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .from").append(
                             "<span class='bcs-chat-info'> Lv. <a class='bcs-chat-lv'>" + _user.level + "</a></span>"
@@ -491,7 +492,7 @@ var bcs = {
                                     success: function(msg) {
                                         console.log(msg);
                                         $($("#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).append("<br><img class='bcs-chat-img' src='" + hts + "'></img><br>");
-                                        setTimeout(function() {  bcs.scrollChat()}, 2000);
+                                        setTimeout(function() {  /* scroll chat */  }, 2000);
                                         setTimeout(function() {
                                         if ($("div#chat-messages .cid-" + _cid + " img").width() == 18 && $("#chat-messages .cid-" + _cid + " img").height() == 20){
                                             $("div#chat-messages .cid-" + _cid + " img").remove();

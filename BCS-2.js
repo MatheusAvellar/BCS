@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "61",
+        "patch": "62",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -386,8 +386,8 @@ var bcs = {
                 }
             },
             unemojify: function() {
-                $("div#chat-input-field").val(
-                    $("div#chat-input-field").val()
+                $("#chat-input-field").val(
+                    $("#chat-input-field").val()
                         .split(":D").join(":‌D")
                         .split(":O").join(":‌O")
                         .split(":/").join(":‌/")

@@ -51,7 +51,7 @@ var bcs = {
         "ultra": "2",
         "major": "0",
         "minor": "0",
-        "patch": "57",
+        "patch": "59",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -390,7 +390,7 @@ var bcs = {
                     $("div#chat-input-field").val()
                         .split(":D").join(":‌D")
                         .split(":O").join(":‌O")
-                        .split(":/").join(":‌/");
+                        .split(":/").join(":‌/")
                 );
             }
         },
@@ -471,6 +471,36 @@ var bcs = {
                             $("#chat-messages > .cm[data-cid='" + _cid + "'] .from .bcs-chat-info").css({"opacity":"0.2"});
                             $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").css({"display":"none"});
                         });
+
+                        // BOOTLEG INLINE IMAGES HYPE //
+                        var pn = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
+                        var linked = $($(".cid-" + msgid + " a")[$("#chat-messages .cid-" + msgid + " a").length - 1]).text();
+                        var isItTheSame = msg.indexOf(linked);
+                        for (var i = 0; i < pn.length; i++) {
+                            var isItAPic = linked.indexOf(pn[i]);
+                            if (linked != "" && isItTheSame != -1 && isItAPic != -1) {
+                                var hts = $($("#chat-messages .cid-" + msgid + " a")[$("#chat-messages .cid-" + msgid + " a").length - 1]).text();
+                                hts.split("http").join("https").split("httpss").join("https").split("gifv").join("gif");
+                                $.ajax({
+                                    type: "GET",
+                                    contentType: "application/json",
+                                    url: hts,
+                                    success: function(msg) {
+                                        console.log(msg);
+                                        $($("#chat-messages .cid-" + msgid + " a")[$("#chat-messages .cid-" + msgid + " a").length - 1]).append("<br><img class='bcs-chat-img' src='" + hts + "'></img><br>");
+                                        setTimeout(function() {  bcs.scrollChat()}, 2000);
+                                        setTimeout(function() {
+                                        if ($("div#chat-messages .cid-" + msgid + " img").width() == 18 && $("#chat-messages .cid-" + msgid + " img").height() == 20){
+                                            $("div#chat-messages .cid-" + msgid + " img").remove();
+                                        }},6000);
+                                    },
+                                    error: function(msg) {
+                                        console.log(msg);
+                                    }
+                                });
+                                break;
+                            }
+                        }
                     }
                 }
             },

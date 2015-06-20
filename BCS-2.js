@@ -298,21 +298,35 @@ var bcs = {
             noperms: function() {
                 bcs.main.addChat("lol u aint got the perms m8");
             },
-            clearchat: function() {
-                if (bcs.u.role >= 2 || bcs.u.gRole >= 3) {
-                    var msgs = $(".cm.message, .cm.emote, .cm.mention");
-                    for (var i = 0; i < msgs.length; i++) {
-                        for (var j = 0; j < msgs[i].classList.length; j++) {
-                            if (!msgs[i].classList[j].indexOf("message")
-                            ||  !msgs[i].classList[j].indexOf("emote")
-                            ||  !msgs[i].classList[j].indexOf("mention")) {
-                                bcs.main.utils.ajax.delete.chat(msgs[i].getAttribute("data-cid"));
+            clearchat: function(_self) {
+                if (!_self) {
+                    if (bcs.u.role >= 2 || bcs.u.gRole >= 3) {
+                        var _messageElements = $(".cm.message, .cm.emote, .cm.mention");
+                        for (var i = 0; i < _messageElements.length; i++) {
+                            for (var j = 0; j < msgs[i].classList.length; j++) {
+                                if (!_messageElements[i].classList[j].indexOf("message")
+                                ||  !_messageElements[i].classList[j].indexOf("emote")
+                                ||  !_messageElements[i].classList[j].indexOf("mention")) {
+                                    bcs.main.utils.ajax.delete.chat(_messageElements[i].getAttribute("data-cid"));
+                                }
                             }
                         }
-                    }
-                    $(".cm.system:contains('Yes, delete it')").remove();
-                } else {
+                        $(".cm.system:contains('Yes, delete it')").remove();
+                    } else {
 
+                    }
+                } else {
+                    if (bcs.u.role >= 2 && bcs.u.gRole < 3) {
+                        var _messageElements = ".cm[data-cid^=" + bcs.u.id + "]";
+                        for (var i in $(_messageElements)) {
+                            if (!$($(_messageElements)[i]).attr("data-cid")) {  continue;  }
+                            bcs.main.utils.ajax.delete.chat($($(_messageElements)[i]).attr("data-cid"));
+                        }
+                        //CHECK//
+                        logged = [];
+                    } else {
+                        bcs.main.utils.noperms;
+                    }
                 }
             },
             oldFooter: {

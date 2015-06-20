@@ -1,8 +1,4 @@
 var _commands = {
-    ct: function(_arg) {
-        _arg = _arg || "";
-        API.sendChat(bcs.temp + " " + _arg);
-    },
     list: [
     {
         cmd: ["todo"],
@@ -47,7 +43,9 @@ var _commands = {
     },
     {
         cmd: ["both"],
-        run: function(_arg, _cmd) {  _commands.ct(" Both. http://i.imgur.com/py7q8V7.gif");  }
+        run: function(_arg, _cmd) {
+            bcs.c(_arg + " Both. http://i.imgur.com/py7q8V7.gif");
+        }
     },
     {
         cmd: ["skip"],
@@ -65,6 +63,22 @@ var _commands = {
         cmd: ["meh", "-1"],
         run: function(_arg, _cmd) {
             bcs.main.utils.ajax.post.meh();
+        }
+    },
+    {
+        cmd: ["clearprofile"],
+        run: function(_arg, _cmd) {
+            var _skipCounter = 0;
+            var _interval = setInterval(function() {
+                _skipCounter++;
+                if (_skipCounter < 50) {
+                    API.moderateForceSkip();
+                    bcs.l("Clearing #" + _skipCounter);
+                } else {
+                    clearInterval(_interval);
+                    bcs.l("Profile cleared.");
+                }
+            }, 5000);
         }
     },
     {
@@ -122,7 +136,7 @@ var _commands = {
     {
         cmd: ["ooo"],
         run: function(_arg, _cmd) {
-            _commands.ct("http://youtu.be/MeB3eYk1Ze0?t=1m16s");
+            bcs.c("http://youtu.be/MeB3eYk1Ze0?t=1m16s");
         }
     },
     {
@@ -160,40 +174,25 @@ var _commands = {
     {
         cmd: ["timeout"],
         run: function(_arg, _cmd) {
-            _commands.ct("You must wait 10 minutes before you can post links on chat after you join a room. This is done to prevent spam.");
+            bcs.c("You must wait 10 minutes before you can post links on chat after you join a room. This is done to prevent spam.");
         }
     },
     {
         cmd: ["nsfw"],
         run: function(_arg, _cmd) {
-            _commands.ct('NSFW means Not Safe For Watching (objectionable content) -- nudity, scant clothing (incl. lingerie), blood and or violence (gore), snuff (dying)');
+            bcs.c('NSFW means Not Safe For Watching (objectionable content) -- nudity, scant clothing (incl. lingerie), blood and or violence (gore), snuff (dying)');
         }
     },
     {
         cmd: ["mc", "minecraft"],
         run: function(_arg, _cmd) {
-            _commands.ct('plug.dj now has its own Minecraft server! http://blog.plug.dj/2014/12/plugcraft-server/ (IP is plugdj.mcph.co)');
+            bcs.c('plug.dj now has its own Minecraft server! http://blog.plug.dj/2014/12/plugcraft-server/ (IP is plugdj.mcph.co)');
         }
     },
     {
         cmd: ["emojisheet", "emojicheat", "cheatsheet", "sheet"],
         run: function(_arg, _cmd) {
-            _commands.ct("http://www.emoji-cheat-sheet.com/");
-        }
-    },
-    {
-        cmd: ["sacrifice", "offering"],
-        run: function(_arg, _cmd) {
-
-                          bcs.c("/me  :fire: :fire: :fire: :fire: :fire:");
-            setTimeout(
-            function() {  bcs.c("/me  :fire: :fire: :goat: :fire: :fire:");  },250);
-
-            setTimeout(
-            function() {  bcs.c("/me  :fire: :fire: :fire: :fire: :fire:");  },500);
-
-            setTimeout (
-            function() {  bcs.c("/me Please, all mighty Admins, accept this sacrifice!");  },750);
+            bcs.c("http://www.emoji-cheat-sheet.com/");
         }
     },
     {
@@ -203,12 +202,6 @@ var _commands = {
             bcs.ajax.delete.chat(logged[cmds]);
             console.log(logged[cmds]);
             logged.splice(cmds,1);
-        }
-    },
-    {
-        cmd: ["mehs", "woots", "votes", "updatevotes", "updatelist"],
-        run: function(_arg, _cmd) {
-            updateList();
         }
     },
     {
@@ -226,9 +219,9 @@ var _commands = {
     {
         cmd: ["break"],
         run: function(_arg, _cmd) {
-            API.sendChat("/me  ");
+            bcs.c("/me  ");
             setTimeout(function() {
-                API.sendChat('/del 0');
+                bcs.c('/del 0');
             },550);
         }
     },
@@ -262,15 +255,9 @@ var _commands = {
         }
     },
     {
-        cmd: ["cya"],
-        run: function(_arg, _cmd) {
-            _commands.ct("Cya later! c: Thanks a lot for passing by! o/");
-        }
-    },
-    {
         cmd: ["shrug"],
         run: function(_arg, _cmd) {
-            _commands.ct(_arg + " ¯\\_(ツ)_/¯");
+            bcs.c(_arg + " ¯\\_(ツ)_/¯");
         }
     },
     {
@@ -286,7 +273,7 @@ var _commands = {
         }
     },
     {
-        cmd: ["getid", "getuid", "id", "uid"],
+        cmd: ["id"],
         run: function(_arg, _cmd) {
             var xname = _arg.substring(1).toString();
             var oname = xname.substring(0,xname.length - 2);
@@ -296,45 +283,33 @@ var _commands = {
         }
     },
     {
-        cmd: ["whywoot"],
-        run: function(_arg, _cmd) {
-            _commands.ct("If you're in this room, you'll most probably like the songs that are played here. Therefore, you'll be clicking Woot for most songs. AutoWoots simply click Woot for you, in case you're busy. If you dislike a song, you can manually Meh it.");
-        }
-    },
-    {
-        cmd: ["blog"],
-        run: function(_arg, _cmd) {
-            _commands.ct("Blog: http://blog.plug.dj/");
-        }
-    },
-    {
         cmd: ["ba"],
         run: function(_arg, _cmd) {
-            _commands.ct("Brand Ambassadors are volunteers who help moderate the website and test features. Here's more about the BA project: http://plug.dj/ba");
+            bcs.c("Brand Ambassadors are volunteers who help moderate the website and test features. Here's more about the BA project: http://plug.dj/ba");
         }
     },
     {
         cmd: ["admin"],
         run: function(_arg, _cmd) {
-            _commands.ct("Admins are the people that work for plug.dj. They have a plug.dj logo next to their names in chat. http://plug.dj/team/");
+            bcs.c("Admins are the people that work for plug.dj. They have a plug.dj logo next to their names in chat. Here's the list of all of them: http://plug.dj/team/");
         }
     },
     {
         cmd: ["xp"],
         run: function(_arg, _cmd) {
-            _commands.ct('XP and PP are earned on ticks. There is a tick cap of 72 per day. After 6 hours (72 ticks), you hit the “XP cap” and will not gain XP until the next day. More info: http://goo.gl/7SDAAr');
+            bcs.c('XP and PP are earned on ticks. There is a tick cap of 72 per day. After 6 hours (72 ticks), you hit the “XP cap” and will not gain XP until the next day. More info: http://goo.gl/7SDAAr');
         }
     },
     {
         cmd: ["pp", "points", "point"],
         run: function(_arg, _cmd) {
-            _commands.ct("The website check every minute what you did in the website during that time (such as Wooting, chatting, etc), and then generates a proportional amount of XP and PP for it. XP, however, has a daily cap, so you can't farm it.");
+            bcs.c("The website check every minute what you did in the website during that time (such as Wooting, chatting, etc), and then generates a proportional amount of XP and PP for it. XP, however, has a daily cap, so you can't farm it.");
         }
     },
     {
         cmd: ["rank", "ranks"],
         run: function(_arg, _cmd) {
-            _commands.ct("Help people out, be active and be online often, and you'll eventually be noticed by our staff. We'll watch you for some time, then decide whether you deserve a rank or not.");
+            bcs.c("Help people out, be active and be online often, and you'll eventually be noticed by our staff. We'll watch you for some time, then decide whether you deserve a rank or not.");
         }
     },
     {
@@ -343,7 +318,7 @@ var _commands = {
             var r = confirm("Delete entire chat on log?");
             if (r === true) {
                 deleteAll();
-            }else{
+            } else {
                 bcs.main.addChat("[Command " + _cmd + " denied]");
             };
         }
@@ -351,7 +326,9 @@ var _commands = {
     {
         cmd: ["stopreload"],
         run: function(_arg, _cmd) {
-            window.onbeforeunload = function() {return "BCS caught something trying to reload your page.";}
+            window.onbeforeunload = function() {
+                return "BCS caught something trying to reload your page.";
+            }
             bcs.main.addChat("BCS will now prevent page from reloading without your permission.");
         }
     },
@@ -368,10 +345,10 @@ var _commands = {
                         contentType: 'application/json',
                         data: JSON.stringify({userID: bcs.user.id, roleID: 1})
                     });
-                }else {
+                } else {
                     bcs.main.addChat("[Command " + _cmd + " denied]");
                 }
-            }else {
+            } else {
                 bcs.main.addChat("[Command " + _cmd + " denied]");
             }
         }

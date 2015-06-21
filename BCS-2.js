@@ -51,7 +51,7 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "0",
+        "minor": "1",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -80,6 +80,7 @@ var bcs = {
         antispam: false
     },
     plugCode: {
+        IDs: {},
         plugMessage: void(0),
         sendChat: void(0),
         sendChatObj: void(0),
@@ -89,18 +90,19 @@ var bcs = {
                 if (typeof bcs.plugCode.all[i] != "undefined") {
                     if (bcs.plugCode.all[i].sendChat
                      && bcs.plugCode.all[i].imgRegex) {
-                        bcs.plugCode.sendChat = i;
+                        bcs.plugCode.IDs.sendChat = i;
                         continue;
                     }
                     for (var j in bcs.plugCode.all[i]) {
                         if (j == "plugMessage") {
+                            bcs.plugCode.IDs.plugMessage = i;
                             bcs.plugCode.plugMessage = bcs.plugCode.all[i][j];
                             continue;
                         }
                     }
                 }
             }
-            bcs.plugCode.sendChatObj = require(bcs.plugCode.sendChat);
+            bcs.plugCode.sendChatObj = require(bcs.plugCode.IDs.sendChat);
             if (!bcs.plugCode.sendChatObj._sendChat) {
                 bcs.plugCode.sendChatObj._sendChat = bcs.plugCode.sendChatObj.sendChat;
             }
@@ -425,8 +427,6 @@ var bcs = {
                 set: function() {
                     localStorage.setItem("bcsSettings", JSON.stringify(bcs.settings));
                 }
-            },
-            unemojify: function() {
             }
         },
         addChat: function(_text, _class1, _class2) {

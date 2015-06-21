@@ -1,5 +1,5 @@
 function bcs_lookfor(id) {
-    id = id.toString().trim().toLowerCase;
+    id = id.toString().trim().toLowerCase();
     if (!parseInt(id)) {
         bcs.main.addChat("<span class='bcs-ass'><a class='bcs-ass-unavailable'>Invalid ID</a></span>");
         return;

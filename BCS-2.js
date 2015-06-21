@@ -51,7 +51,7 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "1",
-        "minor": "2",
+        "minor": "3",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -410,15 +410,20 @@ var bcs = {
                 }
             },
             unemojify: function() {
-                $("#chat-input-field").val(
-                    $("#chat-input-field").val()
-                        .split(":)").join(":‌)")
-                        .split(":(").join(":‌(")
-                        .split(":D").join(":‌D")
-                        .split("XD").join("X‌D")
-                        .split(":O").join(":‌O")
-                        .split(":/").join(":‌/")
-                );
+                var emotes = [":)", ":(", ":D", "XD", ":O", ":/"];
+                for (var i in emotes) {
+                    if ($("#chat-input-field").val().indexOf(emotes[i]) != -1) {
+                        $("#chat-input-field").val(
+                            $("#chat-input-field").val()
+                                .split(":)").join(":‌)")
+                                .split(":(").join(":‌(")
+                                .split(":D").join(":‌D")
+                                .split("XD").join("X‌D")
+                                .split(":O").join(":‌O")
+                                .split(":/").join(":‌/")
+                        );
+                    }
+                }
             }
         },
         addChat: function(_text, _class1, _class2) {

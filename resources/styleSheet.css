@@ -161,9 +161,13 @@ div.bcs-single, div.bcs-on, div.bcs-off {
     cursor: pointer;
     height: 10px;
 }
-div.bcs-single, div.bcs-off {
+div.bcs-single, div.bcs-on {
     top: 15px;
     left: 125px;
+}
+div.bcs-off {
+    top: 5px;   
+    left: 150px;
 }
 div.bcs-off, div.bcs-on {
     width: 25px; 
@@ -171,10 +175,7 @@ div.bcs-off, div.bcs-on {
 div.bcs-single {
     width: 50px;
 }
-div.bcs-off {
-    top: 5px;   
-    left: 150px;
-}
+
 
 div.bcs-on.active     {  background-color: #009cdd;  }
 div.bcs-off.active    {  background-color: #f04f30;  }

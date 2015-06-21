@@ -1,5 +1,5 @@
 function bcs_lookfor(id) {
-    id = id.trim().toLowerCase;
+    id = id.toString().trim().toLowerCase;
     if (!parseInt(id)) {
         bcs.main.addChat("<span class='bcs-ass'><a class='bcs-ass-unavailable'>Invalid ID</a></span>");
         return;
@@ -36,7 +36,7 @@ function bcs_lookfor(id) {
             }
 
 //BADGE
-        switch(data.badge){
+        switch(data.badge) {
     //'UNBUYABLE' (-g)
             case "2015bday-g":    _i.Badge = "3rd Anniversary"; break;
             case "2014wbb-g":     _i.Badge = "Winter"; break;
@@ -362,5 +362,6 @@ function bcs_lookfor(id) {
         }
 
         bcs.addChat(_i.output);
+    }
     });
 }

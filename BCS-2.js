@@ -52,7 +52,7 @@ var bcs = {
         "ultra": "2",
         "major": "1",
         "minor": "0",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -389,7 +389,7 @@ var bcs = {
             },
             settings: {
                 get: function() {
-                    if (JSON.parse(localStorage.getItem("bcsSettings")) {
+                    if (JSON.parse(localStorage.getItem("bcsSettings"))) {
                         bcs.settings = JSON.parse(localStorage.getItem("bcsSettings"));
                         for (var i in bcs.settings) {
                             if (bcs.settings[i] == true) {

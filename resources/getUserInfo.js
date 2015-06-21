@@ -32,7 +32,7 @@ function bcs_lookfor(id) {
                 "Friend": "",
                 "Vote": "",
                 "WaitList Position": "",
-                "output": "<span class='bcs-ass bcs-ass-head bcs-ass-label'>Advanced Searching System (A.S.S.)</span><br />"
+                "output": "<span class='bcs-ass bcs-ass-head bcs-ass-label'>Advanced Searching System (A.S.S.)</span><br /><br />"
             }
 
 //BADGE
@@ -284,7 +284,7 @@ function bcs_lookfor(id) {
                 break;
             }
         }
-        if (_u) {
+        if (_u != undefined) {
             switch (_u.vote) {
                 case 1:  _i.Vote = "<a class='bcs-ass-woot'>Woot!</a> (1)"; break;
                 case -1: _i.Vote = "<a style='bcs-ass-meh'>Meh</a> (-1)"; break;
@@ -297,7 +297,7 @@ function bcs_lookfor(id) {
             }
 
             if (API.getDJ() != undefined) {
-                if (API.getDJ().username == data.username){
+                if (API.getDJ().username == data.username) {
                     _i.Vote = "<a class='bcs-ass-unavailable'>Is currently DJ'ing</a>";
                 }
             } else {
@@ -327,15 +327,14 @@ function bcs_lookfor(id) {
 
 
 //FRIEND
-        _i.Friend = "<a class='bcs-ass-unavailable'>Offline</a>";
-        var isFriend = "No (<a class='bcs-ass-keyword'>false</a>)";
+        _i.Friend = "<a class='bcs-ass-unavailable'>No</a> (<a class='bcs-ass-keyword'>false</a>)";
         if (_u && _u.id == API.getUser().id) {
             _i.Friend = "<a class='bcs-ass-unavailable'>You can't be friends with yourself</a> (<a class='bcs-ass-keyword'>false</a>)";
         } else {
             for (var i = 0, l = bcs.main.utils.ajax.get.aux.friendsList.length; i < l; i++) {
                 if (data.username == bcs.main.utils.ajax.get.aux.friendsList[i].username) {
                     if (bcs.main.utils.ajax.get.aux.friendsList[i].room) {
-                        if (!bcs.main.utils.ajax.get.aux.friendsList[i].room.name) {
+                        if (bcs.main.utils.ajax.get.aux.friendsList[i].room.slug == "dashboard") {
                             var _tmp_friendRoom = "<a class='bcs-ass-unavailable'>Dashboard</a>";
                         } else {
                             var _tmp_friendRoom = "<a class='bcs-ass-link' href='https://plug.dj/" + bcs.main.utils.ajax.get.aux.friendsList[i].room.slug + "'>" + bcs.main.utils.ajax.get.aux.friendsList[i].room.name + "</a>";
@@ -365,8 +364,11 @@ function bcs_lookfor(id) {
             }
         }
 
+        var _scroll = $("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28;
         bcs.main.addChat(_i.output, "", "bcs-ass-frame");
-        bcs.main.utils.scrollChat();
+        if (_scroll) {
+            $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
+        }
     }
     });
 }

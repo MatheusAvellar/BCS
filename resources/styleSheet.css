@@ -71,6 +71,15 @@ div#meh .top .label {
 div#meh  {  left: -1px !important;  }
 div#woot {  left: 1px !important;  }
 
+    /* Guests are people too */
+.is-guest #footer-user .buttons,
+.is-guest #chat-header,
+.is-guest .chat-header-button {
+    display: block !important;
+}
+.is-guest #chat-messages {
+    top: 47px !important;
+}
 
 /* ---------------------------------- */
 
@@ -499,7 +508,7 @@ a.bcs-ass-unavailable {
     color: #646b7e;
 }
 a.bcs-ass-small {
-    font-size: 8px;
+    font-size: 9px;
 }
 a.bcs-ass-regular {
     color: #777f92;
@@ -514,6 +523,9 @@ a.bcs-ass-subscriber {
     color: #c59840;
     font-weight: bold;
 }
+a.bcs-ass-staff {
+    color: #ac76ff;
+}
 a.bcs-ass-woot {
     color: #90ad2f;
 }
@@ -525,6 +537,12 @@ a.bcs-ass-grab {
 }
 a.bcs-ass-spacing {
     padding-left: 15px;
+}
+
+.icon-chat-thehost {
+    height: 15px;
+    width: 15px;
+    background-image: url(https://i.imgur.com/g8NkPge.png);
 }
 
 /* ---------------------------------- */

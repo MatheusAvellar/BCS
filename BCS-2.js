@@ -51,8 +51,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "1",
-        "minor": "1",
-        "patch": "1",
+        "minor": "2",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -127,6 +127,11 @@ var bcs = {
 
             /* Popup chat bugs everything, so might as well remove everything */
             $("#chat-popout-button").on("click", function() {  $(".bcs-log").remove();  });
+
+            /* Guests and Level 1s are people too */
+            $("#header-panel-bar").removeClass("level-1");
+            $("body").removeClass("is-guest");
+            $("#footer-user .signup").remove();
 
             bcs.main.addChat(
                 "BCS - "
@@ -414,22 +419,22 @@ var bcs = {
                         .split(":O").join(":‌O")
                         .split(":/").join(":‌/")
                 );
-            },
-            scrollChat: function() {
-                if ($("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28) {
-                    $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
-                }
             }
         },
         addChat: function(_text, _class1, _class2) {
             if (!_class1 || _class1 == "undefined") {  _class1 = "";  }
             if (!_class2 || _class2 == "undefined") {  _class2 = "";  }
+
+            var _scroll = $("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28;
+
             $("#chat-messages").append(
                 "<div class='bcs-log " + _class1 + "'>"
                     + "<div class='" + _class2 + "'>" + _text + "</div>"
                 + "</div>");
 
-            bcs.main.utils.scrollChat();
+            if (_scroll) {
+                $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
+            }
             if ($("#chat-messages").children().length > 512) {  $("#chat-messages").children().first().remove();  }
         },
         events: {

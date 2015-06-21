@@ -50,8 +50,8 @@ var bcs = {
     v: {
         "stage": "Alpha v",
         "ultra": "2",
-        "major": "1",
-        "minor": "3",
+        "major": "2",
+        "minor": "0",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -80,19 +80,40 @@ var bcs = {
         antispam: false
     },
     plugCode: {
+        plugMessage: void(0),
+        sendChat: void(0),
+        sendChatObj: void(0),
         init: function () {
             bcs.plugCode.all = require.s.contexts._.defined;
-            for (var i in require.s.contexts._.defined) {
-                if (typeof require.s.contexts._.defined[i] == "object") {
-                    for (var j in require.s.contexts._.defined[i]) {
+            for (var i in bcs.plugCode.all) {
+                if (typeof bcs.plugCode.all[i] != "undefined") {
+                    if (bcs.plugCode.all[i].sendChat
+                     && bcs.plugCode.all[i].imgRegex) {
+                        bcs.plugCode.sendChat = i;
+                        continue;
+                    }
+                    for (var j in bcs.plugCode.all[i]) {
                         if (j == "plugMessage") {
-                            var plugMessage = require.s.contexts._.defined[i][j];
-                            break;
+                            bcs.plugCode.plugMessage = bcs.plugCode.all[i][j];
+                            continue;
                         }
                     }
                 }
             }
-            bcs.plugCode.plugMessage = plugMessage ? plugMessage : void(0);
+            bcs.plugCode.sendChatObj = require(bcs.plugCode.sendChat);
+            if (!bcs.plugCode.sendChatObj._sendChat) {
+                bcs.plugCode.sendChatObj._sendChat = bcs.plugCode.sendChatObj.sendChat;
+            }
+            bcs.plugCode.sendChatObj.sendChat = function(message) {
+                if (bcs.settings.unemojify) {
+                    message = message.split(":)").join(":‌)")
+                                    .split(":(").join(":‌(")
+                                    .split(":D").join(":‌D")
+                                    .split("XD").join("X‌D")
+                                    .split(":O").join(":‌O");
+                }
+                return bcs.plugCode.sendChatObj._sendChat.apply(this, [message]);
+            }
         }
     },
     main: {
@@ -111,10 +132,6 @@ var bcs = {
 
             /* Changes YT / SC max length on search to 256 characters */
             $("#search-input-field").attr({"maxlength": 256});
-
-
-            /* Sets unemojify event */
-            $("#chat-input-field").attr("onkeypress", "if (bcs.settings.unemojify) {  bcs.main.utils.unemojify();  }");
 
             /* Scrollable volume slider */
             $("#volume > .slider").on("mousewheel", function(e) {
@@ -410,20 +427,6 @@ var bcs = {
                 }
             },
             unemojify: function() {
-                var emotes = [":)", ":(", ":D", "XD", ":O", ":/"];
-                for (var i in emotes) {
-                    if ($("#chat-input-field").val().indexOf(emotes[i]) != -1) {
-                        $("#chat-input-field").val(
-                            $("#chat-input-field").val()
-                                .split(":)").join(":‌)")
-                                .split(":(").join(":‌(")
-                                .split(":D").join(":‌D")
-                                .split("XD").join("X‌D")
-                                .split(":O").join(":‌O")
-                                .split(":/").join(":‌/")
-                        );
-                    }
-                }
             }
         },
         addChat: function(_text, _class1, _class2) {
@@ -769,11 +772,11 @@ var bcs = {
                         }
                     },250);
                     var hoursLong = "";
-                    var minutesLong = Math.floor(currentSong.duration / 60);
+                    var minutesLong = ~~(currentSong.duration / 60);
                     var secondsLong = currentSong.duration % 60;
 
                     if (minutesLong >= 60){
-                        hoursLong = Math.floor(minutesLong / 60);
+                        hoursLong = ~~(minutesLong / 60);
                         minutesLong = minutesLong % 60;
                     };
                     if (hoursLong != ""){hoursLong = hoursLong + ":";};

@@ -228,8 +228,7 @@ var _commands = {
     {
         cmd: ["lookup", "l"],
         run: function(_arg, _cmd) {
-            var itsYou = _arg == bcs.user.id;
-            intersitial(_arg,itsYou);
+            bcs_lookfor(_arg);
         }
     },
     {

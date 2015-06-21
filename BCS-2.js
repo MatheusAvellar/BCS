@@ -25,6 +25,7 @@ const BCS_DIR = "https://rawgit.com/Tetheu98/BCS/master/resources/";
 
 $.getScript(BCS_DIR + "commands.js");
 $.getScript(BCS_DIR + "menu.js");
+$.getScript(BCS_DIR + "getUserInfo.js");
 
 $("head").append(
 "<link "
@@ -49,9 +50,9 @@ var bcs = {
     v: {
         "stage": "Alpha v",
         "ultra": "2",
-        "major": "0",
+        "major": "1",
         "minor": "0",
-        "patch": "63",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -388,11 +389,15 @@ var bcs = {
             },
             settings: {
                 get: function() {
-                    bcs.settings = JSON.parse(localStorage.getItem("bcsSettings"));
-                    for (var i in bcs.settings) {
-                        if (bcs.settings[i] == true) {
-                            _toggleSetting(i);
+                    if (JSON.parse(localStorage.getItem("bcsSettings")) {
+                        bcs.settings = JSON.parse(localStorage.getItem("bcsSettings"));
+                        for (var i in bcs.settings) {
+                            if (bcs.settings[i] == true) {
+                                _toggleSetting(i);
+                            }
                         }
+                    } else {
+                        localStorage.setItem("bcsSettings", JSON.stringify(bcs.settings));
                     }
                 },
                 set: function() {
@@ -409,20 +414,22 @@ var bcs = {
                         .split(":O").join(":‌O")
                         .split(":/").join(":‌/")
                 );
+            },
+            scrollChat: function() {
+                if ($("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28) {
+                    $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
+                }
             }
         },
         addChat: function(_text, _class1, _class2) {
             if (!_class1 || _class1 == "undefined") {  _class1 = "";  }
             if (!_class2 || _class2 == "undefined") {  _class2 = "";  }
-
-            var _shouldScroll = $("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28;
-
             $("#chat-messages").append(
                 "<div class='bcs-log " + _class1 + "'>"
                     + "<div class='" + _class2 + "'>" + _text + "</div>"
                 + "</div>");
 
-            if (_shouldScroll) {  $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;  }
+            bcs.main.utils.scrollChat();
             if ($("#chat-messages").children().length > 512) {  $("#chat-messages").children().first().remove();  }
         },
         events: {
@@ -471,7 +478,7 @@ var bcs = {
                         && bcs.u.role >= 2
                         || _user.id == bcs.u.id
                         && bcs.u.gRole >= 3) {
-                            _console.log("Appended DELETE BUTTON");
+                            _console.log("@bcs.main.events.onChat Appended DELETE BUTTON");
                             $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend("<div class='delete-button'>Delete</div>");
                         }
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
@@ -491,29 +498,27 @@ var bcs = {
                         });
 
                         // BOOTLEG INLINE IMAGES HYPE //
-                        var pn = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
-                        var linked = $($(".cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).text();
-                        var isItTheSame = _msg.indexOf(linked);
-                        for (var i = 0; i < pn.length; i++) {
-                            var isItAPic = linked.indexOf(pn[i]);
-                            if (linked != "" && isItTheSame != -1 && isItAPic != -1) {
-                                var hts = $($("#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).text();
-                                hts.split("http").join("https").split("httpss").join("https").split("gifv").join("gif");
+                        var _extensions = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
+                        var _messageContent = $($(".cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]).text();
+                        var _hasNotBeenChecked = _msg.indexOf(_messageContent) != -1;
+                        for (var i = 0; i < _extensions.length; i++) {
+                            var _isImage = _messageContent.indexOf(_extensions[i]) != -1;
+                            if (_messageContent != ""
+                             && _hasNotBeenChecked == true
+                             && _isImage == true) {
+                                var _imageLink = $($("div#chat-messages .cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]).text();
+                                _imageLink = _imageLink.split("http").join("https").split("httpss").join("https").split("gifv").join("gif");
                                 $.ajax({
                                     type: "GET",
                                     contentType: "application/json",
-                                    url: hts,
+                                    url: _imageLink,
                                     success: function(msg) {
-                                        console.log(msg);
-                                        $($("#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1]).append("<br><img class='bcs-chat-img' src='" + hts + "'></img><br>");
-                                        setTimeout(function() {  /* scroll chat */  }, 2000);
-                                        setTimeout(function() {
-                                        if ($("div#chat-messages .cid-" + _cid + " img").width() == 18 && $("#chat-messages .cid-" + _cid + " img").height() == 20){
-                                            $("div#chat-messages .cid-" + _cid + " img").remove();
-                                        }},6000);
+                                        _console.log("@bcs.main.events.onChat " + JSON.stringify(msg));
+                                        $($("div#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1])
+                                            .append("<br /><img onload='bcs.main.utils.scrollChat();' class='bcs-chat-image' src='" + _imageLink + "' /><br />");
                                     },
                                     error: function(msg) {
-                                        console.log(msg);
+                                        _console.log("@bcs.main.events.onChat " + JSON.stringify(msg));
                                     }
                                 });
                                 break;

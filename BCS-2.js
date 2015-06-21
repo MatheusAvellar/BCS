@@ -51,8 +51,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "1",
-        "minor": "0",
-        "patch": "2",
+        "minor": "1",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];

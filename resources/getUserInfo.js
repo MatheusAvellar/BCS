@@ -17,22 +17,22 @@ function bcs_lookfor(id) {
         } else {
 
             var _i = {
-                "Name": "",
-                "Raw Username": "",
+                "Name": data.username,
                 "Slug": "",
                 "ID": id,
-                "Level": "",
-                "Avatar": "",
+                "Level": data.level,
+                "Avatar": data.avatarID,
                 "Badge": "",
                 "Language": "",
                 "Role": "",
                 "Global Role": "",
                 "Subscriber": "",
+                "Guest": "",
                 "Joined": "",
                 "Friend": "",
                 "Vote": "",
                 "WaitList Position": "",
-                "output": "<br />"
+                "output": "<br /><span class='bcs-ass bcs-ass-head'></span><br />"
             }
 
 //BADGE
@@ -241,34 +241,38 @@ function bcs_lookfor(id) {
         if (data.gRole < 3) {
             _i["Global Role"] = "<a class='bcs-ass-regular'>Regular</a> (" + data.gRole + ")";
         } else if (data.gRole == 3) {
-            _i["Global Role"] = "<a class='bcs-ass-ambassador'><i class='icon icon-chat-ambassador'></i> Brand Ambassador</a> (" + data.gRole + ")";
+            _i["Global Role"] = "<i class='icon icon-chat-ambassador'></i><a class='bcs-ass-ambassador bcs-ass-spacing'>Brand Ambassador</a> (" + data.gRole + ")";
         } else if (data.gRole > 3) {
-            _i["Global Role"] = "<a class='bcs-ass-admin'><i class='icon icon-chat-admin'></i> Admin</a> (" + data.gRole + ")";
+            _i["Global Role"] = "<i class='icon icon-chat-admin'></i><a class='bcs-ass-admin bcs-ass-spacing'>Admin</a> (" + data.gRole + ")";
         }
 
 //ROLE
         for (var i = 0, l = bcs.main.utils.ajax.get.aux.staffList.length; i < l; i++) {
             if (data.username == bcs.main.utils.ajax.get.aux.staffList[i].username
              && bcs.main.utils.ajax.get.aux.staffList[i].role != 0) {
-                _i.Role = bcs.staffList[i].role;
+                _i.Role = bcs.main.utils.ajax.get.aux.staffList[i].role;
             }
         }
         switch (_i.Role) {
-            case 5:    _i.Role = "<a class='bcs-ass-staff'><i class='icon icon-chat-thehost'></i> Host</a> (5)";    break;
-            case 4:    _i.Role = "<a class='bcs-ass-staff'><i class='icon icon-chat-host'></i> CoHost</a> (4)";     break;
-            case 3:    _i.Role = "<a class='bcs-ass-staff'><i class='icon icon-chat-manager'></i> Manager</a> (3)"; break;
-            case 2:    _i.Role = "<a class='bcs-ass-staff'><i class='icon icon-chat-bouncer'></i> Bouncer</a> (2)"; break;
-            case 1:    _i.Role = "<a class='bcs-ass-staff'><i class='icon icon-chat-dj'></i> RDJ</a> (1)";          break;
-            case null: _i.Role = "<a class='bcs-ass-keyword'>" + _i.Role + "</a>";                                     break;
-            default:   _i.Role = "<a class='bcs-ass-regular'>Regular</a> (0)";                                      break;
+            case 5:    _i.Role = "<i class='icon icon-chat-thehost'></i><a class='bcs-ass-staff bcs-ass-spacing'>Host</a> (5)";    break;
+            case 4:    _i.Role = "<i class='icon icon-chat-host'></i><a class='bcs-ass-staff bcs-ass-spacing'>CoHost</a> (4)";     break;
+            case 3:    _i.Role = "<i class='icon icon-chat-manager'></i><a class='bcs-ass-staff bcs-ass-spacing'>Manager</a> (3)"; break;
+            case 2:    _i.Role = "<i class='icon icon-chat-bouncer'></i><a class='bcs-ass-staff bcs-ass-spacing'>Bouncer</a> (2)"; break;
+            case 1:    _i.Role = "<i class='icon icon-chat-dj'></i><a class='bcs-ass-staff bcs-ass-spacing'>RDJ</a> (1)";          break;
+            case null: _i.Role = "<a class='bcs-ass-keyword'>" + _i.Role + "</a>";                                                 break;
+            default:   _i.Role = "<a class='bcs-ass-regular'>Regular</a> (0)";                                                     break;
         }
 
 
 //SUBSCRIBER
         _i.Subscriber = "No (" + data.sub + ")";
         if (data.sub > 0) {
-            _i.Subscriber = "<i class='icon icon-chat-subscriber'></i> <a class='bcs-ass-subscriber'>Yes</a> (" + data.sub + ")";
+            _i.Subscriber = "<i class='icon icon-chat-subscriber'></i><a class='bcs-ass-subscriber bcs-ass-spacing'>Yes</a> (" + data.sub + ")";
         }
+
+
+//GUEST
+        _i.Guest = "<a class='bcs-ass-keyword'>" + data.guest + "</a>";
 
 
 //VOTE
@@ -326,15 +330,15 @@ function bcs_lookfor(id) {
         _i.Friend = "<a class='bcs-ass-unavailable'>Offline</a>";
         var isFriend = "No (<a class='bcs-ass-keyword'>false</a>)";
         if (_u && _u.id == API.getUser().id) {
-            _i.Friend = "<a class='bcs-ass-unavailable'>You can't be friends with yourself</a> (<em>false</em>)";
+            _i.Friend = "<a class='bcs-ass-unavailable'>You can't be friends with yourself</a> (<a class='bcs-ass-keyword'>false</a>)";
         } else {
-            for (var i = 0, l = bcs.main.utils.ajax.aux.friendsList.length; i < l; i++) {
-                if (data.username == bcs.main.utils.ajax.aux.friendsList[i].username) {
-                    if (bcs.main.utils.ajax.aux.friendsList[i].room) {
-                        if (!bcs.main.utils.ajax.aux.friendsList[i].room.name) {
+            for (var i = 0, l = bcs.main.utils.ajax.get.aux.friendsList.length; i < l; i++) {
+                if (data.username == bcs.main.utils.ajax.get.aux.friendsList[i].username) {
+                    if (bcs.main.utils.ajax.get.aux.friendsList[i].room) {
+                        if (!bcs.main.utils.ajax.get.aux.friendsList[i].room.name) {
                             var _tmp_friendRoom = "<a class='bcs-ass-unavailable'>Dashboard</a>";
                         } else {
-                            var _tmp_friendRoom = "<a class='bcs-ass-link' href='https://plug.dj/" + bcs.main.utils.ajax.aux.friendsList[i].room.slug + "'>" + bcs.main.utils.ajax.aux.friendsList[i].room.name + "</a>";
+                            var _tmp_friendRoom = "<a class='bcs-ass-link' href='https://plug.dj/" + bcs.main.utils.ajax.get.aux.friendsList[i].room.slug + "'>" + bcs.main.utils.ajax.get.aux.friendsList[i].room.name + "</a>";
                         }
                     }
                     _i.Friend = "Yes (<a class='bcs-ass-keyword'>true</a>)";
@@ -351,7 +355,7 @@ function bcs_lookfor(id) {
         if (data.level >= 5) {
             _i.Slug = "<a class='bcs-ass-link' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a>";
         } else {
-            _i.Slug = "<a class='bcs-ass-unavailable' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a><a class='bcs-ass-unavailable'>[No profile yet]</a>";
+            _i.Slug = "<a class='bcs-ass-unavailable' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a> <a class='bcs-ass-unavailable'>[No profile yet]</a>";
         }
 
         for (var i in _i) {
@@ -361,7 +365,7 @@ function bcs_lookfor(id) {
             }
         }
 
-        bcs.addChat(_i.output);
+        bcs.main.addChat(_i.output, "", "bcs-ass-frame");
     }
     });
 }

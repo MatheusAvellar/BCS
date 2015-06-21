@@ -467,16 +467,27 @@ div#footer-user .back {
 /* BCS's Advanced Searching System TM */
          /* (Or The A.S.S.) */
 
+div.bcs-ass-frame {
+    outline: 1px solid #282c35;
+    padding: 10px;
+    width: calc(100% - 30px);
+    margin: 0px;
+    background-color: #1c1f25;
+}
+
 span.bcs-ass {
     color: #cccccc;
     font-size: 12px;
 }
-
+span.bcs-ass-head {
+    text-align: center;
+    width: calc(100% - 30px);
+    position: absolute;
+}
 span.bcs-ass-label {
     color: #42a5dc;
     font-weight: bold;
 }
-
 a.bcs-ass-link {
     color: #aec9ea;
 }
@@ -490,7 +501,6 @@ a.bcs-ass-unavailable {
 a.bcs-ass-small {
     font-size: 8px;
 }
-
 a.bcs-ass-regular {
     color: #777f92;
 }
@@ -512,6 +522,9 @@ a.bcs-ass-meh {
 }
 a.bcs-ass-grab {
     color: #aa74ff;
+}
+a.bcs-ass-spacing {
+    padding-left: 15px;
 }
 
 /* ---------------------------------- */

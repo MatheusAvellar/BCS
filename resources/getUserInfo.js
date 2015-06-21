@@ -32,7 +32,7 @@ function bcs_lookfor(id) {
                 "Friend": "",
                 "Vote": "",
                 "WaitList Position": "",
-                "output": "<br /><span class='bcs-ass bcs-ass-head'></span><br />"
+                "output": "<span class='bcs-ass bcs-ass-head bcs-ass-label'>Advanced Searching System (A.S.S.)</span><br />"
             }
 
 //BADGE
@@ -366,6 +366,7 @@ function bcs_lookfor(id) {
         }
 
         bcs.main.addChat(_i.output, "", "bcs-ass-frame");
+        bcs.main.utils.scrollChat();
     }
     });
 }

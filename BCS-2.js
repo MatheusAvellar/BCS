@@ -52,7 +52,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "1",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -328,7 +328,7 @@ var bcs = {
                     if (bcs.u.role >= 2 || bcs.u.gRole >= 3) {
                         var _messageElements = $(".cm.message, .cm.emote, .cm.mention");
                         for (var i = 0; i < _messageElements.length; i++) {
-                            for (var j = 0; j < msgs[i].classList.length; j++) {
+                            for (var j = 0; j < _messageElements[i].classList.length; j++) {
                                 if (!_messageElements[i].classList[j].indexOf("message")
                                 ||  !_messageElements[i].classList[j].indexOf("emote")
                                 ||  !_messageElements[i].classList[j].indexOf("mention")) {
@@ -713,7 +713,7 @@ var bcs = {
                 bcs.main.utils.volume();
                 bcs.main.utils.percentage();
                 bcs.main.utils.ajax.get.historyID();
-                var currentSong = API.getMedia();
+                var   = API.getMedia();
                 if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){
                     $("#bcs-media-scroll").remove();
                     $("#now-playing-media .bar-value").hide();
@@ -738,15 +738,15 @@ var bcs = {
                 var h = d.getHours();
                 var m = d.getMinutes();
                 var s = d.getSeconds();
-                if (h < 10){  h = "0" + h;  }
-                if (m < 10){  m = "0" + m;  }
-                if (s < 10){  s = "0" + s;  }
+                if (h < 10) {  h = "0" + h;  }
+                if (m < 10) {  m = "0" + m;  }
+                if (s < 10) {  s = "0" + s;  }
 
                 if (bcs.settings.djupdates) {
                     var _logLength = $(".cm.log").length;
                     bcs.l(" ");
                     for (var i = _logLength; i < $(".cm.log").length; i++) {
-                        // Yes, this is pretty stupid. But whatever.
+                        // Yes, this is pretty stupid. But whatever. Script is mine, get rekt :L
                         $(".cm.log")[i].remove();
                     }
                     //CHECK//
@@ -760,7 +760,7 @@ var bcs = {
                         + API.getUsers().length + "</a></b>");
                     setTimeout(function() {
                         for (var i = 0; i< API.getHistory().length; i++) {
-                            if (API.getHistory()[i].media.cid == currentSong.cid && i != 0){
+                            if (API.getHistory()[i].media.cid == currentSong.cid && i != 0) { //CHECK//
                                 var previous = API.getHistory()[i];
                                 var pos = i + 1;
                                 var stats = previous.user.username + " (ID " + previous.user.id + ")";
@@ -772,16 +772,16 @@ var bcs = {
                         }
                     },250);
                     var hoursLong = "";
-                    var minutesLong = ~~(currentSong.duration / 60);
+                    var minutesLong = Math.floor(currentSong.duration / 60);
                     var secondsLong = currentSong.duration % 60;
 
                     if (minutesLong >= 60){
-                        hoursLong = ~~(minutesLong / 60);
+                        hoursLong = Math.floor(minutesLong / 60);
                         minutesLong = minutesLong % 60;
                     };
-                    if (hoursLong != ""){hoursLong = hoursLong + ":";};
-                    if (secondsLong < 10){secondsLong = "0" + secondsLong;}
-                    if (minutesLong < 10){minutesLong = "0" + minutesLong;}
+                    if (hoursLong != "") {  hoursLong = hoursLong + ":";  };
+                    if (secondsLong < 10) {  secondsLong = "0" + secondsLong;  }
+                    if (minutesLong < 10) {  minutesLong = "0" + minutesLong;  }
                     var actuallength = hoursLong + minutesLong + ":" + secondsLong;
                     if (bcs.settings.djupdates) {
                         if (currentSong.duration > 480) {

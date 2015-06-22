@@ -52,7 +52,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "1",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -713,7 +713,7 @@ var bcs = {
                 bcs.main.utils.volume();
                 bcs.main.utils.percentage();
                 bcs.main.utils.ajax.get.historyID();
-                var   = API.getMedia();
+                var currentSong = API.getMedia();
                 if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){
                     $("#bcs-media-scroll").remove();
                     $("#now-playing-media .bar-value").hide();

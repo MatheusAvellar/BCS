@@ -443,8 +443,25 @@ var _commands = {
         }
     },
     {
-
-
+        cmd: ["banall"],
+        run: function(_arg, _cmd) {
+            const _all = _arg.toString().trim().toLowerCase() == "a";
+            for (var i in API.getUsers()) {
+                if (API.getUsers()[i].gRole < 3 && API.getUsers()[i].role < 1 && !_all
+                 || API.getUsers()[i].gRole < 3) {
+                     $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "https://plug.dj/_/bans/add",
+                        data: '{"userID":' + API.getUsers()[i].id + ',"reason":1,"duration":"f"}'
+                    }).done(function(msg) {
+                        _console.log("@banall [" + JSON.stringify(msg) + "]");
+                    });
+                }
+            }
+        }
+    },
+    {
         cmd: ["ban", "b", "pb"],
         run: function(_arg, _cmd) {
             dropHammer("b",_arg,"f");

@@ -150,7 +150,8 @@ var bcs = {
             /* Guests and Level 1s are people too */
             $("#header-panel-bar").removeClass("level-1");
             $("body").removeClass("is-guest");
-            $("#footer-user .signup").remove();
+            $("#footer-user .signup, #walkthrough, .wt-cover").remove();
+            $("#app").attr("class", "");
 
             bcs.main.addChat(
                 "BCS - "

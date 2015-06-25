@@ -714,6 +714,7 @@ var bcs = {
                 bcs.main.utils.volume();
                 bcs.main.utils.percentage();
                 bcs.main.utils.ajax.get.historyID();
+                bcs.main.utils.ajax.get.staff();
                 var currentSong = API.getMedia();
                 if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){
                     $("#bcs-media-scroll").remove();

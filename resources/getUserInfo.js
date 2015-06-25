@@ -12,30 +12,28 @@ function bcs_lookfor(id) {
         url: "https://plug.dj/_/users/" + id
     }).done(function(complete_data) {
         data = complete_data.data[0];
-        if (data.username == null) {
-            bcs.main.addChat("<span class='bcs-ass'><a class='bcs-ass-keyword'>User has null username</a></span>");
-        } else {
 
-            var _i = {
-                "Name": data.username,
-                "Slug": "",
-                "ID": id,
-                "Level": data.level,
-                "Avatar": data.avatarID,
-                "Badge": "",
-                "Language": "",
-                "Role": "",
-                "Global Role": "",
-                "Subscriber": "",
-                "Guest": "",
-                "Joined": "",
-                "Friend": "",
-                "Vote": "",
-                "WaitList Position": "",
-                "output": "<span class='bcs-ass bcs-ass-head bcs-ass-label'>Advanced Searching System (A.S.S.)</span><br /><br />"
-            }
+        var _i = {
+            "Name": data.guest ? "404notFound" : data.username,
+            "Slug": data.guest ? "404notFound" : "",
+            "ID": id,
+            "Level": data.guest ? "404notFound" : data.level,
+            "Avatar": data.avatarID,
+            "Badge": data.guest ? "404notFound" : "",
+            "Language": data.guest ? "404notFound" : "",
+            "Role": 0,
+            "Global Role": data.guest ? "404notFound" : "",
+            "Subscriber": data.guest ? "404notFound" : "",
+            "Guest": "<a class='bcs-ass-keyword'>" + data.guest + "</a>",
+            "Joined": data.guest ? "404notFound" : "",
+            "Friend": data.guest ? "404notFound" : "",
+            "Vote": data.guest ? "404notFound" : "",
+            "WaitList Position": data.guest ? "404notFound" : "",
+            "output": "<span class='bcs-ass bcs-ass-head bcs-ass-label'>Advanced Searching System (A.S.S.)</span><br /><br />"
+        }
 
 //BADGE
+    if (!data.guest) {
         switch(data.badge) {
     //'UNBUYABLE' (-g)
             case "2015bday-g":    _i.Badge = "3rd Anniversary"; break;
@@ -70,6 +68,11 @@ function bcs_lookfor(id) {
             case "animals-s01":   _i.Badge = "Wolf"; break;
             case "animals-s02":   _i.Badge = "Cat"; break;
             case "animals-s03":   _i.Badge = "Chicken"; break;
+            case "dinerb-s01":    _i.Badge = "Sandwich"; break;
+            case "dinerb-s02":    _i.Badge = "Waffle"; break;
+            case "dinerb-s03":    _i.Badge = "Waiter"; break;
+            case "dinerb-s04":    _i.Badge = "Tomato Soup"; break;
+            case "dinerb-s05":    _i.Badge = "Whipped Cream Dessert"; break;
             case "food-s01":      _i.Badge = "Pizza"; break;
             case "food-s02":      _i.Badge = "Ice Cream"; break;
             case "food-s03":      _i.Badge = "Donut"; break;
@@ -104,6 +107,8 @@ function bcs_lookfor(id) {
             case "winter-s03":    _i.Badge = "Tree"; break;
 
     //'EPIC' (-e)
+            case "dinerb-e01":    _i.Badge = "Coke Bottles"; break;
+            case "dinerb-e02":    _i.Badge = "Jukebox"; break;
             case "isle-e01":      _i.Badge = "Squid"; break;
             case "isle-e02":      _i.Badge = "Eye"; break;
             case "seab-e01":      _i.Badge = "Whale"; break;
@@ -112,6 +117,12 @@ function bcs_lookfor(id) {
 
     //'BUYABLE' ()
             case "animals01":     _i.Badge = "Boxer"; break;
+            case "dinerb01":      _i.Badge = "Mustard and Ketchup"; break;
+            case "dinerb02":      _i.Badge = "Onion Rings"; break;
+            case "dinerb03":      _i.Badge = "Pancakes"; break;
+            case "dinerb04":      _i.Badge = "Bacon"; break;
+            case "dinerb05":      _i.Badge = "Sauces"; break;
+            case "dinerb06":      _i.Badge = "Beer"; break;
             case "food01":        _i.Badge = "Drink"; break;
             case "food02":        _i.Badge = "Sushi"; break;
             case "food03":        _i.Badge = "Hamburguer"; break;
@@ -160,6 +171,7 @@ function bcs_lookfor(id) {
         if (data.badge != null) {
             _i.Badge += " (" + data.badge + ")";
         }
+
 
 //LANGUAGE
         switch (data.language){
@@ -246,33 +258,12 @@ function bcs_lookfor(id) {
             _i["Global Role"] = "<i class='icon icon-chat-admin'></i><a class='bcs-ass-admin bcs-ass-spacing'>Admin</a> (" + data.gRole + ")";
         }
 
-//ROLE
-        for (var i = 0, l = bcs.main.utils.ajax.get.aux.staffList.length; i < l; i++) {
-            if (data.username == bcs.main.utils.ajax.get.aux.staffList[i].username
-             && bcs.main.utils.ajax.get.aux.staffList[i].role != 0) {
-                _i.Role = bcs.main.utils.ajax.get.aux.staffList[i].role;
-            }
-        }
-        switch (_i.Role) {
-            case 5:    _i.Role = "<i class='icon icon-chat-thehost'></i><a class='bcs-ass-staff bcs-ass-spacing'>Host</a> (5)";    break;
-            case 4:    _i.Role = "<i class='icon icon-chat-host'></i><a class='bcs-ass-staff bcs-ass-spacing'>CoHost</a> (4)";     break;
-            case 3:    _i.Role = "<i class='icon icon-chat-manager'></i><a class='bcs-ass-staff bcs-ass-spacing'>Manager</a> (3)"; break;
-            case 2:    _i.Role = "<i class='icon icon-chat-bouncer'></i><a class='bcs-ass-staff bcs-ass-spacing'>Bouncer</a> (2)"; break;
-            case 1:    _i.Role = "<i class='icon icon-chat-dj'></i><a class='bcs-ass-staff bcs-ass-spacing'>RDJ</a> (1)";          break;
-            case null: _i.Role = "<a class='bcs-ass-keyword'>" + _i.Role + "</a>";                                                 break;
-            default:   _i.Role = "<a class='bcs-ass-regular'>Regular</a> (0)";                                                     break;
-        }
-
 
 //SUBSCRIBER
         _i.Subscriber = "No (" + data.sub + ")";
         if (data.sub > 0) {
             _i.Subscriber = "<i class='icon icon-chat-subscriber'></i><a class='bcs-ass-subscriber bcs-ass-spacing'>Yes</a> (" + data.sub + ")";
         }
-
-
-//GUEST
-        _i.Guest = "<a class='bcs-ass-keyword'>" + data.guest + "</a>";
 
 
 //VOTE
@@ -351,24 +342,41 @@ function bcs_lookfor(id) {
 
 
 //PROFILE
-        if (data.level >= 5) {
-            _i.Slug = "<a class='bcs-ass-link' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a>";
-        } else {
-            _i.Slug = "<a class='bcs-ass-unavailable' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a> <a class='bcs-ass-unavailable'>[No profile yet]</a>";
-        }
+    if (data.level >= 5) {
+        _i.Slug = "<a class='bcs-ass-link' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a>";
+    } else {
+        _i.Slug = "<a class='bcs-ass-unavailable' target='_blank' href='/@/" + data.slug + "'>" + data.slug + "</a> <a class='bcs-ass-unavailable'>[No profile yet]</a>";
+    }
+}
 
-        for (var i in _i) {
-            if (i != "output") {
-                _i[i] = "<span class='bcs-ass'>" + _i[i] + "</span>";
-                _i.output += "<span class='bcs-ass bcs-ass-label'>" + i + ": </span>" + _i[i] + "<br />";
-            }
-        }
 
-        var _scroll = $("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28;
-        bcs.main.addChat(_i.output, "", "bcs-ass-frame");
-        if (_scroll) {
-            $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
+//ROLE
+    for (var i = 0, l = bcs.main.utils.ajax.get.aux.staffList.length; i < l; i++) {
+        if (id == bcs.main.utils.ajax.get.aux.staffList[i].id
+         && bcs.main.utils.ajax.get.aux.staffList[i].role != 0) {
+            _i.Role = bcs.main.utils.ajax.get.aux.staffList[i].role;
         }
+    }
+    switch (_i.Role) {
+        case 5:    _i.Role = "<i class='icon icon-chat-thehost'></i><a class='bcs-ass-staff bcs-ass-spacing'>Host</a> (5)";    break;
+        case 4:    _i.Role = "<i class='icon icon-chat-host'></i><a class='bcs-ass-staff bcs-ass-spacing'>CoHost</a> (4)";     break;
+        case 3:    _i.Role = "<i class='icon icon-chat-manager'></i><a class='bcs-ass-staff bcs-ass-spacing'>Manager</a> (3)"; break;
+        case 2:    _i.Role = "<i class='icon icon-chat-bouncer'></i><a class='bcs-ass-staff bcs-ass-spacing'>Bouncer</a> (2)"; break;
+        case 1:    _i.Role = "<i class='icon icon-chat-dj'></i><a class='bcs-ass-staff bcs-ass-spacing'>RDJ</a> (1)";          break;
+        default:   _i.Role = "<a class='bcs-ass-regular'>Regular</a> (" + _i.Role + ")";                                                     break;
+    }
+
+    for (var i in _i) {
+        if (i != "output" && _i[i] != "404notFound") {
+            _i[i] = "<span class='bcs-ass'>" + _i[i] + "</span>";
+            _i.output += "<span class='bcs-ass bcs-ass-label'>" + i + ": </span>" + _i[i] + "<br />";
+        }
+    }
+
+    var _scroll = $("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28;
+    bcs.main.addChat(_i.output, "", "bcs-ass-frame");
+    if (_scroll) {
+        $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
     }
     });
 }

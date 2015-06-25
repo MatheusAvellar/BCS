@@ -497,6 +497,9 @@ span.bcs-ass-label {
     color: #42a5dc;
     font-weight: bold;
 }
+span.bcs-ass i.icon {
+    margin: 2px 0px 0px -2px;
+}
 a.bcs-ass-link {
     color: #aec9ea;
 }

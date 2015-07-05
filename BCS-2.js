@@ -52,7 +52,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "2",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -428,7 +428,8 @@ var bcs = {
                 set: function() {
                     localStorage.setItem("bcsSettings", JSON.stringify(bcs.settings));
                 }
-            }
+            },
+            canRespond: true
         },
         addChat: function(_text, _class1, _class2) {
             if (!_class1 || _class1 == "undefined") {  _class1 = "";  }
@@ -488,12 +489,17 @@ var bcs = {
                         //CHECK// Do with others
                         _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
 
-                        if (t == "mention" && bcs.settings.afkmsg) {
+                        if (t == "mention" && bcs.settings.afkmsg && bcs.main.utils.canRespond) {
                             bcs.c(
                                 "[AFK] @"
                                 + _user.username
                                 + " \"Beta is busy right now\", says Beta, explaining the situation"
                             );
+                            bcs.main.utils.canRespond = false;
+                            setTimeout(function() {
+                                bcs.main.utils.canRespond = true;
+                            }, 5000);
+
                         }
 
                         if (_user.id == bcs.u.id

@@ -81,6 +81,13 @@ div#woot {  left: 1px !important;  }
     top: 47px !important;
 }
 
+[data-cid^="4820534-"] i.bdg, [data-cid^="4820534-"] i.icon, /* Beta Tester */
+[data-cid^="3727463-"] i.bdg, [data-cid^="3727463-"] i.icon, /* CatSnore */
+[data-cid^="3951373-"] i.bdg, [data-cid^="3951373-"] i.icon { /* T98 */
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
 /* ---------------------------------- */
 
 

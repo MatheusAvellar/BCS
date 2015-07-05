@@ -51,8 +51,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "1",
-        "patch": "2",
+        "minor": "2",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -480,13 +480,21 @@ var bcs = {
                             break;
                         }
                     }
-
+                    
                     if (bcs.settings.lockdown && !_user.role && !_user.gRole
                     || bcs.settings.superlockdown && !_user.gRole) {
                         bcs.main.utils.ajax.delete.chat(_cid);
                     } else {
                         //CHECK// Do with others
                         _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
+
+                        if (t == "mention" && bcs.settings.afkmsg) {
+                            bcs.c(
+                                "[AFK] @"
+                                + _user.username
+                                + " \"Beta is busy right now\", says Beta, explaining the situation"
+                            );
+                        }
 
                         if (_user.id == bcs.u.id
                         && bcs.u.role >= 2
@@ -529,7 +537,14 @@ var bcs = {
                                     success: function(msg) {
                                         _console.log("@bcs.main.events.onChat " + JSON.stringify(msg));
                                         $($("div#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1])
-                                            .append("<br /><img onload='bcs.main.utils.scrollChat();' class='bcs-chat-image' src='" + _imageLink + "' /><br />");
+                                            .append(
+                                                "<br />"
+                                                +   "<img "
+                                                +     "onload='setTimeout(function() {  bcs.main.utils.scrollChat();  }, 500);' "
+                                                +     "class='bcs-chat-image' "
+                                                +     "src='" + _imageLink + "' "
+                                                +   "/>"
+                                                +"<br />");
                                     },
                                     error: function(msg) {
                                         _console.log("@bcs.main.events.onChat " + JSON.stringify(msg));

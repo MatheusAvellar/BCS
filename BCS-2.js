@@ -9,7 +9,7 @@
  * the most efficient. But it works. So who cares.
  *
  *              sᴏᴏɴ™
- * (https://tetheu98.github.io/bcs-2)
+ * (https://matheusavellar.github.io/bcs-2)
  *
  */
 
@@ -52,7 +52,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "2",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -355,6 +355,9 @@ var bcs = {
                     }
                 }
             },
+            scrollChat: function() {
+                $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
+            },
             oldFooter: {
                 toggle: function(_arg) {
                     var _footerButtons =
@@ -490,16 +493,23 @@ var bcs = {
                         _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
 
                         if (t == "mention" && bcs.settings.afkmsg && bcs.main.utils.canRespond) {
-                            bcs.c(
-                                "[AFK] @"
-                                + _user.username
-                                + " \"Beta is busy right now\", says Beta, explaining the situation"
-                            );
+                            if (bcs.VIP()) {
+                                bcs.c(
+                                    "[AFK] @"
+                                    + _user.username
+                                    + " \"Beta is busy right now\", says Beta, explaining the situation"
+                                );
+                            } else {
+                                bcs.c(
+                                    "[AFK] @"
+                                    + _user.username
+                                    + " I'm busy at the moment! Sorry!"
+                                );
+                            }
                             bcs.main.utils.canRespond = false;
                             setTimeout(function() {
                                 bcs.main.utils.canRespond = true;
-                            }, 5000);
-
+                            }, 120000);
                         }
 
                         if (_user.id == bcs.u.id
@@ -542,11 +552,15 @@ var bcs = {
                                     url: _imageLink,
                                     success: function(msg) {
                                         _console.log("@bcs.main.events.onChat " + JSON.stringify(msg));
+                                        var _willScroll = "";
+                                        if ($("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28) {
+                                            _willScroll = "onload='setTimeout(function() {  bcs.main.utils.scrollChat();  }, 500);' ";
+                                        }
                                         $($("div#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1])
                                             .append(
                                                 "<br />"
                                                 +   "<img "
-                                                +     "onload='setTimeout(function() {  bcs.main.utils.scrollChat();  }, 500);' "
+                                                +     _willScroll
                                                 +     "class='bcs-chat-image' "
                                                 +     "src='" + _imageLink + "' "
                                                 +   "/>"

@@ -180,7 +180,7 @@ var _commands = {
     {
         cmd: ["nsfw"],
         run: function(_arg, _cmd) {
-            bcs.c('NSFW means Not Safe For Watching (objectionable content) -- nudity, scant clothing (incl. lingerie), blood and or violence (gore), snuff (dying)');
+            bcs.c("Here is a description of what is NSFW - http://i.imgur.com/0X5f7nL.png");
         }
     },
     {

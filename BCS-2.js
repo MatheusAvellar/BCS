@@ -3,7 +3,7 @@
  *   Cause #1 just wasn't good enough
  *
  * Coded by Matheus Avellar (Beta Tester)
- * Help with ideas from Dean (DCV)
+ * Help with ideas from "DCV"
  *
  * Most of the stuff here is probably not
  * the most efficient. But it works. So who cares.

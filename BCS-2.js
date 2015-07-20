@@ -2,7 +2,7 @@
  *               [BCS-2]
  *   Cause #1 just wasn't good enough
  *
- * Coded by Matheus Avellar (Beta Tester)
+ * Coded by Matheus Avellar ("Beta Tester")
  * Help with ideas from "DCV"
  *
  * Most of the stuff here is probably not
@@ -13,15 +13,9 @@
  *
  */
 
-//b2deb/c3d18/cc5ae plugMessage & functions
-
-//["b2deb/ebc3a/adb1a"]["map"]
-
-//b2deb/c7567/cd872"]["ModerateEvent"
-
 "use strict";
 
-const BCS_DIR = "https://rawgit.com/Tetheu98/BCS/master/resources/";
+const BCS_DIR = "https://rawgit.com/MatheusAvellar/BCS/master/resources/";
 
 $.getScript(BCS_DIR + "commands.js");
 $.getScript(BCS_DIR + "menu.js");
@@ -51,8 +45,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "2",
-        "patch": "2",
+        "minor": "3",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -111,7 +105,7 @@ var bcs = {
                     message = message.split(":)").join(":‌)")
                                     .split(":(").join(":‌(")
                                     .split(":D").join(":‌D")
-                                    .split("XD").join("X‌D")
+                                    .split(":/").join(":‌/")
                                     .split(":O").join(":‌O");
                 }
                 return bcs.plugCode.sendChatObj._sendChat.apply(this, [message]);

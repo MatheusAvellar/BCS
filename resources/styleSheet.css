@@ -108,7 +108,7 @@ div#bcs-menu i.icon-star-white {
 }
 
 div#bcs-menu .menu {
-    top: -457px;
+    top: -377px;
     left: -4px;
     position: absolute;
 }
@@ -154,7 +154,8 @@ div#bcs-menu .menu ul li.options span {
     cursor: default;
 }
 
-div#bcs-menu .menu ul li.options i.icon {
+div#bcs-menu .menu ul li.options i.icon,
+div#bcs-menu .menu ul div.options-parent i.icon {
     top: 4px;
     left: 7px;
 }
@@ -169,6 +170,51 @@ div#bcs-menu .menu div.arrow-down {
     top: -1px;
     left: 24px;
     position: relative;
+}
+
+div#bcs-menu .menu ul.extend {
+    background-color: #1C1F25;
+    border-bottom: 1px solid #282c35;
+    height: 38px;
+    width: 179px;
+    cursor: pointer;
+}
+
+div#bcs-menu .menu ul.extend.open {
+    background-color: #323742;
+}
+
+div#bcs-menu .menu ul.extend li {
+    display: none;
+}
+
+div#bcs-menu .menu ul.extend.open * {
+    display: block;
+}
+
+div#bcs-menu .menu div.options-parent {
+    width: 100%;
+    height: 38px;
+    position: absolute;
+    cursor: pointer !important;
+}
+
+div#bcs-menu .menu div.options-parent * {
+    cursor: pointer !important;
+}
+
+div#bcs-menu .menu span.loglist {
+    left: 45px;
+    top: 9px;
+    position: absolute;
+    text-align: left;
+    font-weight: 400;
+    cursor: default;
+    width: 100px;
+}
+
+div#bcs-menu .menu li.options-child {
+    left: -180px;
 }
 
 div.bcs-single, div.bcs-on, div.bcs-off {

@@ -525,7 +525,7 @@ var _commands = {
                 <i class='icon icon-chat-bcslogo' style='left:80%;'></i>\
                 There are too many commands for an in-chat<br />\
                 reference of all of them.<br />\
-                <a style='color:#b8e0ff;' href='https://github.com/Tetheu98/FunBotThing/blob/master/Commands.md' target='_blank' title='Commands List'>\
+                <a style='color:#b8e0ff;' href='https://github.com/MatheusAvellar/FunBotThing/blob/master/Commands.md' target='_blank' title='Commands List'>\
                     Click here instead\
                 </a><br />");
         }

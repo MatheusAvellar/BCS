@@ -46,7 +46,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "3",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -105,7 +105,6 @@ var bcs = {
                     message = message.split(":)").join(":‌)")
                                     .split(":(").join(":‌(")
                                     .split(":D").join(":‌D")
-                                    .split(":/").join(":‌/")
                                     .split(":O").join(":‌O");
                 }
                 return bcs.plugCode.sendChatObj._sendChat.apply(this, [message]);

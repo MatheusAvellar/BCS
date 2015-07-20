@@ -269,7 +269,7 @@ function bcs_lookfor(id) {
 //VOTE
         _i.Vote = "<a class='bcs-ass-unavailable'>Not in the room</a>";
         var _u;
-        for (var i = 0, l = API.getUsers(); i < l; i++){
+        for (var i = 0, l = API.getUsers().length; i < l; i++){
             if (API.getUsers()[i].username == data.username){
                 _u = API.getUsers()[i];
                 break;

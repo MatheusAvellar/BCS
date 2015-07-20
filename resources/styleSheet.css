@@ -177,7 +177,6 @@ div#bcs-menu .menu ul.extend {
     border-bottom: 1px solid #282c35;
     height: 38px;
     width: 179px;
-    cursor: pointer;
 }
 
 div#bcs-menu .menu ul.extend.open {
@@ -270,11 +269,9 @@ a.bcs-title {
     color: #00bee8;
     font-weight: bold;
 }
+a.bcs-todo-done,
 a.bcs-todo-nope {
     color: #282C35;
-}
-a.bcs-todo-done {
-    color: #8694B2;
 }
 a.bcs-todo-todo {
     color: #eeeeee;

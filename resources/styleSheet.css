@@ -43,6 +43,8 @@ div#user-rollover .meta .user-id {
     color: #808691;
 }
 
+
+    /* The following alter the looks of Author / Title */
 div#now-playing-dj {
     text-align: right;
     top: 1px;
@@ -50,13 +52,15 @@ div#now-playing-dj {
     right: 135px;
     position: absolute;
 }
-
 div#now-playing-dj .dark-label {
     display: block;
     color: #999B9F;
+    z-index: 1;
 }
-
-div#now-playing-media {  top: 7px;  }
+div#now-playing-media {
+    top: 7px;
+    z-index: 2;
+}
 div#now-playing-media .bar-value {
     color: #777f92;
     font-size: 14px;

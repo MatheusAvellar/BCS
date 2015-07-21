@@ -156,11 +156,9 @@ var bcs = {
             +       "<div id='spotifyify-bar'></div>"
             +   "</div>");
 
-            var _timeRemaining = API.getTimeRemaining() - 1;
-            $("div#spotifyify-bar").css({
-                "transition": "width " + _timeRemaining + "s linear",
-                "width": "100%"
-            });
+            /* The following alters the looks of Author / Title */
+            $("#now-playing-media .bar-value")[0].innerHTML =
+                    $("#now-playing-media .bar-value")[0].innerHTML.split("</span> - ").join("</span>");
 
             bcs.main.addChat(
                 "BCS - "

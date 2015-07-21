@@ -46,7 +46,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "5",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -58,20 +58,22 @@ var bcs = {
     c: function (msg) {  API.sendChat(msg);  },
     l: function (msg) {  API.chatLog(msg);  },
     settings: {
+        /* Auto */
         autowoot: false,
+        autograb: false,
+        automeh: false,
+        autojoin: false,
+        autoleave: false,
+        /* Logs */
+        wootlog: false,
         grablog: false,
         mehlog: false,
-        autojoin: false,
         trafficlog: false,
+        /* Misc */
         djupdates: false,
         afkmsg: false,
         unemojify: false,
-        lockdown: false,
-        wootlog: false,
-        autograb: false,
-        automeh: false,
-        autoleave: false,
-        antispam: false
+        lockdown: false
     },
     plugCode: {
         IDs: {},
@@ -468,7 +470,7 @@ var bcs = {
                 API.on(API.GRAB_UPDATE,      bcs.main.events.onVote);
                 API.on(API.USER_JOIN,        bcs.main.events.onJoin);
                 API.on(API.ADVANCE,          bcs.main.events.onAdvance);
-                API.on(API.WAITLIST_UPDATE,  bcs.main.events.onWaitListUpdate);
+                API.on(API.WAIT_LIST_UPDATE, bcs.main.events.onWaitListUpdate);
                 API.on(API.USER_LEAVE,       bcs.main.events.onLeave);
                 API.on(API.CHAT_COMMAND,     bcs.main.events.onCommand);
             },
@@ -478,7 +480,7 @@ var bcs = {
                 API.off(API.GRAB_UPDATE,     bcs.main.events.onVote);
                 API.off(API.USER_JOIN,       bcs.main.events.onJoin);
                 API.off(API.ADVANCE,         bcs.main.events.onAdvance);
-                API.off(API.WAITLIST_UPDATE, bcs.main.events.onWaitListUpdate);
+                API.off(API.WAIT_LIST_UPDATE,bcs.main.events.onWaitListUpdate);
                 API.off(API.USER_LEAVE,      bcs.main.events.onLeave);
                 API.off(API.CHAT_COMMAND,    bcs.main.events.onCommand);
             },
@@ -863,12 +865,9 @@ var bcs = {
                 }
             },
             onWaitListUpdate: function(data) {
-                API.chatLog("A");
                 if (bcs.settings.autojoin) {
-                    API.chatLog("B");
                     var dj = API.getDJ();
                     if (API.getWaitListPosition() <= -1 && dj.username != bcs.u.username) {
-                        API.chatLog("C");
                         bcs.main.utils.ajax.post.waitList();
                         setTimeout(function(){
                             if (API.getWaitListPosition() <= -1 && dj.username != bcs.u.username) {
@@ -880,6 +879,10 @@ var bcs = {
                                 bcs.main.utils.ajax.post.waitList();
                             }
                         },250);
+                    }
+                } else if (bcs.settings.autoleave) {
+                    if (API.getWaitListPosition() != -1) {
+                        bcs.main.utils.ajax["delete"].waitList();
                     }
                 }
             },

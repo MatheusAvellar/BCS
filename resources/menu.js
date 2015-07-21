@@ -127,6 +127,25 @@ function _toggleSetting(className) {
 $("div#playlist-meta").append(BCS_MENU);
 $("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
 
+$("div#chat-input").append("<div id='bcs-afk-notif'>0</div>");
+$("div#bcs-afk-notif").on("click", function() {
+    for (var i = 0, l = bcs.main.utils.afkList.length; i < l; i++) {
+        bcs.main.addChat(
+            "<div class='meta'>"
+            +    "<span class='disclaimer'>[AFK LOG]</span>"
+            +    "<span class='username'>" + bcs.main.utils.afkList[i].user + "</span>"
+            +    "<span class='bcs-chat-info' style='opacity: 1;'>"
+            +        "ID: <a class='bcs-chat-id'>" + bcs.main.utils.afkList[i].id + "</a>"
+            +    "</span>"
+            +    "<span class='timestamp'>" + bcs.main.utils.afkList[i].time + "</span>"
+            +"</div>"
+            +"<div class='msg' data-cid='" + bcs.main.utils.afkList[i].cid + "'>"
+            +    bcs.main.utils.afkList[i].message
+            +"</div>","bcs-afk-log");
+    }
+    $("div#bcs-afk-notif").css({"display":"none"}).text("0");
+});
+
 $("div#bcs-menu .icon-star-white").on("click", function() {
     var menuElement = $("div#bcs-menu .menu");
     if (menuElement.css("display") == "none") {

@@ -118,6 +118,15 @@ div#woot {  left: 1px !important;  }
     transform: rotate(180deg);
 }
 
+div#chat-input.bcs-afk {
+    background: #111317;
+}
+div#chat-input.bcs-afk.focused {
+    -webkit-box-shadow: inset 0 0 0 1px #009cdd!important;
+    -moz-box-shadow: inset 0 0 0 1px #009cdd!important;
+    box-shadow: inset 0 0 0 1px #F04F30!important;
+}
+
 /* ---------------------------------- */
 
 
@@ -276,10 +285,23 @@ div.bcs-single {
     width: 50px;
 }
 
-
 div.bcs-on.active     {  background-color: #009cdd;  }
 div.bcs-off.active    {  background-color: #f04f30;  }
 div.bcs-single:active {  background-color: #009cdd;  }
+
+div#bcs-afk-notif {
+    position: absolute;
+    top: 8px;
+    right: 4px;
+    padding: 0 6px;
+    min-width: 10px;
+    border-radius: 12px;
+    background: #db182e;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+}
 
 /* ---------------------------------- */
 
@@ -432,6 +454,26 @@ a.bcs-timestamp {
     max-height: 300px;
     margin-left: -28px;
 }
+
+div.bcs-afk-log {
+    opacity: 0.5;
+    border-left: 3px solid #F04F30;
+    background-color: #000000;
+}
+
+div.bcs-afk-log .meta .username {
+    color: #ffdd6f;
+    margin-right: 5px;
+}
+
+div.bcs-afk-log .meta .disclaimer {
+    color: #777f92;
+    margin-right: 4px;
+    font-size: 9px;
+}
+
+div.bcs-afk-log .meta .bcs-chat-info {  opacity: 1;  }
+div.bcs-afk-log .meta .timestamp {  display: block;  }
 
 /* ---------------------------------- */
 

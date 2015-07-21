@@ -47,7 +47,7 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "7",
+        "minor": "8",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -258,7 +258,8 @@ var bcs = {
                             type: "POST",
                             contentType: "application/json",
                             url: "https://plug.dj/_/grabs",
-                            data: '{"historyID": "' + bcs.main.utils.ajax.get.aux.historyID + '", "playlistID": ' + _playlist + '}'
+                            data: '{"historyID": "' + bcs.main.utils.ajax.get.aux.historyID
+                                + '", "playlistID": ' + _playlist + '}'
                         });
                     }
                 },
@@ -318,6 +319,7 @@ var bcs = {
                     }
                 }
             },
+            afkList: [],
             volume: function() {
                 /* Fix for the volume bug */
                 var currentVolume = $("#volume span").text().split("%")[0];
@@ -515,23 +517,47 @@ var bcs = {
                         bcs.main.utils.ajax.delete.chat(_cid);
                     } else {
                         //CHECK// Do with others
-                        _console.log("@bcs.main.events.onChat [" + _time + "] [" + _cid + "] [" + _user.id + "] [" + _user.username + "] " + _msg);
+                        _console.log("@bcs.main.events.onChat "
+                            + "[" + _time + "] "
+                            + "[" + _cid + "] "
+                            + "[" + _user.id + "] "
+                            + "[" + _user.username + "] "
+                            + _msg
+                        );
 
-                        if (t == "mention" && bcs.settings.afkmsg && bcs.main.utils.canRespond) {
-                            if (bcs.VIP()) {
+                        if (bcs.main.utils.afkList.length > 0 && bcs.settings.afkmsg) {
+                            $("div#bcs-afk-notif").css({"display":"block"}).text(bcs.main.utils.afkList.length);
+                            $("div#chat-input").addClass("bcs-afk");
+                        } else if (bcs.main.utils.afkList.length <= 0) {
+                            $("div#bcs-afk-notif").css({"display":"none"});
+                            $("div#chat-input").removeClass("bcs-afk");
+                        }
+
+                        if (t == "mention" && bcs.settings.afkmsg) {
+                            if (bcs.VIP() && bcs.main.utils.canRespond) {
                                 bcs.c(
                                     "[AFK] @"
                                     + _user.username
                                     + " \"Beta is busy right now\", says Beta, explaining the situation"
                                 );
-                            } else {
+                                bcs.main.utils.canRespond = false;
+                            } else if (bcs.main.utils.canRespond) {
                                 bcs.c(
                                     "[AFK] @"
                                     + _user.username
                                     + " I'm busy at the moment! Sorry!"
                                 );
+                                bcs.main.utils.canRespond = false;
                             }
-                            bcs.main.utils.canRespond = false;
+
+                            bcs.main.utils.afkList.push({
+                                "cid": _cid,
+                                "user": _user.username,
+                                "id": _user.id,
+                                "time": _time,
+                                "message": _msg
+                            });
+
                             setTimeout(function() {
                                 bcs.main.utils.canRespond = true;
                             }, 120000);
@@ -542,7 +568,9 @@ var bcs = {
                         || _user.id == bcs.u.id
                         && bcs.u.gRole >= 3) {
                             _console.log("@bcs.main.events.onChat Appended DELETE BUTTON");
-                            $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend("<div class='delete-button'>Delete</div>");
+                            $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend(
+                                "<div class='delete-button'>Delete</div>"
+                            );
                         }
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
                             bcs.main.utils.ajax.delete.chat(_cid);
@@ -553,24 +581,46 @@ var bcs = {
                             + "<span class='bcs-chat-info'> ID: <a class='bcs-chat-id'>" + _user.id + "</a></span>");
 
                         $("#chat-messages > .cm[data-cid='" + _cid + "']").hover(function() {
-                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .from .bcs-chat-info").css({"opacity":"1"});
-                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").css({"display":"block"});
+                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .from .bcs-chat-info").css({
+                                "opacity":"1"
+                            });
+
+                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").css({
+                                "display":"block"
+                            });
                         }, function() {
-                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .from .bcs-chat-info").css({"opacity":"0.2"});
-                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").css({"display":"none"});
+                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .from .bcs-chat-info").css({
+                                "opacity":"0.2"
+                            });
+
+                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").css({
+                                "display":"none"
+                            });
                         });
 
                         // BOOTLEG INLINE IMAGES HYPE //
                         var _extensions = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
-                        var _messageContent = $($(".cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]).text();
+                        var _messageContent = $(
+                            $(".cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]
+                        ).text();
                         var _hasNotBeenChecked = _msg.indexOf(_messageContent) != -1;
                         for (var i = 0; i < _extensions.length; i++) {
                             var _isImage = _messageContent.indexOf(_extensions[i]) != -1;
                             if (_messageContent != ""
                              && _hasNotBeenChecked == true
                              && _isImage == true) {
-                                var _imageLink = $($("div#chat-messages .cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]).text();
-                                _imageLink = _imageLink.split("http").join("https").split("httpss").join("https").split("gifv").join("gif");
+
+                                var _imageLink = $(
+                                    $("div#chat-messages .cid-" + _cid + " a")
+                                        [$("div#chat-messages .cid-" + _cid + " a").length - 1]
+                                ).text();
+
+                                _imageLink = _imageLink
+                                    .split("http").join("https")
+                                    .split("httpss").join("https")
+                                    .split("gifv").join("gif")
+                                    .split("webm").join("gif");
+
                                 $.ajax({
                                     type: "GET",
                                     contentType: "application/json",
@@ -669,22 +719,29 @@ var bcs = {
                         case 0:
                             _user.role = ""; break;
                         case 1:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>RDJ</a> " + _bcs_tmp + " (1)</a>";     break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>RDJ</a> " + _bcs_tmp + " (1)</a>";     break;
                         case 2:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Bouncer</a> " + _bcs_tmp + " (2)</a>"; break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>Bouncer</a> " + _bcs_tmp + " (2)</a>"; break;
                         case 3:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Manager</a> " + _bcs_tmp + " (3)</a>"; break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>Manager</a> " + _bcs_tmp + " (3)</a>"; break;
                         case 4:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>CoHost</a> " + _bcs_tmp + " (4)</a>";  break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>CoHost</a> " + _bcs_tmp + " (4)</a>";  break;
                         case 5:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
                     }
 
                     switch (data.gRole) {
                         case 3:
-                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole3'>BA</a> " + _bcs_tmp + " (3)</a>";    break;
+                            _user.gRole = _bcs_tmp
+                            + " | <a class='bcs-styles-gRole3'>BA</a> " + _bcs_tmp + " (3)</a>";    break;
                         case 5:
-                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
+                            _user.gRole = _bcs_tmp
+                            + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
                         default:
                             _user.gRole = ""; break;
                     }
@@ -733,22 +790,29 @@ var bcs = {
                         case 0:
                             _user.role = ""; break;
                         case 1:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>RDJ</a> " + _bcs_tmp + " (1)</a>";     break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>RDJ</a> " + _bcs_tmp + " (1)</a>";     break;
                         case 2:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Bouncer</a> " + _bcs_tmp + " (2)</a>"; break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>Bouncer</a> " + _bcs_tmp + " (2)</a>"; break;
                         case 3:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Manager</a> " + _bcs_tmp + " (3)</a>"; break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>Manager</a> " + _bcs_tmp + " (3)</a>"; break;
                         case 4:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>CoHost</a> " + _bcs_tmp + " (4)</a>";  break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>CoHost</a> " + _bcs_tmp + " (4)</a>";  break;
                         case 5:
-                            _user.role = _bcs_tmp + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
+                            _user.role = _bcs_tmp
+                            + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
                     }
 
                     switch (data.gRole) {
                         case 3:
-                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole3'>BA</a> " + _bcs_tmp + " (3)</a>";    break;
+                            _user.gRole = _bcs_tmp
+                            + " | <a class='bcs-styles-gRole3'>BA</a> " + _bcs_tmp + " (3)</a>";    break;
                         case 5:
-                            _user.gRole = _bcs_tmp + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
+                            _user.gRole = _bcs_tmp
+                            + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
                         default:
                             _user.gRole = ""; break;
                     }
@@ -839,9 +903,15 @@ var bcs = {
                                 var previous = API.getHistory()[i];
                                 var pos = i + 1;
                                 var stats = previous.user.username + " (ID " + previous.user.id + ")";
-                                bcs.console.warn("Song in History | Played by " + stats + "<br />(History position " + pos + ")<br />[" + previous.media.title + "]");
+                                _console.warn(
+                                    "Song in History | Played by " + stats
+                                    + "<br />(History position " + pos + ")<br />[" + previous.media.title + "]"
+                                );
                                 badoop.play();//CHECK//
-                                bcs.main.addChat("<a style='color:#ff3535; font-weight:bold;'>Song in History</a><br />Played by " + stats + " - (History position " + pos + ")<br />[" + previous.media.title + "]","#D04545",true);
+                                bcs.main.addChat(
+                                    "<a style='color:#ff3535; font-weight:bold;'>Song in History</a><br />Played by "
+                                    + stats + " - (History position " + pos + ")"
+                                    + "<br />[" + previous.media.title + "]","#D04545",true);
                                 break;
                             }
                         }
@@ -860,8 +930,11 @@ var bcs = {
                     var actuallength = hoursLong + minutesLong + ":" + secondsLong;
                     if (bcs.settings.djupdates) {
                         if (currentSong.duration > 480) {
+                            //CHECK//
                             badoop.play();
-                            bcs.main.addChat("<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br /> Song length: " + actuallength,"#D04545",true);
+                            bcs.main.addChat(
+                                "<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br />"
+                                + " Song length: " + actuallength,"#D04545",true);
                         }
                     }
                     //CHECK//

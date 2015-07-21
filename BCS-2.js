@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "6",
-        "patch": "2",
+        "minor": "7",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -156,15 +156,9 @@ var bcs = {
             +       "<div id='spotifyify-bar'></div>"
             +   "</div>");
 
-            $("div#now-playing-bar").hover(function() {
-                $("div#spotifyify-bar").css({"opacity":"1"});
-            }, function() {
-                $("div#spotifyify-bar").css({"opacity":"0.5"});
-            });
-
             var _timeRemaining = API.getTimeRemaining() - 1;
             $("div#spotifyify-bar").css({
-                "transition": "width " + _timeRemaining + "s linear, opacity 0.5s ease",
+                "transition": "width " + _timeRemaining + "s linear",
                 "width": "100%"
             });
 
@@ -266,7 +260,7 @@ var bcs = {
                             type: "POST",
                             contentType: "application/json",
                             url: "https://plug.dj/_/grabs",
-                            data: '{"historyID": ' + bcs.main.utils.ajax.get.aux.historyID + ', "playlistID": ' + _playlist + '}'
+                            data: '{"historyID": "' + bcs.main.utils.ajax.get.aux.historyID + '", "playlistID": ' + _playlist + '}'
                         });
                     }
                 },
@@ -786,24 +780,15 @@ var bcs = {
                 bcs.main.utils.ajax.get.playlists();
                 bcs.main.events.onWaitListUpdate();
                 var currentSong = API.getMedia();
-                if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){
-                    $("#bcs-media-scroll").remove();
-                    $("#now-playing-media .bar-value").hide();
-                    $("#now-playing-media").append(
-                        "<marquee id='bcs-media-scroll' scrollamount='3'>"
-                        + currentSong.author + " - " + currentSong.title
-                        + "</marquee>");
-                }else{
-                    $("#bcs-media-scroll").remove();
-                    $("#now-playing-media .bar-value").show();
-                }
+                $("#now-playing-media .bar-value")[0].innerHTML =
+                    $("#now-playing-media .bar-value")[0].innerHTML.split("</span> - ").join("</span>");
 
                 setTimeout(function() {
                     $("div#spotifyify-bar").addClass("reset");
                     setTimeout(function() {
                         var _timeRemaining = API.getTimeRemaining() - 1;
                         $("div#spotifyify-bar").removeClass("reset").css({
-                            "transition": "width " + _timeRemaining + "s linear, opacity 0.5s ease",
+                            "transition": "width " + _timeRemaining + "s linear",
                             "width": "100%"
                         });
                     }, 100);

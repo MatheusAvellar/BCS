@@ -144,6 +144,7 @@ $("div#bcs-afk-notif").on("click", function() {
             +"</div>","bcs-afk-log");
     }
     $("div#bcs-afk-notif").css({"display":"none"}).text("0");
+    bcs.main.utils.afkList = [];
 });
 
 $("div#bcs-menu .icon-star-white").on("click", function() {

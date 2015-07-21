@@ -32,11 +32,13 @@ $("head").append(
 var _console = {
     log: function () {
         var params = Array.prototype.slice.call(arguments, 1);
-        arguments[0] = JSON.stringify(arguments[0]);
-        params.unshift("%cBCS%c ~ " + arguments[0],
-            "color: #00bee8; font-weight: bold; font-size: 13px;",
-            "color: black;");
-        console.info.apply(console, params);
+        if (arguments[0].length < 1000) {
+            arguments[0] = JSON.stringify(arguments[0]);
+            params.unshift("%cBCS%c ~ " + arguments[0],
+                "color: #00bee8; font-weight: bold; font-size: 13px;",
+                "color: black;");
+            console.info.apply(console, params);
+        }
     }
 }
 
@@ -46,7 +48,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "6",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -806,25 +808,23 @@ var bcs = {
                         });
                     }, 100);
 
-                    setTimeout(function() {
-                        if (bcs.settings.autowoot) {
-                            bcs.main.utils.woot();
-                        } else if (bcs.settings.automeh) {
-                            bcs.main.utils.meh();
-                        }
+                    if (bcs.settings.autowoot) {
+                        bcs.main.utils.woot();
+                    } else if (bcs.settings.automeh) {
+                        bcs.main.utils.meh();
+                    }
 
-                        if (bcs.settings.autograb) {
-                            for (var i = 0; i < bcs.main.utils.ajax.get.aux.playlistIDs.length; i++) {
-                                if (bcs.main.utils.ajax.get.aux.playlistIDs[i].active) {
-                                    bcs.main.utils.ajax.post.grab(
-                                        bcs.main.utils.ajax.get.aux.playlistIDs[i].id
-                                    );
-                                    break;
-                                }
+                    if (bcs.settings.autograb) {
+                        for (var i = 0; i < bcs.main.utils.ajax.get.aux.playlistIDs.length; i++) {
+                            if (bcs.main.utils.ajax.get.aux.playlistIDs[i].active) {
+                                bcs.main.utils.ajax.post.grab(
+                                    bcs.main.utils.ajax.get.aux.playlistIDs[i].id
+                                );
+                                break;
                             }
                         }
-                    }, 1000);
-                }, 1000);
+                    }
+                }, 1750);
 
                 var d = new Date();
                 var h = d.getHours();

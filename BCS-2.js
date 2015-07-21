@@ -45,8 +45,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "3",
-        "patch": "1",
+        "minor": "4",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -158,8 +158,9 @@ var bcs = {
                 $("div#spotifyify-bar").css({"opacity":"0.5"});
             });
 
+            var _timeRemaining = API.getTimeRemaining() - 1;
             $("div#spotifyify-bar").css({
-                "transition": "width " + API.getTimeRemaining() + "s linear, opacity 0.5s ease",
+                "transition": "width " + _timeRemaining + "s linear, opacity 0.5s ease",
                 "width": "100%"
             });
 
@@ -773,21 +774,24 @@ var bcs = {
                     $("#now-playing-media .bar-value").show();
                 }
 
-                $("div#spotifyify-bar").addClass("reset");
                 setTimeout(function() {
-                    $("div#spotifyify-bar").removeClass("reset").css({
-                        "transition": "width " + API.getTimeRemaining() + "s linear, opacity 0.5s ease",
-                        "width": "100%"
-                    });
-                }, 100);
+                    $("div#spotifyify-bar").addClass("reset");
+                    setTimeout(function() {
+                        var _timeRemaining = API.getTimeRemaining() - 1;
+                        $("div#spotifyify-bar").removeClass("reset").css({
+                            "transition": "width " + _timeRemaining + "s linear, opacity 0.5s ease",
+                            "width": "100%"
+                        });
+                    }, 100);
 
-                setTimeout(function() {
-                    if (bcs.settings.autowoot) {
-                        bcs.main.utils.woot();
-                    } else if (bcs.settings.automeh) {
-                        bcs.main.utils.meh();
-                    }
-                }, 2000);
+                    setTimeout(function() {
+                        if (bcs.settings.autowoot) {
+                            bcs.main.utils.woot();
+                        } else if (bcs.settings.automeh) {
+                            bcs.main.utils.meh();
+                        }
+                    }, 1000);
+                }, 1000);
 
                 var d = new Date();
                 var h = d.getHours();

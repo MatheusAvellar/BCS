@@ -160,6 +160,11 @@ $("div.bcs-on, div.bcs-off").on("click", function(data) {
     var _parent = data.currentTarget.parentElement.innerText.toString().replace(' ', "").trim().toLowerCase();
     _toggleSetting(_parent);
     bcs.main.utils.settings.set();
+    if (_parent == afkmsg && bcs.main.utils.settings.afkmsg) {
+        $("div#chat-input").addClass("bcs-afk");
+    } else if (_parent == afkmsg && !bcs.main.utils.settings.afkmsg) {
+        $("div#chat-input").removeClass("bcs-afk");
+    }
 });
 
 $("div#bcs-menu .menu div.options-parent.log").on("click", function(data) {

@@ -48,7 +48,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "8",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -525,13 +525,15 @@ var bcs = {
                             + _msg
                         );
 
-                        if (bcs.main.utils.afkList.length > 0 && bcs.settings.afkmsg) {
-                            $("div#bcs-afk-notif").css({"display":"block"}).text(bcs.main.utils.afkList.length);
-                            $("div#chat-input").addClass("bcs-afk");
-                        } else if (bcs.main.utils.afkList.length <= 0) {
-                            $("div#bcs-afk-notif").css({"display":"none"});
-                            $("div#chat-input").removeClass("bcs-afk");
-                        }
+                        setTimeout(function() {
+                            if (bcs.main.utils.afkList.length > 0 && bcs.settings.afkmsg) {
+                                $("div#bcs-afk-notif").css({"display":"block"}).text(bcs.main.utils.afkList.length);
+                                $("div#chat-input").addClass("bcs-afk");
+                            } else if (bcs.main.utils.afkList.length <= 0) {
+                                $("div#bcs-afk-notif").css({"display":"none"});
+                                $("div#chat-input").removeClass("bcs-afk");
+                            }
+                        }, 500);
 
                         if (t == "mention" && bcs.settings.afkmsg) {
                             if (bcs.VIP() && bcs.main.utils.canRespond) {

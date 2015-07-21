@@ -143,10 +143,12 @@ $("div.bcs-on, div.bcs-off").on("click", function(data) {
 });
 
 $("div#bcs-menu .menu div.options-parent.log").on("click", function(data) {
+    $("div#bcs-menu .menu ul.extend.auto").removeClass("open");
     $("div#bcs-menu .menu ul.extend.log").toggleClass("open");
 });
 
 $("div#bcs-menu .menu div.options-parent.auto").on("click", function(data) {
+    $("div#bcs-menu .menu ul.extend.log").removeClass("open");
     $("div#bcs-menu .menu ul.extend.auto").toggleClass("open");
 });
 

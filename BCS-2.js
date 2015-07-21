@@ -146,6 +146,23 @@ var bcs = {
             $("#footer-user .signup, #walkthrough, .wt-cover").remove();
             $("#app").attr("class", "");
 
+            /* "The Spotify-ify" - Gorgeous Time Remaining Visualizer */
+            $("div#now-playing-bar").prepend(
+                "<div id='spotifyify-holder'>"
+            +       "<div id='spotifyify-bar'></div>"
+            +   "</div>");
+
+            $("div#now-playing-bar").hover(function() {
+                $("div#spotifyify-bar").css({"opacity":"1"});
+            }, function() {
+                $("div#spotifyify-bar").css({"opacity":"0.5"});
+            });
+
+            $("div#spotifyify-bar").css({
+                "transition": "width " + API.getTimeRemaining() + "s linear, opacity 0.5s ease",
+                "width": "100%"
+            });
+
             bcs.main.addChat(
                 "BCS - "
                 + bcs.v.stage
@@ -756,6 +773,14 @@ var bcs = {
                     $("#now-playing-media .bar-value").show();
                 }
 
+                $("div#spotifyify-bar").addClass("reset");
+                setTimeout(function() {
+                    $("div#spotifyify-bar").removeClass("reset").css({
+                        "transition": "width " + API.getTimeRemaining() + "s linear, opacity 0.5s ease",
+                        "width": "100%"
+                    });
+                }, 100);
+
                 setTimeout(function() {
                     if (bcs.settings.autowoot) {
                         bcs.main.utils.woot();
@@ -800,7 +825,7 @@ var bcs = {
                                 break;
                             }
                         }
-                    },250);
+                    }, 250);
                     var hoursLong = "";
                     var minutesLong = Math.floor(currentSong.duration / 60);
                     var secondsLong = currentSong.duration % 60;

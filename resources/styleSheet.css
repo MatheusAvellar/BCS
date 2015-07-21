@@ -599,3 +599,33 @@ a.bcs-ass-spacing {
 }
 
 /* ---------------------------------- */
+
+/* Gorgeous Time Remaining Visualizer */
+      /* Or "The Spotify-ify" */
+
+div#spotifyify-holder {
+    height: 2px;
+    width: calc(100% - 150px);
+    left: 10px;
+    bottom: 4px;
+    background-color: #282C35;
+    position: absolute;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+div#spotifyify-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #AA74FE;
+    opacity: 0.5;
+    transition: opacity 0.5s ease;
+    border-radius: 10px;
+}
+
+div#spotifyify-bar.reset {
+    width: 0px !important;
+    transition: 0s linear !important;
+}
+
+/* ---------------------------------- */

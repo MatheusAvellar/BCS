@@ -46,7 +46,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "6",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -814,10 +814,10 @@ var bcs = {
                         }
 
                         if (bcs.settings.autograb) {
-                            for (var i = 0; i < bcs.main.utils.ajax.get.playlistIDs; i++) {
-                                if (bcs.main.utils.ajax.get.playlistIDs[i].active) {
+                            for (var i = 0; i < bcs.main.utils.ajax.get.aux.playlistIDs.length; i++) {
+                                if (bcs.main.utils.ajax.get.aux.playlistIDs[i].active) {
                                     bcs.main.utils.ajax.post.grab(
-                                        bcs.main.utils.ajax.get.playlistIDs[i].id
+                                        bcs.main.utils.ajax.get.aux.playlistIDs[i].id
                                     );
                                     break;
                                 }

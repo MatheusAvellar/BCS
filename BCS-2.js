@@ -45,8 +45,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "5",
-        "patch": "2",
+        "minor": "6",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -258,6 +258,14 @@ var bcs = {
                             contentType: "application/json",
                             url: "https://plug.dj/_/booth"
                         });
+                    },
+                    grab: function(_playlist) {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "https://plug.dj/_/grabs",
+                            data: '{"historyID": ' + bcs.main.utils.ajax.get.aux.historyID + ', "playlistID": ' + _playlist + '}'
+                        });
                     }
                 },
                 get: {
@@ -265,7 +273,8 @@ var bcs = {
                         historyID: "",
                         friendsList: [],
                         staffList: [],
-                        user: ""
+                        user: "",
+                        playlistIDs: []
                     },
                     historyID: function(_arg) {
                         $.ajax({
@@ -293,6 +302,15 @@ var bcs = {
                             url: "https://plug.dj/_/staff"
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.staffList = msg.data;
+                        });
+                    },
+                    playlists: function() {
+                        $.ajax({
+                            type: "GET",
+                            contentType: "application/json",
+                            url: "https://plug.dj/_/playlists"
+                        }).done(function(msg) {
+                            bcs.main.utils.ajax.get.aux.playlistIDs = msg.data;
                         });
                     },
                     user: function(_id) {
@@ -763,6 +781,8 @@ var bcs = {
                 bcs.main.utils.percentage();
                 bcs.main.utils.ajax.get.historyID();
                 bcs.main.utils.ajax.get.staff();
+                bcs.main.utils.ajax.get.playlists();
+                bcs.main.events.onWaitListUpdate();
                 var currentSong = API.getMedia();
                 if ($("#now-playing-media .bar-value").width() >= $("#now-playing-media").width()){
                     $("#bcs-media-scroll").remove();
@@ -791,6 +811,17 @@ var bcs = {
                             bcs.main.utils.woot();
                         } else if (bcs.settings.automeh) {
                             bcs.main.utils.meh();
+                        }
+
+                        if (bcs.settings.autograb) {
+                            for (var i = 0; i < bcs.main.utils.ajax.get.playlistIDs; i++) {
+                                if (bcs.main.utils.ajax.get.playlistIDs[i].active) {
+                                    bcs.main.utils.ajax.post.grab(
+                                        bcs.main.utils.ajax.get.playlistIDs[i].id
+                                    );
+                                    break;
+                                }
+                            }
                         }
                     }, 1000);
                 }, 1000);
@@ -864,7 +895,7 @@ var bcs = {
                         + " (ID " + data.dj.id + ")<br />");
                 }
             },
-            onWaitListUpdate: function(data) {
+            onWaitListUpdate: function() {
                 if (bcs.settings.autojoin) {
                     var dj = API.getDJ();
                     if (API.getWaitListPosition() <= -1 && dj.username != bcs.u.username) {

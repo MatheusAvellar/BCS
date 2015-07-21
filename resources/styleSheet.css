@@ -93,6 +93,15 @@ div#woot {  left: 1px !important;  }
 
 /* ------------ BCS menu ------------ */
 
+div#bcs-menu * {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    cursor: default;
+}
+
 div#bcs-menu {
     right: calc(66px + 57px);
     top: 0;
@@ -219,7 +228,7 @@ div#bcs-menu .menu li.options-child {
 div.bcs-single, div.bcs-on, div.bcs-off {
     background-color: #282c35;
     position: relative;
-    cursor: pointer;
+    cursor: pointer !important;
     height: 10px;
 }
 div.bcs-single, div.bcs-on {

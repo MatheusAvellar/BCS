@@ -127,6 +127,19 @@ function _toggleSetting(className) {
 $("div#playlist-meta").append(BCS_MENU);
 $("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
 
+$("div#bcs-menu .menu").on("click", function() {
+    if (bcs.settings.afkmsg) {
+        $("div#chat-input").addClass("bcs-afk");
+        if (bcs.main.utils.afkList.length > 0) {
+            $("div#bcs-afk-notif").css({"display":"block"}).text(bcs.main.utils.afkList.length);
+        } else {
+            $("div#bcs-afk-notif").css({"display":"none"});
+        }
+    } else {
+        $("div#chat-input").removeClass("bcs-afk");
+    }
+});
+
 $("div#chat-input").append("<div id='bcs-afk-notif'>0</div>");
 $("div#bcs-afk-notif").on("click", function() {
     for (var i = 0, l = bcs.main.utils.afkList.length; i < l; i++) {

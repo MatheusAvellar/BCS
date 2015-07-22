@@ -694,7 +694,6 @@ div#spotifyify-holder {
     width: calc(100% - 182px);
     left: 47px;
     bottom: 6px;
-    background-color: #282C35;
     position: absolute;
     z-index: 1;
     border-radius: 10px;
@@ -703,9 +702,21 @@ div#spotifyify-holder {
 div#spotifyify-bar {
     height: 100%;
     width: 0%;
-    background-color: #009cdd;
     border-radius: 10px;
 }
+
+div#spotifyify-holder.style-1 {  background-color: #282C35;  }
+div#spotifyify-bar.style-1    {  background-color: #009cdd;  }
+div#spotifyify-holder.style-2 {  background-color: #534F55;  }
+div#spotifyify-bar.style-2    {  background-color: #A9A3AD;  }
+div#spotifyify-holder.style-3 {  background-color: #444444;  }
+div#spotifyify-bar.style-3    {  background-color: #CC181E;  }
+div#spotifyify-holder.style-4 {  background-color: #282C35;  }
+div#spotifyify-bar.style-4    {  background-color: #F04F30;  }
+div#spotifyify-holder.style-5 {  background-color: #282C35;  }
+div#spotifyify-bar.style-5    {  background-color: #AA74FE;  }
+div#spotifyify-holder.style-6 {  background-color: #282C35;  }
+div#spotifyify-bar.style-6    {  background-color: #8694B2;  }
 
 div#spotifyify-bar.reset {
     width: 0px !important;

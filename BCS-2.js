@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "10",
-        "patch": "1",
+        "minor": "11",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -154,9 +154,16 @@ var bcs = {
 
             /* "The Spotify-ify" - Gorgeous Time Remaining Visualizer */
             $("div#now-playing-bar").prepend(
-                "<div id='spotifyify-holder'>"
-            +       "<div id='spotifyify-bar'></div>"
+                "<div id='spotifyify-holder' class='style-1'>"
+            +       "<div id='spotifyify-bar' class='style-1'></div>"
             +   "</div>");
+
+            $("div#now-playing-media, div#spotifyify-holder, div#spotifyify-bar").on("click", function() {
+                var _c = $("div#spotifyify-holder, div#spotifyify-bar").attr("class");
+                _c = parseInt(_c.replace("style-", "")) + 1;
+                _c = _c <= 6 ? _c : 1;
+                $("div#spotifyify-holder, div#spotifyify-bar").removeClass().addClass("style-" + _c);
+            });
 
             /* The following alters the looks of Author / Title */
             $("#now-playing-media .bar-value")[0].innerHTML =
@@ -481,11 +488,13 @@ var bcs = {
                 sync: function() {
                     bcs.main.utils.points.prev.xp = bcs.u.xp;
                     bcs.main.utils.points.prev.pp = bcs.u.pp;
-                    bcs.main.utils.points.tick = setTimeout(function() {  bcs.main.utils.points.foo();  }, 300000);
+                    bcs.main.utils.points.tick = setTimeout(function() {  bcs.main.utils.points.foo();  }, /*300000*/60000);
                 },
                 foo: function() {
                     var _xp = bcs.main.utils.points.prev.xp > 0 ? bcs.u.xp - bcs.main.utils.points.prev.xp : 0;
                     var _pp = bcs.main.utils.points.prev.pp > 0 ? bcs.u.pp - bcs.main.utils.points.prev.pp : 0;
+                    API.chatLog(_xp + " | " + _pp + " | " + bcs.main.utils.points.prev.xp + " | " + bcs.main.utils.points.prev.pp);
+                    API.chatLog(bcs.u.xp + " | " + bcs.u.pp);
                     bcs.main.utils.points.sync();
                     if (_xp > 0 || _pp > 0) {
                         bcs.main.addChat(

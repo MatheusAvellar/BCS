@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "11",
-        "patch": "1",
+        "minor": "12",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -493,20 +493,22 @@ var bcs = {
                 foo: function() {
                     var _xp = bcs.main.utils.points.prev.xp > 0 ? API.getUser().xp - bcs.main.utils.points.prev.xp : 0;
                     var _pp = bcs.main.utils.points.prev.pp > 0 ? API.getUser().pp - bcs.main.utils.points.prev.pp : 0;
-                    API.chatLog(_xp + " | " + _pp + " | " + bcs.main.utils.points.prev.xp + " | " + bcs.main.utils.points.prev.pp);
-                    API.chatLog(API.getUser().xp + " | " + API.getUser().pp);
                     bcs.main.utils.points.sync();
+
                     if (_xp > 0 || _pp > 0) {
+                        var _earned;
+                        if (_xp > 0 && _pp == 0) {       _earned = "+ " + _xp + " <b>XP</b>";  }
+                        else if (_pp > 0 && _xp == 0) {  _earned = "+ " + _pp + " <b>PP</b>";  }
+                        else if (_xp > 0 && _pp > 0) {
+                            _earned = "+ " + _xp + " <b>XP</b> | + " + _pp + " <b>PP</b>";
+                        }
+
                         bcs.main.addChat(
                             "<a><b>You just earned some points!</b></a><br />"
-                            +"<a class='bcs-timestamp'>"
-                            +    "<b>XP</b> +" + _xp + " | "
-                            +    "<b>PP</b> +" + _pp + " | "
-                            +    "<b>Level</b> " + API.getUser().level + "</a>", "bcs-log bcs-pts-log");
+                            +"<a class='bcs-timestamp'>" + _earned + "</a>", "bcs-log bcs-pts-log");
+
                         _console.log("@bcs.main.utils.points.foo "
-                            +    "[XP +" + _xp + " "
-                            +   "| PP +" + _pp + " "
-                            +   "| Level " + API.getUser().level + "]");
+                            +    "[XP +" + _xp + " | PP +" + _pp + "]");
                     } else {
                         _console.log("@bcs.main.utils.points.foo [No points earned]");
                     }

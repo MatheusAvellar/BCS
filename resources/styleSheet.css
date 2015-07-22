@@ -448,6 +448,11 @@ a.bcs-timestamp {
     font-size: 11px;
 }
 
+.bcs-log.bcs-pts-log {
+    color: #009cdd;
+    border-left: 3px solid #0699dd;
+}
+
 .bcs-chat-image {
     margin: 5px;
     max-width: 300px;

@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "8",
-        "patch": "2",
+        "minor": "10",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -90,6 +90,8 @@ var bcs = {
                      && bcs.plugCode.all[i].imgRegex) {
                         bcs.plugCode.IDs.sendChat = i;
                         continue;
+                    } else if (bcs.plugCode.all[i]["_events"]["change:gRole"]) {
+                        bcs.plugCode.IDs.setRole = i;
                     }
                     for (var j in bcs.plugCode.all[i]) {
                         if (j == "plugMessage") {
@@ -160,6 +162,21 @@ var bcs = {
             $("#now-playing-media .bar-value")[0].innerHTML =
                     $("#now-playing-media .bar-value")[0].innerHTML.split("</span> - ").join("</span>");
 
+            /* Removes ignore button from rollover, adds staff */
+            $("#audience, #dj-booth, .user, .un").on("click", function() {
+                $("#user-rollover").removeClass("can-ignore").addClass("can-staff");
+            });
+            $("div#header-panel-bar").on("click", function() {
+                setTimeout(function() {
+                    $("#audience, #dj-booth, .user, .un").on("click", function() {
+                        $("#user-rollover").removeClass("can-ignore").addClass("can-staff");
+                    });
+                }, 500);
+            });
+
+            /* */
+            bcs.main.utils.points.sync();
+
             bcs.main.addChat(
                 "BCS - "
                 + bcs.v.stage
@@ -205,7 +222,7 @@ var bcs = {
                             url: "https://plug.dj/_/votes",
                             data: '{"direction": "1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
-                            _console.log("@bcs.main.utils.ajax.post.woot [" + JSON.stringify(msg) + "]");
+                            _console.log("@bcs.main.utils.ajax.post.woot [Status: " + JSON.stringify(msg.status) + "]");
                         });
                     },
                     meh: function(_hid) {
@@ -215,7 +232,7 @@ var bcs = {
                             url: "https://plug.dj/_/votes",
                             data: '{"direction": "-1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
-                            _console.log("@bcs.main.utils.ajax.post.woot [" + JSON.stringify(msg) + "]");
+                            _console.log("@bcs.main.utils.ajax.post.meh [" + JSON.stringify(msg) + "]");
                         });
                     },
                     ban: function(_id, _dur) {
@@ -459,6 +476,37 @@ var bcs = {
                     localStorage.setItem("bcsSettings", JSON.stringify(bcs.settings));
                 }
             },
+            points: {
+                tick: void(0),
+                sync: function() {
+                    bcs.main.utils.points.prev.xp = bcs.u.xp;
+                    bcs.main.utils.points.prev.pp = bcs.u.pp;
+                    bcs.main.utils.points.tick = setTimeout(function() {  bcs.main.utils.points.foo();  }, 300000);
+                },
+                foo: function() {
+                    var _xp = bcs.main.utils.points.prev.xp > 0 ? bcs.u.xp - bcs.main.utils.points.prev.xp : 0;
+                    var _pp = bcs.main.utils.points.prev.pp > 0 ? bcs.u.pp - bcs.main.utils.points.prev.pp : 0;
+                    bcs.main.utils.points.sync();
+                    if (_xp > 0 || _pp > 0) {
+                        bcs.main.addChat(
+                            "<a><b>You just earned some points!</b></a><br />"
+                            +"<a class='bcs-timestamp'>"
+                            +    "<b>XP</b> +" + _xp + " | "
+                            +    "<b>PP</b> +" + _pp + " | "
+                            +    "<b>Level</b> " + bcs.u.level + "</a>", "bcs-log bcs-pts-log");
+                        _console.log("@bcs.main.utils.points.foo "
+                            +    "[XP +" + _xp + " "
+                            +   "| PP +" + _pp + " "
+                            +   "| Level " + bcs.u.level + "]");
+                    } else {
+                        _console.log("@bcs.main.utils.points.foo [No points earned]");
+                    }
+                },
+                prev: {
+                    xp: 0,
+                    pp: 0
+                }
+            },
             canRespond: true
         },
         addChat: function(_text, _class1, _class2) {
@@ -569,7 +617,7 @@ var bcs = {
                         && bcs.u.role >= 2
                         || _user.id == bcs.u.id
                         && bcs.u.gRole >= 3) {
-                            _console.log("@bcs.main.events.onChat Appended DELETE BUTTON");
+                            _console.log("@bcs.main.events.onChat Appended [Delete Button]");
                             $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend(
                                 "<div class='delete-button'>Delete</div>"
                             );

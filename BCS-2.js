@@ -48,7 +48,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "10",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -90,7 +90,7 @@ var bcs = {
                      && bcs.plugCode.all[i].imgRegex) {
                         bcs.plugCode.IDs.sendChat = i;
                         continue;
-                    } else if (bcs.plugCode.all[i]["_events"]["change:gRole"]) {
+                    } else if (bcs.plugCode.all[i]["_events"] && bcs.plugCode.all[i]["_events"]["change:gRole"]) {
                         bcs.plugCode.IDs.setRole = i;
                     }
                     for (var j in bcs.plugCode.all[i]) {

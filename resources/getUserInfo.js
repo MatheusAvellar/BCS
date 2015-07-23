@@ -55,7 +55,9 @@ function bcs_lookfor(id) {
         //SETS
             case "2014hwset-g":   _i.Badge = "Halloween"; break;
             case "80sset-g":      _i.Badge = "80's"; break;
+            case "beachset-g":    _i.Badge = "Beach"; break;
             case "countryset-g":  _i.Badge = "Country"; break;
+            case "dinerset-g":    _i.Badge = "Diner"; break;
             case "hiphopset-g":   _i.Badge = "HipHop"; break;
             case "islandset-g":   _i.Badge = "Island"; break;
             case "raveset-g":     _i.Badge = "Rave"; break;
@@ -67,7 +69,12 @@ function bcs_lookfor(id) {
     //'SUBSCRIBER' (-s)
             case "animals-s01":   _i.Badge = "Wolf"; break;
             case "animals-s02":   _i.Badge = "Cat"; break;
-            case "animals-s03":   _i.Badge = "Chicken"; break;
+            case "animals-s03":   _i.Badge = "Boxer"; break;
+            case "beachb-s01":    _i.Badge = "Hula Dancer"; break;
+            case "beachb-s02":    _i.Badge = "Beach Chair"; break;
+            case "beachb-s03":    _i.Badge = "Sand Castle"; break;
+            case "beachb-s04":    _i.Badge = "Sexy Surfers"; break;
+            case "beachb-s05":    _i.Badge = "Tropical Drink"; break;
             case "dinerb-s01":    _i.Badge = "Sandwich"; break;
             case "dinerb-s02":    _i.Badge = "Waffle"; break;
             case "dinerb-s03":    _i.Badge = "Waiter"; break;
@@ -89,6 +96,7 @@ function bcs_lookfor(id) {
             case "music-s02":     _i.Badge = "Musical Keyboard"; break;
             case "music-s03":     _i.Badge = "Compact Cassette"; break;
             case "music-s04":     _i.Badge = "Disco Ball"; break;
+            case "robotb-s01":    _I.Badge = "Cyborg Woman"; break;
             case "seab-s01":      _i.Badge = "Striped Fish"; break;
             case "seab-s02":      _i.Badge = "Pink Fish"; break;
             case "seab-s03":      _i.Badge = "Divers"; break;
@@ -107,6 +115,8 @@ function bcs_lookfor(id) {
             case "winter-s03":    _i.Badge = "Tree"; break;
 
     //'EPIC' (-e)
+            case "beachb-e01":    _i.Badge = "Tiki Surfer [gif]"; break;
+            case "beachb-e02":    _i.Badge = "Fire Eater [gif]"; break;
             case "dinerb-e01":    _i.Badge = "Coke Bottles"; break;
             case "dinerb-e02":    _i.Badge = "Jukebox"; break;
             case "isle-e01":      _i.Badge = "Squid"; break;
@@ -116,7 +126,12 @@ function bcs_lookfor(id) {
             case "seab-e03":      _i.Badge = "Rainbow Narwhal"; break;
 
     //'BUYABLE' ()
-            case "animals01":     _i.Badge = "Boxer"; break;
+            case "animals01":     _i.Badge = "Rubber Chicken"; break;
+            case "beachb01":      _i.Badge = "Tiki Token"; break;
+            case "beachb02":      _i.Badge = "Sea Shell"; break;
+            case "beachb03":      _i.Badge = "Beach Ball"; break;
+            case "beachb04":      _i.Badge = "Flip Flops"; break;
+            case "beachb05":      _i.Badge = "Tropical Flower"; break;
             case "dinerb01":      _i.Badge = "Mustard and Ketchup"; break;
             case "dinerb02":      _i.Badge = "Onion Rings"; break;
             case "dinerb03":      _i.Badge = "Pancakes"; break;

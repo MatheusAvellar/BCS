@@ -16,6 +16,13 @@
 
 /* ---- Edits on plug.dj content ---- */
 
+body          {  transform: scale(1, 1);  }
+body.bcs-flip {  transform: scale(-1, 1) !important;  }
+
+div#intercom-launcher.bcs-visible {
+    visibility: visible !important;
+}
+
 div.cm.promo {
     /* "Want to post images in chat? Subscribe now" */
     display: none !important;
@@ -724,3 +731,11 @@ div#spotifyify-bar.reset {
 }
 
 /* ---------------------------------- */
+
+.bcs-invert {
+    filter: invert(100%) !important;
+    -webkit-filter: invert(100%) !important;
+    -moz-filter: invert(100%) !important;
+    -o-filter: invert(100%) !important;
+    -ms-filter: invert(100%) !important;
+}

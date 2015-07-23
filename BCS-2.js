@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "12",
-        "patch": "2",
+        "minor": "13",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -514,7 +514,7 @@ var bcs = {
                         bcs.main.addChat(
                             "<a><b>You just earned some points!</b></a><br />"
                             +"<a class='bcs-timestamp'>" + _earned + " | " + h + ":" + m + ":" + s + "</a>",
-                                "bcs-log bcs-pts-log");
+                                "bcs-pts-log");
 
                         _console.log("@bcs.main.utils.points.foo "
                             +    "[XP +" + _xp + " | PP +" + _pp + "]");

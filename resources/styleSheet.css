@@ -16,7 +16,6 @@
 
 /* ---- Edits on plug.dj content ---- */
 
-body          {  transform: scale(1, 1);  }
 body.bcs-flip {  transform: scale(-1, 1) !important;  }
 
 div#intercom-launcher.bcs-visible {

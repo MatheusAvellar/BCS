@@ -412,6 +412,20 @@ var _commands = {
         }
     },
     {
+        cmd: ["friend"],
+        run: function(_arg, _cmd) {
+            _arg = parseInt(_arg);
+            if (_arg) {
+                bcs.main.utils.ajax.post.friend(_arg);
+            } else {
+                bcs.main.addChat(
+                    "<span class='bcs-ass'>"
+                    +    "<a class='bcs-ass-unavailable'>Invalid ID</a>"
+                    +"</span>");
+            }
+        }
+    },
+    {
         cmd: ["z"],
         run: function(_arg, _cmd) {
             bcs.main.addChat("<a style='color:#2975ff;'><b>Tip:</b></a> &<b>zwnj;</b> / &<b>nbsp;</b>");

@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "2",
-        "minor": "13",
-        "patch": "1",
+        "minor": "14",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -284,6 +284,14 @@ var bcs = {
                             url: "https://plug.dj/_/grabs",
                             data: '{"historyID": "' + bcs.main.utils.ajax.get.aux.historyID
                                 + '", "playlistID": ' + _playlist + '}'
+                        });
+                    },
+                    friend: function(_id) {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "https://plug.dj/_/friends",
+                            data: '{"id": ' + _id + '}'
                         });
                     }
                 },

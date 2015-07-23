@@ -329,31 +329,31 @@ var _commands = {
     {
         cmd: ["rdj"],
         run: function(_arg, _cmd) {
-            dropPromotion(1,_arg);
+            bcs.main.utils.ajax.post.staff(_arg, 1);
         }
     },
     {
         cmd: ["bouncer"],
         run: function(_arg, _cmd) {
-            dropPromotion(2,_arg);
+            bcs.main.utils.ajax.post.staff(_arg, 2);
         }
     },
     {
         cmd: ["manager"],
         run: function(_arg, _cmd) {
-            dropPromotion(3,_arg);
+            bcs.main.utils.ajax.post.staff(_arg, 3);
         }
     },
     {
         cmd: ["cohost"],
         run: function(_arg, _cmd) {
-            dropPromotion(4,_arg);
+            bcs.main.utils.ajax.post.staff(_arg, 4);
         }
     },
     {
         cmd: ["host"],
         run: function(_arg, _cmd) {
-            dropPromotion(5,_arg);
+            bcs.main.utils.ajax.post.staff(_arg, 5);
         }
     },
     {
@@ -378,37 +378,37 @@ var _commands = {
     {
         cmd: ["ban", "b", "pb"],
         run: function(_arg, _cmd) {
-            dropHammer("b",_arg,"f");
+            bcs.main.utils.ajax.post.ban(_arg, "f");
         }
     },
     {
         cmd: ["dayban", "dban", "db"],
         run: function(_arg, _cmd) {
-            dropHammer("b",_arg,"d");
+            bcs.main.utils.ajax.post.ban(_arg, "d");
         }
     },
     {
         cmd: ["hourban", "hban", "hb"],
         run: function(_arg, _cmd) {
-            dropHammer("b",_arg,"h");
+            bcs.main.utils.ajax.post.ban(_arg, "h");
         }
     },
     {
         cmd: ["m", "ml", "lmute"],
         run: function(_arg, _cmd) {
-            dropHammer("m",_arg,"l");
+            bcs.main.utils.ajax.post.mute(_arg, "l");
         }
     },
     {
         cmd: ["mm", "mmute"],
         run: function(_arg, _cmd) {
-            dropHammer("m",_arg,"m");
+            bcs.main.utils.ajax.post.ban(_arg, "m");
         }
     },
     {
         cmd: ["ms", "smute"],
         run: function(_arg, _cmd) {
-            dropHammer("m",_arg,"s");
+            bcs.main.utils.ajax.post.ban(_arg, "s");
         }
     },
     {

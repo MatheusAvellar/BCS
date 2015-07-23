@@ -48,7 +48,7 @@ var bcs = {
         "ultra": "2",
         "major": "2",
         "minor": "13",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -672,16 +672,18 @@ var bcs = {
                         });
 
                         // BOOTLEG INLINE IMAGES HYPE //
-                        var _extensions = [".png", ".gif", ".jpg", ".jpeg", ".gifv"];
+                        var _extensions = [".png", ".gif", ".jpg", ".jpeg"];
+
                         var _messageContent = $(
                             $(".cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]
                         ).text();
+
                         var _hasNotBeenChecked = _msg.indexOf(_messageContent) != -1;
+
                         for (var i = 0; i < _extensions.length; i++) {
                             var _isImage = _messageContent.indexOf(_extensions[i]) != -1;
-                            if (_messageContent != ""
-                             && _hasNotBeenChecked == true
-                             && _isImage == true) {
+
+                            if (_messageContent != "" && _hasNotBeenChecked && _isImage) {
 
                                 var _imageLink = $(
                                     $("div#chat-messages .cid-" + _cid + " a")
@@ -689,10 +691,10 @@ var bcs = {
                                 ).text();
 
                                 _imageLink = _imageLink
-                                    .split("http").join("https")
-                                    .split("httpss").join("https")
-                                    .split("gifv").join("gif")
-                                    .split("webm").join("gif");
+                                    .replace("http", "https")
+                                    .replace("httpss", "https")
+                                    .replace(".gifv", ".gif")
+                                    .replace(".webm", ".gif");
 
                                 $.ajax({
                                     type: "GET",
@@ -701,11 +703,15 @@ var bcs = {
                                     success: function(msg) {
                                         _console.log("@bcs.main.events.onChat " + JSON.stringify(msg));
                                         var _willScroll = "";
-                                        if ($("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28) {
-                                            _willScroll = "onload='setTimeout(function() {  bcs.main.utils.scrollChat();  }, 500);' ";
+                                        var _chat = $("#chat-messages");
+                                        if (_chat[0].scrollTop > _chat[0].scrollHeight - _chat.height() - 28) {
+                                            _willScroll = "onload='setTimeout("
+                                                    +       "function() {"
+                                                    +           "bcs.main.utils.scrollChat();"
+                                                    +       "}, 500);' ";
                                         }
-                                        $($("div#chat-messages .cid-" + _cid + " a")[$("#chat-messages .cid-" + _cid + " a").length - 1])
-                                            .append(
+                                        var _message = $("div#chat-messages .cid-" + _cid + " a");
+                                        $(_message[_message.length - 1]).append(
                                                 "<br />"
                                                 +   "<img "
                                                 +     _willScroll

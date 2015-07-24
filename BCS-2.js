@@ -48,7 +48,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "0",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -170,12 +170,12 @@ var bcs = {
                     $("#now-playing-media .bar-value")[0].innerHTML.split("</span> - ").join("</span>");
 
             /* Removes ignore button from rollover, adds staff */
-            $("#audience, #dj-booth, .user, .un").on("click", function() {
+            $("#audience, #dj-booth, .user, .un, .jspContainer").on("click", function() {
                 $("#user-rollover").removeClass("can-ignore").addClass("can-staff");
             });
             $("div#header-panel-bar").on("click", function() {
                 setTimeout(function() {
-                    $("#audience, #dj-booth, .user, .un").on("click", function() {
+                    $("#audience, #dj-booth, .user, .un, .jspContainer").on("click", function() {
                         $("#user-rollover").removeClass("can-ignore").addClass("can-staff");
                     });
                 }, 500);

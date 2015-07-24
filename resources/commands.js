@@ -44,7 +44,7 @@ var _commands = {
     {
         cmd: ["both"],
         run: function(_arg, _cmd) {
-            bcs.c(_arg + " Both. http://i.imgur.com/py7q8V7.gif");
+            bcs.c(_arg + " Both. http://i.imgur.com/hsB1mSb.gif");
         }
     },
     {
@@ -422,6 +422,50 @@ var _commands = {
                     "<span class='bcs-ass'>"
                     +    "<a class='bcs-ass-unavailable'>Invalid ID</a>"
                     +"</span>");
+            }
+        }
+    },
+    {
+        cmd: ["gif", "gifs", "g"],
+        run: function(_arg, _cmd) {
+
+            _arg = _arg.toString().trim();
+            var _r = bcs.main.utils.ran();
+            var _callback ="<ul class='bcs-gif'>Indexed .gif results for <a class='bcs-gif-keyword'>" + _arg + "</a>";
+            var _n = 0;
+            for (var i = 0, l = _gifs.length; i < l; i++) {
+                if (!_arg) {  break;  }
+                else {
+                    for (var j = 0, k = _gifs[i].keywords.length; j < k; j++) {
+                        if ((_arg.indexOf(_gifs[i].keywords[j]) != -1
+                        ||  _gifs[i].keywords[j].indexOf(_arg) != -1)
+                        &&  _n != i) {
+                            _n = i;
+                            _callback += "<li class='bcs-gif-item'>"
+                                         +    "<details>"
+                                         +        "<summary>"
+                                         +            "<span class='bcs-gif-keywords'>Matched keyword "
+                                         +            "<a class='bcs-gif-keyword'>" + _gifs[i].keywords[j] + "</a>"
+                                         +        "</summary>"
+                                         +    "</span>"
+                                         +    "<a class='bcs-gif-link' href='" + _gifs[i].url + "' target='_blank'>"
+                                         +        "<img class='bcs-gif-preview' src=" + _gifs[i].url + " />"
+                                         +    "</a>"
+                                         +    "<a class='bcs-gif-send' target='_blank'>Add to your message</a>"
+                                         +"</li>";
+                        }
+                    }
+                }
+            }
+            if (_callback.trim().indexOf("li") != -1) {
+                bcs.main.addChat(_callback + "</ul>", "", "bcs-gif-frame");
+                bcs.main.utils.rem(_r);
+            } else {
+                bcs.main.addChat(
+                    "No indexed .gifs match <a class='bcs-gif-keyword'>" + _arg + "</a>",
+                    "",
+                    "bcs-gif-frame"
+                );
             }
         }
     },

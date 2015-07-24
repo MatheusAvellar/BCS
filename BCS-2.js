@@ -8,8 +8,7 @@
  * Most of the stuff here is probably not
  * the most efficient. But it works. So who cares.
  *
- *              sᴏᴏɴ™
- * (https://matheusavellar.github.io/bcs-2)
+ * FAQ @ https://matheusavellar.github.io/bcs
  *
  */
 
@@ -20,6 +19,7 @@ const BCS_DIR = "https://rawgit.com/MatheusAvellar/BCS/master/resources/";
 $.getScript(BCS_DIR + "commands.js");
 $.getScript(BCS_DIR + "menu.js");
 $.getScript(BCS_DIR + "getUserInfo.js");
+$.getScript(BCS_DIR + "gifs.js");
 
 $("head").append(
 "<link "
@@ -46,8 +46,8 @@ var bcs = {
     v: {
         "stage": "Alpha v",
         "ultra": "2",
-        "major": "2",
-        "minor": "14",
+        "major": "3",
+        "minor": "0",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -535,6 +535,22 @@ var bcs = {
                     pp: 0
                 }
             },
+            ran: function() {
+                return "bcs-" + (~~(Math.random() * 1e8)).toString(16);
+            },
+            rem: function(_id) {
+                if ($("#" + _id).parent().attr("id") != "chat-messages") {
+                    $("#" + _id).parent().hover(function() {
+                        $("#" + _id).css({"display":"block"});
+                    }, function() {
+                        $("#" + _id).css({"display":"none"});
+                    });
+
+                    $("#" + _id).on("click", function() {
+                        $("#" + _id).parent().remove();
+                    });
+                }
+            },
             canRespond: true
         },
         addChat: function(_text, _class1, _class2) {
@@ -542,11 +558,16 @@ var bcs = {
             if (!_class2 || _class2 == "undefined") {  _class2 = "";  }
 
             var _scroll = $("#chat-messages")[0].scrollTop > $("#chat-messages")[0].scrollHeight - $("#chat-messages").height() - 28;
+            
+            var _r = bcs.main.utils.ran();
 
             $("#chat-messages").append(
                 "<div class='bcs-log " + _class1 + "'>"
-                    + "<div class='" + _class2 + "'>" + _text + "</div>"
-                + "</div>");
+                +    "<div class='delete-button bcs-rem' id='" + _r + "'>Remove</div>"
+                +    "<div class='" + _class2 + "'>" + _text + "</div>"
+                +"</div>");
+
+            bcs.main.utils.rem(_r);
 
             if (_scroll) {
                 $("#chat-messages")[0].scrollTop = $("#chat-messages")[0].scrollHeight;
@@ -680,7 +701,7 @@ var bcs = {
                         });
 
                         // BOOTLEG INLINE IMAGES HYPE //
-                        var _extensions = [".png", ".gif", ".jpg", ".jpeg"];
+                        var _extensions = [".png", ".gif", ".jpg", ".jpeg", ".webm"];
 
                         var _messageContent = $(
                             $(".cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]

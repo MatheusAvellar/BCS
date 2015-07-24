@@ -319,7 +319,7 @@ function bcs_lookfor(id) {
         if (_u) {
             switch (API.getWaitListPosition(data.id)) {
                 case -1:
-                    if (API.getDJ().username == data.username) {
+                    if (API.getDJ() && API.getDJ().username == data.username) {
                         _i["WaitList Position"] = "<a class='bcs-ass-unavailable'>Is currently DJ'ing</a>";
                     }
                     break;

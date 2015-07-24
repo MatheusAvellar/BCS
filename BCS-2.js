@@ -48,7 +48,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "0",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];

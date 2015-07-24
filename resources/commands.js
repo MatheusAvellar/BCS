@@ -14,7 +14,8 @@ var _commands = {
                     + "<a class='bcs-todo-nope'>✘ Change all avatars to only one</a><br />"
                     + "<a class='bcs-todo-nope'>✘ Check if I can raise the cap to over 200</a><br />"
                     + "<a class='bcs-todo-todo'>⊱ Mentioning user when clicking Meh/Grab msg</a><br />"
-                    + "<a class='bcs-todo-todo'>⊱ Meh count per user (automeh check)</a><br />");
+                    + "<a class='bcs-todo-todo'>⊱ Meh count per user (automeh check)</a><br />"
+                    + "<a class='bcs-todo-todo'>⊱ Be a jerk and steal p³ / rcs custom settings</a><br />");
         }
     },
     {
@@ -451,7 +452,13 @@ var _commands = {
                                          +    "<a class='bcs-gif-link' href='" + _gifs[i].url + "' target='_blank'>"
                                          +        "<img class='bcs-gif-preview' src=" + _gifs[i].url + " />"
                                          +    "</a>"
-                                         +    "<a class='bcs-gif-send' target='_blank'>Add to your message</a>"
+                                         +    "<a class='bcs-gif-send'"
+                                         +        "onclick='(function() {"
+                                         +            "$(\"#chat-input-field\").val("
+                                         +                "$(\"#chat-input-field\").val() + \"" + _gifs[i].url + "\""
+                                         +            ");})();"
+                                         +        "'"//
+                                         +    ">Add to your message</a>"
                                          +"</li>";
                         }
                     }

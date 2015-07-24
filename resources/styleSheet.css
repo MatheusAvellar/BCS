@@ -27,8 +27,9 @@ div.cm.promo {
     display: none !important;
 }
 
-div.cm.moderation {
-    /* Cute border on moderation messages */
+div.cm.moderation, 
+div.cm.welcome {
+    /* Cute border on purple messages */
     border-left: 3px solid #ac76ff;
 }
 
@@ -37,7 +38,7 @@ div.level.earned.ep .label {
     background: #009cdd !important;
 }
 
-div#chat .delete-button{
+div#chat .delete-button {
     /* That small and cute chat delete button again */
     padding: 3px;
     height: 15px;
@@ -491,6 +492,23 @@ div.bcs-afk-log .meta .disclaimer {
 
 div.bcs-afk-log .meta .bcs-chat-info {  opacity: 1;  }
 div.bcs-afk-log .meta .timestamp {  display: block;  }
+
+div.bcs-lastplay .positive span { color: #90ad2f; }
+div.bcs-lastplay .grabs span { color: #aa74ff; }
+div.bcs-lastplay .negative span {  color: #c42e3b  }
+div.bcs-lastplay .listeners span {  color: #ededed  }
+div.bcs-lastplay .item,
+div.bcs-lastplay .item .icon {
+    float: left;
+    position: relative;
+}
+div.bcs-lastplay .item {
+    margin-right: 15px;
+}
+div.bcs-lastplay .item .icon {
+    margin-left: -3px;
+    margin-right: 5px;
+}
 
 /* ---------------------------------- */
 

@@ -47,8 +47,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "0",
-        "patch": "2",
+        "minor": "1",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -996,15 +996,26 @@ var bcs = {
                         // Yes, this is pretty stupid. But whatever. Script is mine, get rekt :L
                         $(".cm.log")[i].remove();
                     }
-                    //CHECK//
-                    bcs.main.addChat("<br /><img src='https://i.imgur.com/fhagHZg.png' /><br />"
-                        + "<b><a style='color:#90ad2f;'>" + data.lastPlay.score.positive
-                        + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#aa74ff;'>"
-                        + data.lastPlay.score.grabs
-                        + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#c42e3b;'>"
-                        + data.lastPlay.score.negative
-                        + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style='color:#646b7e;'>"
-                        + API.getUsers().length + "</a></b>");
+
+                    bcs.main.addChat(
+                        "<div class='item positive'>"
+                        +     "<i class='icon icon-history-positive'></i>"
+                        +     "<span>" + data.lastPlay.score.positive + "</span>"
+                        + "</div>"
+                        + "<div class='item grabs'>"
+                        +     "<i class='icon icon-history-grabs'></i>"
+                        +     "<span>" + data.lastPlay.score.grabs + "</span>"
+                        + "</div>"
+                        + "<div class='item negative'>"
+                        +     "<i class='icon icon-history-negative'></i>"
+                        +     "<span>" + data.lastPlay.score.negative + "</span>"
+                        + "</div>"
+                        + "<div class='item listeners'>"
+                        +     "<i class='icon icon-history-listeners'></i>"
+                        +     "<span>" + API.getUsers().length + "</span>"
+                        + "</div>"
+                        + "<br />", "", "bcs-lastplay");
+
                     setTimeout(function() {
                         for (var i = 0; i< API.getHistory().length; i++) {
                             if (API.getHistory()[i].media.cid == currentSong.cid && i != 0) { //CHECK//

@@ -48,7 +48,7 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "3",
+        "minor": "4",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -736,7 +736,14 @@ var bcs = {
                         for (var i = 0; i < badWords.length; i++) {
                             if (_msg.toLowerCase().indexOf(badWords[i] + ' ') != -1
                             ||  _msg.toLowerCase().indexOf(' ' + badWords[i]) != -1) {
-                                $("#chat-messages > .cm .cid-" + _cid).parent().addClass("bcs-bw");
+                                var _textPath = "#chat-messages > .cm .text.cid-" + _cid;
+                                var _msgPath = "#chat-messages > .cm .msg.cid-" + _cid;
+                                var _h = $(_textPath)[0].innerHTML;
+                                $(_textPath)[0].innerHTML = _h.replace(
+                                                                badWords[i],
+                                                                "<a class='bcs-bw-word'>" + badWords[i] + "</a>"
+                                                            );
+                                $(_msgPath).parent().addClass("bcs-bw");
                                 break;
                             }
                         }

@@ -19,6 +19,7 @@ const BCS_DIR = "https://rawgit.com/MatheusAvellar/BCS/master/resources/";
 $.getScript(BCS_DIR + "commands.js");
 $.getScript(BCS_DIR + "menu.js");
 $.getScript(BCS_DIR + "getUserInfo.js");
+$.getScript(BCS_DIR + "badWordsList.js");
 $.getScript(BCS_DIR + "gifs.js");
 
 $("head").append(
@@ -47,7 +48,7 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "1",
+        "minor": "2",
         "patch": "0",
         "legal": "",
         "_": function() {
@@ -699,6 +700,13 @@ var bcs = {
                                 "display":"none"
                             });
                         });
+
+                        for (var i = 0; i < badWords.length; i++) {
+                            if (_msg.indexOf(badWords[i]) != -1) {
+                                $("#chat-messages > .cm .cid-" + _cid).parent().addClass("bcs-bw");
+                                break;
+                            }
+                        }
 
                         // BOOTLEG INLINE IMAGES HYPE //
                         var _extensions = [".png", ".gif", ".jpg", ".jpeg", ".webm"];

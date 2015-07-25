@@ -48,8 +48,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "2",
-        "patch": "4",
+        "minor": "3",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -507,9 +507,14 @@ var bcs = {
                         }
 
                         bcs.main.addChat(
-                             "<a><b>You just earned some points!</b></a><br />"
-                            +"<a class='bcs-timestamp'>" + _earned + " | " + h + ":" + m + ":" + s + "</a>",
-                             "bcs-pts-log");
+                            "<span>"
+                            +    "<b>You just earned some points!</b><br />"
+                            +    "<a class='bcs-timestamp'>"
+                            +        _earned
+                            +        " | " + h + ":" + m + ":" + s
+                            +    "</a>"
+                            +"</span>",
+                            "bcs-pts-log");
 
                         _console.log("@bcs.main.utils.points.foo "
                             +    "[XP +" + _xp + " | PP +" + _pp + "]");
@@ -520,6 +525,47 @@ var bcs = {
                 prev: {
                     xp: 0,
                     pp: 0
+                }
+            },
+            error: function(_message) {
+                var d = new Date();
+                var h = d.getHours();
+                var m = d.getMinutes();
+                var s = d.getSeconds();
+                if (h < 10) {  h = "0" + h;  }
+                if (m < 10) {  m = "0" + m;  }
+                if (s < 10) {  s = "0" + s;  }
+                bcs.main.addChat(
+                    "<span>"
+                    +    "<b>" + _message + "</b><br />"
+                    +    "<a class='bcs-timestamp'>" + h + ":" + m + ":" + s + "</a>"
+                    +"</span>"
+                , "bcs-error-log");
+            },
+            isValidSong: function() {
+                if (API.getMedia()) {
+                    var _format = API.getMedia().format;
+                    var _cid = API.getMedia().cid;
+                    if (_format == 1){
+                        $.getJSON(
+                             "https://www.googleapis.com/youtube/v3/videos"
+                             + "?id=" + _cid
+                             + "&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0"
+                             + "&part=snippet"
+                             + "&callback=?",
+                            function (_track){
+                                if (typeof(_track.items[0]) == "undefined"){
+                                    return bcs.main.utils.error("This song might be unavailable!");
+                                }
+                            }
+                        );
+                    } else {
+                        var checkSong = SC.get("/tracks/" + _cid, function (_track){
+                            if (typeof _track.title === "undefined"){
+                                return bcs.main.utils.error("This song might be unavailable!");
+                            }
+                        });
+                    }
                 }
             },
             ran: function() {
@@ -688,7 +734,8 @@ var bcs = {
                         });
 
                         for (var i = 0; i < badWords.length; i++) {
-                            if (_msg.toLowerCase().indexOf(badWords[i]) != -1) {
+                            if (_msg.toLowerCase().indexOf(badWords[i] + ' ') != -1
+                            ||  _msg.toLowerCase().indexOf(' ' + badWords[i]) != -1) {
                                 $("#chat-messages > .cm .cid-" + _cid).parent().addClass("bcs-bw");
                                 break;
                             }
@@ -849,18 +896,16 @@ var bcs = {
                     }
 
                     bcs.main.addChat(
-                        "<a>"
-                        +   _user.intro
-                        +   "<b>"
-                        +       _user.username
-                        +   "</b> joined </a>"
-                        +"<br />"
-                        +"<a class='bcs-timestamp'>"
-                        +    "<b>ID</b> "
-                        +    _user.id + " | " + h + ":" + m + ":" + s
-                        +    " | <b>Level</b> "
-                        +    _user.level
-                        +"</a> "
+                        "<span>"
+                        +    _user.intro
+                        +    "<b>"
+                        +        _user.username
+                        +    "</b> joined </a><br />"
+                        +    "<a class='bcs-timestamp'>"
+                        +        "<b>ID</b> " +        _user.id
+                        +        " | " + h + ":" + m + ":" + s
+                        +        " | <b>Level</b> " + _user.level
+                        +"</span> "
                         + _user.role + " "
                         + _user.gRole, _class);
                 }
@@ -920,18 +965,16 @@ var bcs = {
                     }
 
                     bcs.main.addChat(
-                        "<a>"
-                        +   _user.intro
-                        +   "<b>"
-                        +       _user.username
-                        +   "</b> left </a>"
-                        +"<br />"
-                        +"<a class='bcs-timestamp'>"
-                        +    "<b>ID</b> "
-                        +    _user.id + " | " + h + ":" + m + ":" + s
-                        +    " | <b>Level</b> "
-                        +    _user.level
-                        +"</a> "
+                        "<span>"
+                        +    _user.intro
+                        +    "<b>"
+                        +        _user.username
+                        +    "</b> left </a><br />"
+                        +    "<a class='bcs-timestamp'>"
+                        +        "<b>ID</b> " +        _user.id
+                        +        " | " + h + ":" + m + ":" + s
+                        +        " | <b>Level</b> " + _user.level
+                        +"</span> "
                         + _user.role + " "
                         + _user.gRole, _class);
                 }
@@ -973,6 +1016,7 @@ var bcs = {
                             }
                         }
                     }
+                    bcs.main.utils.isValidSong();
                 }, 1750);
 
                 var d = new Date();
@@ -1011,7 +1055,7 @@ var bcs = {
                         + "<br />", "", "bcs-lastplay");
 
                     setTimeout(function() {
-                        for (var i = 0; i< API.getHistory().length; i++) {
+                        for (var i = 0, l = API.getHistory().length; i < l; i++) {
                             if (API.getHistory()[i].media.cid == currentSong.cid && i != 0) { //CHECK//
                                 var previous = API.getHistory()[i];
                                 var pos = i + 1;

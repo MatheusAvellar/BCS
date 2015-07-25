@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "4",
-        "patch": "2",
+        "patch": "3",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -79,7 +79,9 @@ var bcs = {
         lockdown: false
     },
     plugCode: {
-        IDs: {},
+        IDs: {
+            setRole: []
+        },
         plugMessage: void(0),
         sendChat: void(0),
         sendChatObj: void(0),
@@ -92,7 +94,7 @@ var bcs = {
                         bcs.plugCode.IDs.sendChat = i;
                         continue;
                     } else if (bcs.plugCode.all[i]["_events"] && bcs.plugCode.all[i]["_events"]["change:gRole"]) {
-                        bcs.plugCode.IDs.setRole = i;
+                        bcs.plugCode.IDs.setRole.push(i);
                     }
                     for (var j in bcs.plugCode.all[i]) {
                         if (j == "plugMessage") {
@@ -706,11 +708,12 @@ var bcs = {
                             $("#chat-messages > .cm[data-cid='" + _cid + "']").prepend(
                                 "<div class='delete-button'>Delete</div>"
                             );
-                        }
-                        $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
-                            bcs.main.utils.ajax.delete.chat(_cid);
-                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").remove();
+                            $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
+                                bcs.main.utils.ajax.delete.chat(_cid);
+                                $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").remove();
+                            }
                         });
+
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .from").append(
                             "<span class='bcs-chat-info'> Lv. <a class='bcs-chat-lv'>" + _user.level + "</a></span>"
                             + "<span class='bcs-chat-info'> ID: <a class='bcs-chat-id'>" + _user.id + "</a></span>");

@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "2",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
@@ -702,7 +702,7 @@ var bcs = {
                         });
 
                         for (var i = 0; i < badWords.length; i++) {
-                            if (_msg.indexOf(badWords[i]) != -1) {
+                            if (_msg.toLowerCase().indexOf(badWords[i]) != -1) {
                                 $("#chat-messages > .cm .cid-" + _cid).parent().addClass("bcs-bw");
                                 break;
                             }

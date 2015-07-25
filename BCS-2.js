@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "4",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -483,7 +483,7 @@ var bcs = {
                 sync: function() {
                     bcs.main.utils.points.prev.xp = API.getUser().xp;
                     bcs.main.utils.points.prev.pp = API.getUser().pp;
-                    bcs.main.utils.points.tick = setTimeout(function() {  bcs.main.utils.points.foo();  }, /*300000*/60000);
+                    bcs.main.utils.points.tick = setTimeout(function() {  bcs.main.utils.points.foo();  }, 300000);
                 },
                 foo: function() {
                     var _xp = bcs.main.utils.points.prev.xp > 0 ? API.getUser().xp - bcs.main.utils.points.prev.xp : 0;
@@ -733,19 +733,19 @@ var bcs = {
                             });
                         });
 
+                        const _path = "#chat-messages > .cm .text.cid-" + _cid;
+                        const _h = $(_path)[0].innerHTML;
+                        var _msgBW = _msg;
                         for (var i = 0; i < badWords.length; i++) {
-                            if (_msg.toLowerCase().indexOf(badWords[i] + ' ') != -1
-                            ||  _msg.toLowerCase().indexOf(' ' + badWords[i]) != -1) {
-                                var _textPath = "#chat-messages > .cm .text.cid-" + _cid;
-                                var _msgPath = "#chat-messages > .cm .msg.cid-" + _cid;
-                                var _h = $(_textPath)[0].innerHTML;
-                                $(_textPath)[0].innerHTML = _h.replace(
-                                                                badWords[i],
-                                                                "<a class='bcs-bw-word'>" + badWords[i] + "</a>"
-                                                            );
-                                $(_msgPath).parent().addClass("bcs-bw");
-                                break;
-                            }
+                            var _msgBW = _msgBW.replace(
+                                new RegExp("\\b("
+                                    + badWords[i] + "|"
+                                    + badWords[i] + "ing|"
+                                    + badWords[i] + "in)\\b", "ig"),
+                                "<a class='bcs-bw-word'>\$&</a>"
+                            );
+                            $(_path)[0].innerHTML = _h.replace(_msg, _msgBW);
+                            $(_path).parent().addClass("bcs-bw-msg");
                         }
 
                         // BOOTLEG INLINE IMAGES HYPE //

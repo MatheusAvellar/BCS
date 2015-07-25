@@ -138,11 +138,8 @@ div#chat-input.bcs-afk.focused {
     -moz-box-shadow: inset 0 0 0 1px #009cdd!important;
     box-shadow: inset 0 0 0 1px #f04f30!important;
 }
-div#chat-messages .cm .msg.bcs-bw {
-    background-color: #1B0808;
-}
 div#chat-messages .cm .msg .bcs-bw-word {
-    color: #c42e3b;
+    color: #444a59;
 }
 
 /* ---------------------------------- */

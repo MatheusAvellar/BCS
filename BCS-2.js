@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "4",
-        "patch": "1",
+        "patch": "2",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -544,8 +544,8 @@ var bcs = {
             },
             isValidSong: function() {
                 if (API.getMedia()) {
-                    var _format = API.getMedia().format;
-                    var _cid = API.getMedia().cid;
+                    const _format = API.getMedia().format;
+                    const _cid = API.getMedia().cid;
                     if (_format == 1){
                         $.getJSON(
                              "https://www.googleapis.com/youtube/v3/videos"
@@ -560,7 +560,7 @@ var bcs = {
                             }
                         );
                     } else {
-                        var checkSong = SC.get("/tracks/" + _cid, function (_track){
+                        const checkSong = SC.get("/tracks/" + _cid, function (_track){
                             if (typeof _track.title === "undefined"){
                                 return bcs.main.utils.error("This song might be unavailable!");
                             }
@@ -737,11 +737,8 @@ var bcs = {
                         const _h = $(_path)[0].innerHTML;
                         var _msgBW = _msg;
                         for (var i = 0; i < badWords.length; i++) {
-                            var _msgBW = _msgBW.replace(
-                                new RegExp("\\b("
-                                    + badWords[i] + "|"
-                                    + badWords[i] + "ing|"
-                                    + badWords[i] + "in)\\b", "ig"),
+                            _msgBW = _msgBW.replace(
+                                new RegExp("\\b" + badWords[i] + "(er|ing|ed|s|in)?\\b", "ig"),
                                 "<a class='bcs-bw-word'>\$&</a>"
                             );
                             $(_path)[0].innerHTML = _h.replace(_msg, _msgBW);
@@ -749,7 +746,8 @@ var bcs = {
                         }
 
                         // BOOTLEG INLINE IMAGES HYPE //
-                        var _extensions = [".png", ".gif", ".jpg", ".jpeg", ".webm"];
+                        //CHECK//
+                        const _extensions = [".png", ".gif", ".jpg", ".jpeg", ".webm"];
 
                         var _messageContent = $(
                             $(".cid-" + _cid + " a")[$("div#chat-messages .cid-" + _cid + " a").length - 1]
@@ -758,7 +756,7 @@ var bcs = {
                         var _hasNotBeenChecked = _msg.indexOf(_messageContent) != -1;
 
                         for (var i = 0; i < _extensions.length; i++) {
-                            var _isImage = _messageContent.indexOf(_extensions[i]) != -1;
+                            const _isImage = _messageContent.indexOf(_extensions[i]) != -1;
 
                             if (_messageContent != "" && _hasNotBeenChecked && _isImage) {
 

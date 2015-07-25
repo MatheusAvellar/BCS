@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "4",
-        "patch": "4",
+        "patch": "5",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -706,8 +706,8 @@ var bcs = {
                             $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").on("click", function() {
                                 bcs.main.utils.ajax.delete.chat(_cid);
                                 $("#chat-messages > .cm[data-cid='" + _cid + "'] .delete-button").remove();
-                            }
-                        });
+                            });
+                        }
 
                         $("#chat-messages > .cm[data-cid='" + _cid + "'] .from").append(
                             "<span class='bcs-chat-info'> Lv. <a class='bcs-chat-lv'>" + _user.level + "</a></span>"

@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "4",
-        "patch": "3",
+        "patch": "4",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -442,11 +442,6 @@ var bcs = {
                     });
                     $("#footer-user .info .meta .level .label").text("Lv.");
 
-                    $("#footer-user .inventory").hover(function() {
-                        $("#footer-user .buttons").addClass("hover");
-                    }, function() {
-                        $("#footer-user .buttons").removeClass("hover");
-                    });
                     $("#footer-user .button").hover(function() {
                         $("#tooltip").remove();
                     });

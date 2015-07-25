@@ -49,10 +49,10 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "2",
-        "patch": "2",
+        "patch": "3",
         "legal": "",
         "_": function() {
-            return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch];
+            return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
         }
     },
     b: 4820534,
@@ -155,16 +155,9 @@ var bcs = {
 
             /* "The Spotify-ify" - Gorgeous Time Remaining Visualizer */
             $("div#now-playing-bar").prepend(
-                "<div id='spotifyify-holder' class='style-1'>"
-            +       "<div id='spotifyify-bar' class='style-1'></div>"
+                "<div id='spotifyify-holder'>"
+            +       "<div id='spotifyify-bar'></div>"
             +   "</div>");
-
-            $("div#now-playing-media, div#spotifyify-holder, div#spotifyify-bar").on("click", function() {
-                var _c = $("div#spotifyify-holder, div#spotifyify-bar").attr("class");
-                _c = parseInt(_c.replace("style-", "")) + 1;
-                _c = _c <= 6 ? _c : 1;
-                $("div#spotifyify-holder, div#spotifyify-bar").removeClass().addClass("style-" + _c);
-            });
 
             /* The following alters the looks of Author / Title */
             $("#now-playing-media .bar-value")[0].innerHTML =
@@ -181,8 +174,8 @@ var bcs = {
             bcs.main.addChat(
                 "BCS - "
                 + bcs.v.stage
-                + bcs.v._().join(".")
-                + bcs.v.legal
+                + bcs.v._()
+                + bcs.v.legal// TODO: Change this to <details>
                 + "<div class='authors'>"
                     + "<br />"
                     + "<p>"
@@ -348,7 +341,7 @@ var bcs = {
             afkList: [],
             volume: function() {
                 /* Fix for the volume bug */
-                var currentVolume = $("#volume span").text().split("%")[0];
+                var currentVolume = $("#volume span").text().split('%')[0];
                 var tempVolume = currentVolume != 0 ? 0 : 1;
                 API.setVolume(tempVolume);
                 setTimeout(function() {
@@ -460,7 +453,7 @@ var bcs = {
                     $("#footer-user .profile").append("<div class='nothing'></div><span>My Profile</span>");
                     $("#footer-user .settings").append("<div class='nothing'></div><span>Settings</span>");
                     $("#footer-user .info").on("click", bcs.main.utils.oldFooter.toggle);
-                    $("#footer-user .button").on('click', bcs.main.utils.oldFooter.toggle("hide"));
+                    $("#footer-user .button").on("click", bcs.main.utils.oldFooter.toggle("hide"));
                     $("#app").on("click", function(e) {
                         if (!$(e.target).closest("#footer-user .info").length){
                             bcs.main.utils.oldFooter.toggle("hide");

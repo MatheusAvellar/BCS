@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "2",
-        "patch": "3",
+        "patch": "4",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -507,9 +507,9 @@ var bcs = {
                         }
 
                         bcs.main.addChat(
-                            "<a><b>You just earned some points!</b></a><br />"
+                             "<a><b>You just earned some points!</b></a><br />"
                             +"<a class='bcs-timestamp'>" + _earned + " | " + h + ":" + m + ":" + s + "</a>",
-                                "bcs-pts-log");
+                             "bcs-pts-log");
 
                         _console.log("@bcs.main.utils.points.foo "
                             +    "[XP +" + _xp + " | PP +" + _pp + "]");
@@ -526,15 +526,15 @@ var bcs = {
                 return "bcs-" + (~~(Math.random() * 1e8)).toString(16);
             },
             rem: function(_id) {
-                if ($("#" + _id).parent().attr("id") != "chat-messages") {
-                    $("#" + _id).parent().hover(function() {
-                        $("#" + _id).css({"display":"block"});
+                if ($('#' + _id).parent().attr("id") != "chat-messages") {
+                    $('#' + _id).parent().hover(function() {
+                        $('#' + _id).css({"display":"block"});
                     }, function() {
-                        $("#" + _id).css({"display":"none"});
+                        $('#' + _id).css({"display":"none"});
                     });
 
-                    $("#" + _id).on("click", function() {
-                        $("#" + _id).parent().remove();
+                    $('#' + _id).on("click", function() {
+                        $('#' + _id).parent().remove();
                     });
                 }
             },

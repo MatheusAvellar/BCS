@@ -125,7 +125,7 @@ function _toggleSetting(className) {
 }
 
 $("div#playlist-meta").append(BCS_MENU);
-$("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._().join("."));
+$("div#bcs-menu .menu ul li.bcs span.bcs-version").text(bcs.v.stage + bcs.v._());
 
 $("div#bcs-menu .menu").on("click", function() {
     if (bcs.settings.afkmsg) {

@@ -8,7 +8,7 @@
  * Most of the stuff here is probably not
  * the most efficient. But it works. So who cares.
  *
- * FAQ @ https://matheusavellar.github.io/bcs
+ * FAQ @ [https://matheusavellar.github.io/bcs]
  *
  */
 

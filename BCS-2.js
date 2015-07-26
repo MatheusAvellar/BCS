@@ -48,8 +48,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "4",
-        "patch": "5",
+        "minor": "5",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');

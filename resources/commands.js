@@ -201,7 +201,10 @@ var _commands = {
                 }
             }
             if (cleanID) {
-                bcs_lookfor(cleanID);
+                bcs.main.addChat(
+                    "<span class='bcs-ass'>"
+                    +    _arg + "'s ID is " + cleanID);
+                    +"</span>");
             } else {
                 bcs.main.addChat(
                     "<span class='bcs-ass'>"
@@ -213,14 +216,14 @@ var _commands = {
     {
         cmd: ["ba"],
         run: function(_arg, _cmd) {
-            bcs.c("Brand Ambassadors are volunteers who help moderate the website and test features. "
+            bcs.c(_arg + " Brand Ambassadors are volunteers who help moderate the website and test features. "
                 + "Here's more about the BA project: http://plug.dj/ba");
         }
     },
     {
         cmd: ["admin"],
         run: function(_arg, _cmd) {
-            bcs.c("Admins are the people that work for plug.dj. "
+            bcs.c(_arg + " Admins are the people that work for plug.dj. "
                 + "They have a plug.dj logo next to their names in chat. "
                 + "Here's the list of the current Admins: http://plug.dj/team/");
         }
@@ -228,7 +231,7 @@ var _commands = {
     {
         cmd: ["xp"],
         run: function(_arg, _cmd) {
-            bcs.c("XP and PP are earned on ticks. "
+            bcs.c(_arg + " XP and PP are earned on ticks. "
                 + "There is a tick cap of 72 per day. "
                 + "After 6 hours (72 ticks), you hit the “XP cap” and will not gain XP until the next day. "
                 + "More info: http://goo.gl/7SDAAr");
@@ -266,16 +269,9 @@ var _commands = {
     {
         cmd: ["selfdemote"],
         run: function(_arg, _cmd) {
-            if (bcs.user.role >= 2) {
-                var r = confirm("Demote yourself to RDJ? Like, wtf are you doing?");
-                if (r === true) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/_/staff/update',
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        data: JSON.stringify({userID: bcs.user.id, roleID: 1})
-                    });
+            if (bcs.u.role >= 2) {
+                if (confirm("Demote yourself to RDJ? Like, wtf are you doing?")) {
+                    bcs.main.utils.ajax.post.staff(bcs.u.id, 1);
                 } else {
                     bcs.main.addChat("[Command " + _cmd + " denied]");
                 }
@@ -361,17 +357,10 @@ var _commands = {
         cmd: ["banall"],
         run: function(_arg, _cmd) {
             const _all = _arg.toString().trim().toLowerCase() == "a";
-            for (var i in API.getUsers()) {
+            for (var i = 0, l = API.getUsers().length; i < l; i++) {
                 if (API.getUsers()[i].gRole < 3 && API.getUsers()[i].role < 1 && !_all
                  || API.getUsers()[i].gRole < 3) {
-                     $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        url: "https://plug.dj/_/bans/add",
-                        data: '{"userID":' + API.getUsers()[i].id + ',"reason":1,"duration":"f"}'
-                    }).done(function(msg) {
-                        _console.log("@banall [" + JSON.stringify(msg) + "]");
-                    });
+                    bcs.main.utils.ajax.post.ban(API.getUsers()[i].id, "f");
                 }
             }
         }
@@ -499,7 +488,9 @@ var _commands = {
     {
         cmd: ["cmds", "cmd", "commands"],
         run: function(_arg, _cmd) {
-            bcs.main.addChat("We're working on it!");
+            bcs.main.addChat("<a "
+                            + "src='https://github.com/MatheusAvellar/BCS/blob/master/Commands.md' "
+                            + "target='_blank'>Here you go!</a>");
         }
     }
     ]

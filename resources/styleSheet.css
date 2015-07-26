@@ -142,6 +142,11 @@ div#chat-messages .cm .msg .bcs-bw-word {
     color: #444a59;
 }
 
+#footer-user .buttons .button .count {
+    top: 18px;
+    right: 10px;
+}
+
 /* ---------------------------------- */
 
 

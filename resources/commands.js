@@ -203,7 +203,7 @@ var _commands = {
             if (cleanID) {
                 bcs.main.addChat(
                     "<span class='bcs-ass'>"
-                    +    _arg + "'s ID is " + cleanID);
+                    +    _arg + "'s ID is " + cleanID
                     +"</span>");
             } else {
                 bcs.main.addChat(

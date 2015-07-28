@@ -408,19 +408,27 @@ div.bcs-log._1 .init .authors.visible {
 }
 
 .cm.system a.bcs-clearchat {
-    left: 60px;
+    left: 25px;
     bottom: -4px;
     position: absolute;
     font-size: 17px;
     text-decoration: none;
-    font-weight: bold;
-    color: #3498db;
+    color: #42a5dc !important;
     border: #d3d3d3 1px solid;
     padding: 2px 10px 4px 10px;
     cursor: pointer;
 }
 .cm.system a.bcs-clearchat:hover {
     background-color: #ffffff;
+}
+.cm.system a.bcs-dontclear {
+    left: 160px;
+    bottom: 2px;
+    position: absolute;
+    font-size: 13px;
+    text-decoration: none;
+    color: #42a5dc !important;
+    cursor: pointer;
 }
 
 .bcs-log.bcs-woot-log {

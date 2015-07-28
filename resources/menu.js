@@ -196,6 +196,7 @@ $("li.clearchat div.bcs-single").on("click", function(data) {
 +       "<br />"
 +       "<h1>"
 +           "<a class='bcs-clearchat' onclick='return bcs.main.utils.clearchat();'>Yes, delete it</a>"
++           "<a class='bcs-dontclear' onclick='return $(this).parent().parent().parent().parent().remove();'>No</a>"
 +           "<a>&nbsp;</a>"
 +       "</h1>");
 });

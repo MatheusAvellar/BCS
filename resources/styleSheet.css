@@ -514,6 +514,11 @@ div.bcs-afk-log .meta .disclaimer {
 div.bcs-afk-log .meta .bcs-chat-info {  opacity: 1;  }
 div.bcs-afk-log .meta .timestamp {  display: block;  }
 
+div.bcs-lastplay {
+    border-top: 1px solid #1c1f25;
+    padding: 10px 10px 0px 10px;
+}
+
 div.bcs-lastplay .positive span { color: #90ad2f; }
 div.bcs-lastplay .grabs span { color: #aa74ff; }
 div.bcs-lastplay .negative span {  color: #c42e3b  }
@@ -533,7 +538,8 @@ div.bcs-lastplay .item .icon {
 
 div.bcs-now-playing {
     border-top: 1px solid #1c1f25;
-    padding: 10px 0px;
+    border-bottom: 1px solid #1c1f25;
+    padding: 10px 10px;
 }
 
 a.bcs-now-playing-heading {

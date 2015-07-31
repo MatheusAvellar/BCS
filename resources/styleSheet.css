@@ -533,7 +533,7 @@ div.bcs-lastplay .item .icon {
 
 div.bcs-now-playing {
     border-top: 1px solid #1c1f25;
-    padding-top: 10px 0px;
+    padding: 10px 0px;
 }
 
 a.bcs-now-playing-heading {

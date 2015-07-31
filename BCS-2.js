@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "7",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -1104,7 +1104,7 @@ var bcs = {
                         + "<a class='bcs-now-playing-heading'>Song length:</a> "
                         + "<a class='bcs-now-playing-body'>" + actuallength + "</a>"
                         + "<a class='bcs-now-playing-heading'>Current DJ:</a> "
-                        + "<a class='bcs-now-playing-body'>" + data.dj.username + "</a>" + " (ID " + data.dj.id + ")",
+                        + "<a class='bcs-now-playing-body'>" + data.dj.username + " (ID " + data.dj.id + ")" + "</a>",
                         "", "bcs-now-playing");
                 }
             },

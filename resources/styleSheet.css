@@ -531,6 +531,21 @@ div.bcs-lastplay .item .icon {
     margin-right: 5px;
 }
 
+div.bcs-now-playing {
+    border-top: 1px solid #1c1f25;
+    padding-top: 10px 0px;
+}
+
+a.bcs-now-playing-heading {
+    color: #009cdd;
+    display: block;
+}
+
+a.bcs-now-playing-body {
+    padding: 3px 10px;
+    display: block;
+}
+
 /* ---------------------------------- */
 
 

@@ -216,8 +216,11 @@ var _commands = {
     {
         cmd: ["ba"],
         run: function(_arg, _cmd) {
-            bcs.c(_arg + " Brand Ambassadors are volunteers who help moderate the website and test features. "
-                + "Here's more about the BA project: http://plug.dj/ba");
+            var _baResponse = [
+                " Brand Ambassadors are like the police of plug.dj, except they usually won’t do cavity searches.",
+                " Brand Ambassadors are volunteers who help moderate the website and test features."
+            ];
+            bcs.c(_arg + " " + ~~(Math.Random() * _baResponse.length) + " Here's more about the BA project: http://plug.dj/ba");
         }
     },
     {

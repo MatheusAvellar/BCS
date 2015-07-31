@@ -48,8 +48,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "6",
-        "patch": "2",
+        "minor": "7",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -1098,17 +1098,14 @@ var bcs = {
                         }
                     }
                     //CHECK//
-                    bcs.main.addChat("<a style='color:#e6ff99;'><b>Now playing:</b></a> "
-                        + data.media.title
-                        + "<br />"
-                        + "<a style='color:#e6ff99;'><b>Author:</b></a> "
-                        + data.media.author
-                        + "<br />"
-                        + "<a style='color:#e6ff99;'><b>Song length:</b></a> "
-                        + actuallength + "<br />"
-                        + "<a style='color:#e6ff99;'><b>Current DJ:</b></a> "
-                        + data.dj.username
-                        + " (ID " + data.dj.id + ")<br />");
+                    bcs.main.addChat(
+                        "<a class='bcs-now-playing-heading'>Now playing:</a>"
+                        + "<a class='bcs-now-playing-body'>" + data.media.title + " - " + data.media.author + "</a>"
+                        + "<a class='bcs-now-playing-heading'>Song length:</a> "
+                        + "<a class='bcs-now-playing-body'>" + actuallength + "</a>"
+                        + "<a class='bcs-now-playing-heading'>Current DJ:</a> "
+                        + "<a class='bcs-now-playing-body'>" + data.dj.username + "</a>" + " (ID " + data.dj.id + ")",
+                        "", "bcs-now-playing");
                 }
             },
             onWaitListUpdate: function() {

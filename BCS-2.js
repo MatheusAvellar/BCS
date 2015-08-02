@@ -48,8 +48,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "7",
-        "patch": "2",
+        "minor": "8",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -387,7 +387,7 @@ var bcs = {
                         }
                         $(".cm.system:contains('Yes, delete it')").remove();
                     } else {
-
+                        //uwot
                     }
                 } else {
                     if (bcs.u.role >= 2 && bcs.u.gRole < 3) {
@@ -488,19 +488,11 @@ var bcs = {
                     bcs.main.utils.points.sync();
 
                     if (_xp > 0 || _pp > 0) {
-                        var d = new Date();
-                        var h = d.getHours();
-                        var m = d.getMinutes();
-                        var s = d.getSeconds();
-                        if (h < 10) {  h = "0" + h;  }
-                        if (m < 10) {  m = "0" + m;  }
-                        if (s < 10) {  s = "0" + s;  }
-
                         var _earned;
-                        if (_xp > 0 && _pp == 0) {       _earned = "+ " + _xp + " <b>XP</b>";  }
-                        else if (_pp > 0 && _xp == 0) {  _earned = "+ " + _pp + " <b>PP</b>";  }
-                        else if (_xp > 0 && _pp > 0) {
-                            _earned = "+ " + _xp + " <b>XP</b> | + " + _pp + " <b>PP</b>";
+                        if (_xp > 0 && _pp == 0) {        _earned = "+ " + _xp + " <b>XP</b>";
+                        } else if (_pp > 0 && _xp == 0) { _earned = "+ " + _pp + " <b>PP</b>";
+                        } else if (_xp > 0 && _pp > 0) {  _earned = "+ " + _xp + " <b>XP</b>"
+                                                          +      " | + " + _pp + " <b>PP</b>";
                         }
 
                         bcs.main.addChat(
@@ -508,7 +500,7 @@ var bcs = {
                             +    "<b>You just earned some points!</b><br />"
                             +    "<a class='bcs-timestamp'>"
                             +        _earned
-                            +        " | " + h + ":" + m + ":" + s
+                            +        " | " + bcs.main.utils.time()
                             +    "</a>"
                             +"</span>",
                             "bcs-pts-log");
@@ -524,20 +516,26 @@ var bcs = {
                     pp: 0
                 }
             },
-            error: function(_message) {
+            time: function() {
                 var d = new Date();
-                var h = d.getHours();
-                var m = d.getMinutes();
-                var s = d.getSeconds();
-                if (h < 10) {  h = "0" + h;  }
-                if (m < 10) {  m = "0" + m;  }
-                if (s < 10) {  s = "0" + s;  }
+                var t = {
+                    h: d.getHours(),
+                    m: d.getMinutes(),
+                    s: d.getSeconds()
+                };
+                t.h = t.h < 10 ? "0" + t.h : t.h;
+                t.m = t.m < 10 ? "0" + t.m : t.m;
+                t.s = t.s < 10 ? "0" + t.s : t.s;
+                return (t.h + ":" + t.m + ":" + t.s)
+            },
+            warn: function(_m, _s) {
+                _s = !_s ? "" : _s + " | ";
                 bcs.main.addChat(
                     "<span>"
-                    +    "<b>" + _message + "</b><br />"
-                    +    "<a class='bcs-timestamp'>" + h + ":" + m + ":" + s + "</a>"
+                    +    "<b>" + _m + "</b><br />"
+                    +    "<a class='bcs-timestamp'>" + _s + bcs.main.utils.time() + "</a>"
                     +"</span>"
-                , "bcs-error-log");
+                , "bcs-warn-log");
             },
             isValidSong: function() {
                 if (API.getMedia()) {
@@ -552,14 +550,14 @@ var bcs = {
                              + "&callback=?",
                             function (_track){
                                 if (typeof(_track.items[0]) == "undefined"){
-                                    return bcs.main.utils.error("This song might be unavailable!");
+                                    return bcs.main.utils.warn("This song might be unavailable!");
                                 }
                             }
                         );
                     } else {
                         const checkSong = SC.get("/tracks/" + _cid, function (_track){
                             if (typeof _track.title === "undefined"){
-                                return bcs.main.utils.error("This song might be unavailable!");
+                                return bcs.main.utils.warn("This song might be unavailable!");
                             }
                         });
                     }
@@ -804,13 +802,6 @@ var bcs = {
                 }
             },
             onVote: function(data) {
-                var d = new Date();
-                var h = d.getHours();
-                var m = d.getMinutes();
-                var s = d.getSeconds();
-                if (h < 10) {  h = "0" + h;  }
-                if (m < 10) {  m = "0" + m;  }
-                if (s < 10) {  s = "0" + s;  }
                 var userName = data.user.username.split('<').join("&lt;").split('>').join("&gt;");
                 if (bcs.settings.mehlog && data.vote == -1) {
                     bcs.main.addChat(
@@ -819,7 +810,7 @@ var bcs = {
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
                     +        "<b>" + userName + "</b> meh'ed this"
                     +        "<br />"
-                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
+                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + bcs.main.utils.time() + "</a>"
                     +    "</span>"
                     +"</div>", "bcs-meh-log");
                 } else if (bcs.settings.wootlog && data.vote == 1) {
@@ -829,7 +820,7 @@ var bcs = {
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
                     +        "<b>" + userName + "</b> woot'ed this"
                     +        "<br />"
-                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
+                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + bcs.main.utils.time() + "</a>"
                     +    "</span>"
                     +"</div>", "bcs-woot-log");
                 } else if (bcs.settings.grablog && !data.vote) {
@@ -839,10 +830,10 @@ var bcs = {
                     +    "<span class='bcs-vote-log' username='" + userName + "'>"
                     +        "<b>" + userName + "</b> grabbed this"
                     +        "<br />"
-                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + h + ":" + m + ":" + s + "</a>"
+                    +        "<a class='bcs-timestamp'>ID " + data.user.id + " | " + bcs.main.utils.time() + "</a>"
                     +    "</span>"
                     +"</div>","bcs-grab-log");
-                }
+                };
             },
             onJoin: function(data) {
                 if (bcs.settings.trafficlog) {
@@ -854,16 +845,8 @@ var bcs = {
                         level: data.level,
                         role: "",
                         gRole: ""
-                    }
+                    };
                     var _class = data.friend ? "bcs-friendJoin-log" : "bcs-userJoin-log";
-
-                    var d = new Date();
-                    var h = d.getHours();
-                    var m = d.getMinutes();
-                    var s = d.getSeconds();
-                    if (h < 10) {  h = "0" + h;  }
-                    if (m < 10) {  m = "0" + m;  }
-                    if (s < 10) {  s = "0" + s;  }
 
                     var _bcs_tmp = "<a class='bcs-timestamp'>";
 
@@ -885,7 +868,7 @@ var bcs = {
                         case 5:
                             _user.role = _bcs_tmp
                             + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
-                    }
+                    };
 
                     switch (data.gRole) {
                         case 3:
@@ -896,7 +879,7 @@ var bcs = {
                             + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
                         default:
                             _user.gRole = ""; break;
-                    }
+                    };
 
                     bcs.main.addChat(
                         "<span>"
@@ -906,12 +889,12 @@ var bcs = {
                         +    "</b> joined </a><br />"
                         +    "<a class='bcs-timestamp'>"
                         +        "<b>ID</b> " +        _user.id
-                        +        " | " + h + ":" + m + ":" + s
+                        +        " | " + bcs.main.utils.time()
                         +        " | <b>Level</b> " + _user.level
                         +"</span> "
                         + _user.role + " "
                         + _user.gRole, _class);
-                }
+                };
             },
             onLeave: function(data) {
                 if (bcs.settings.trafficlog) {
@@ -923,16 +906,8 @@ var bcs = {
                         level: data.level,
                         role: "",
                         gRole: ""
-                    }
+                    };
                     var _class = data.friend ? "bcs-friendLeave-log" : "bcs-userLeave-log";
-
-                    var d = new Date();
-                    var h = d.getHours();
-                    var m = d.getMinutes();
-                    var s = d.getSeconds();
-                    if (h < 10) {  h = "0" + h;  }
-                    if (m < 10) {  m = "0" + m;  }
-                    if (s < 10) {  s = "0" + s;  }
 
                     var _bcs_tmp = "<a class='bcs-timestamp'>";
 
@@ -954,7 +929,7 @@ var bcs = {
                         case 5:
                             _user.role = _bcs_tmp
                             + " | <a class='bcs-styles-lRole'>Host</a> " + _bcs_tmp + " (5)</a>";    break;
-                    }
+                    };
 
                     switch (data.gRole) {
                         case 3:
@@ -965,7 +940,7 @@ var bcs = {
                             + " | <a class='bcs-styles-gRole5'>Admin</a> " + _bcs_tmp + " (5)</a>"; break;
                         default:
                             _user.gRole = ""; break;
-                    }
+                    };
 
                     bcs.main.addChat(
                         "<span>"
@@ -975,12 +950,12 @@ var bcs = {
                         +    "</b> left </a><br />"
                         +    "<a class='bcs-timestamp'>"
                         +        "<b>ID</b> " +        _user.id
-                        +        " | " + h + ":" + m + ":" + s
+                        +        " | " + bcs.main.utils.time()
                         +        " | <b>Level</b> " + _user.level
                         +"</span> "
                         + _user.role + " "
                         + _user.gRole, _class);
-                }
+                };
             },
             onAdvance: function(data) {
                 bcs.main.utils.volume();
@@ -1007,7 +982,7 @@ var bcs = {
                         bcs.main.utils.woot();
                     } else if (bcs.settings.automeh) {
                         bcs.main.utils.meh();
-                    }
+                    };
 
                     if (bcs.settings.autograb) {
                         for (var i = 0; i < bcs.main.utils.ajax.get.aux.playlistIDs.length; i++) {
@@ -1016,19 +991,11 @@ var bcs = {
                                     bcs.main.utils.ajax.get.aux.playlistIDs[i].id
                                 );
                                 break;
-                            }
-                        }
-                    }
+                            };
+                        };
+                    };
                     bcs.main.utils.isValidSong();
                 }, 1750);
-
-                var d = new Date();
-                var h = d.getHours();
-                var m = d.getMinutes();
-                var s = d.getSeconds();
-                if (h < 10) {  h = "0" + h;  }
-                if (m < 10) {  m = "0" + m;  }
-                if (s < 10) {  s = "0" + s;  }
 
                 if (bcs.settings.djupdates) {
                     var _logLength = $(".cm.log").length;
@@ -1036,76 +1003,72 @@ var bcs = {
                     for (var i = _logLength; i < $(".cm.log").length; i++) {
                         // Yes, this is pretty stupid. But whatever. Script is mine, get rekt :L
                         $(".cm.log")[i].remove();
-                    }
+                    };
+
+                    var _len = {
+                        h: "", m: 0, s: 0
+                    };
+
+                    _len.m = Math.floor(currentSong.duration / 60);
+                    _len.s = currentSong.duration % 60;
+
+                    if (_len.m >= 60){
+                        _len.h = Math.floor(_len.m / 60);
+                        _len.m = _len.m % 60;
+                    };
+
+                    if (_len.h != "") {  _len.h = _len.h + ":";  };
+                    if (_len.m < 10) {  _len.m = "0" + _len.m;  };
+                    if (_len.s < 10) {  _len.s = "0" + _len.s;  };
+                    var currentLength = _len.h + _len.m + ":" + _len.s;
+                    if (bcs.settings.djupdates && currentSong.duration > 480) {
+                        bcs.main.utils.warn(
+                            "Song is over 8 minutes",
+                            "Song length: " + currentLength
+                        );
+                    };
 
                     bcs.main.addChat(
-                        "<div class='item positive'>"
-                        +     "<i class='icon icon-history-positive'></i>"
-                        +     "<span>" + data.lastPlay.score.positive + "</span>"
-                        + "</div>"
-                        + "<div class='item grabs'>"
-                        +     "<i class='icon icon-history-grabs'></i>"
-                        +     "<span>" + data.lastPlay.score.grabs + "</span>"
-                        + "</div>"
-                        + "<div class='item negative'>"
-                        +     "<i class='icon icon-history-negative'></i>"
-                        +     "<span>" + data.lastPlay.score.negative + "</span>"
-                        + "</div>"
-                        + "<div class='item listeners'>"
-                        +     "<i class='icon icon-history-listeners'></i>"
-                        +     "<span>" + API.getUsers().length + "</span>"
-                        + "</div>"
-                        + "<br />", "", "bcs-lastplay");
+                        "<div class='bcs-lastplay'>"
+                        +    "<div class='item positive'>"
+                        +      "<i class='icon icon-history-positive'></i>"
+                        +      "<span>" + data.lastPlay.score.positive + "</span>"
+                        +    "</div>"
+                        +    "<div class='item grabs'>"
+                        +        "<i class='icon icon-history-grabs'></i>"
+                        +        "<span>" + data.lastPlay.score.grabs + "</span>"
+                        +    "</div>"
+                        +    "<div class='item negative'>"
+                        +        "<i class='icon icon-history-negative'></i>"
+                        +        "<span>" + data.lastPlay.score.negative + "</span>"
+                        +    "</div>"
+                        +    "<div class='item listeners'>"
+                        +        "<i class='icon icon-history-listeners'></i>"
+                        +        "<span>" + API.getUsers().length + "</span>"
+                        +    "</div>"
+                        +"</div>"
+                        +"<br />"
+                        +"<div class='bcs-now-playing'>"
+                        +    "<a class='bcs-now-playing-heading'>Now playing:</a>"
+                        +    "<a class='bcs-now-playing-body'>" + data.media.title + " - " + data.media.author + "</a>"
+                        +    "<a class='bcs-now-playing-heading'>Song length:</a> "
+                        +    "<a class='bcs-now-playing-body'>" + currentLength + "</a>"
+                        +    "<a class='bcs-now-playing-heading'>Current DJ:</a> "
+                        +    "<a class='bcs-now-playing-body'>" + data.dj.username + " (ID " + data.dj.id + ")" + "</a>"
+                        +"</div>");
 
                     setTimeout(function() {
                         for (var i = 0, l = API.getHistory().length; i < l; i++) {
-                            if (API.getHistory()[i].media.cid == currentSong.cid && i != 0) { //CHECK//
-                                var previous = API.getHistory()[i];
-                                var pos = i + 1;
-                                var stats = previous.user.username + " (ID " + previous.user.id + ")";
-                                _console.warn(
-                                    "Song in History | Played by " + stats
-                                    + "<br />(History position " + pos + ")<br />[" + previous.media.title + "]"
+                            if (API.getHistory()[i].media.cid == currentSong.cid && i != 0) {
+                                var _h = API.getHistory()[i];
+                                bcs.main.utils.warn(
+                                    "Song in History!",
+                                    "Played by " + _h.user.username + " (ID " + _h.user.id + ") | History #" + (i + 1)
                                 );
-                                badoop.play();//CHECK//
-                                bcs.main.addChat(
-                                    "<a style='color:#ff3535; font-weight:bold;'>Song in History</a><br />Played by "
-                                    + stats + " - (History position " + pos + ")"
-                                    + "<br />[" + previous.media.title + "]","#D04545",true);
                                 break;
                             }
                         }
                     }, 250);
-                    var hoursLong = "";
-                    var minutesLong = Math.floor(currentSong.duration / 60);
-                    var secondsLong = currentSong.duration % 60;
-
-                    if (minutesLong >= 60){
-                        hoursLong = Math.floor(minutesLong / 60);
-                        minutesLong = minutesLong % 60;
-                    };
-                    if (hoursLong != "") {  hoursLong = hoursLong + ":";  };
-                    if (secondsLong < 10) {  secondsLong = "0" + secondsLong;  }
-                    if (minutesLong < 10) {  minutesLong = "0" + minutesLong;  }
-                    var actuallength = hoursLong + minutesLong + ":" + secondsLong;
-                    if (bcs.settings.djupdates) {
-                        if (currentSong.duration > 480) {
-                            //CHECK//
-                            badoop.play();
-                            bcs.main.addChat(
-                                "<b><a style='color:#ff3535;'>Song is over 8 minutes</a></b><br />"
-                                + " Song length: " + actuallength,"#D04545",true);
-                        }
-                    }
-                    //CHECK//
-                    bcs.main.addChat(
-                        "<a class='bcs-now-playing-heading'>Now playing:</a>"
-                        + "<a class='bcs-now-playing-body'>" + data.media.title + " - " + data.media.author + "</a>"
-                        + "<a class='bcs-now-playing-heading'>Song length:</a> "
-                        + "<a class='bcs-now-playing-body'>" + actuallength + "</a>"
-                        + "<a class='bcs-now-playing-heading'>Current DJ:</a> "
-                        + "<a class='bcs-now-playing-body'>" + data.dj.username + " (ID " + data.dj.id + ")" + "</a>",
-                        "", "bcs-now-playing");
                 }
             },
             onWaitListUpdate: function() {

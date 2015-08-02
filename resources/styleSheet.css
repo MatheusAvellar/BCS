@@ -472,9 +472,9 @@ span.bcs-vote-log .bcs-timestamp {
     border-left: 3px solid #39589a;
 }
 
-.bcs-log.bcs-error-log {
+.bcs-log.bcs-warn-log {
     border-left: 3px solid #f04f30;
-    color: #F04F30;
+    color: #f04f30;
 }
 
 a.bcs-timestamp {

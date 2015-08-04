@@ -486,6 +486,10 @@ a.bcs-timestamp {
     color: #c59840;
     border-left: 3px solid #c59840;
 }
+.bcs-log.bcs-mpop-log {
+    color: #89be6c;
+    border-left: 3px solid #89be6c;
+}
 
 .bcs-chat-image {
     margin: 5px;

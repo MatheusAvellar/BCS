@@ -15,7 +15,8 @@ var _commands = {
                     + "<a class='bcs-todo-nope'>✘ Check if I can raise the cap to over 200</a><br />"
                     + "<a class='bcs-todo-todo'>⊱ Mentioning user when clicking Meh/Grab msg</a><br />"
                     + "<a class='bcs-todo-todo'>⊱ Meh count per user (automeh check)</a><br />"
-                    + "<a class='bcs-todo-todo'>⊱ Be a jerk and steal p³ / rcs custom settings</a><br />");
+                    + "<a class='bcs-todo-todo'>⊱ Be a jerk and steal p³ / rcs custom settings</a><br />"
+                    + "<a class='bcs-todo-todo'>⊱ Profit</a><br />");
         }
     },
     {
@@ -466,6 +467,53 @@ var _commands = {
                     "bcs-gif-frame"
                 );
             }
+        }
+    },
+    {
+        cmd: ["r"],
+        run: function(_arg, _cmd) {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "https://plug.dj/_/rooms?limit=5",
+                success: function(_data) {
+                    var _c = [];
+                    for (var i = 0, l = _data.data.length; i < l; i++) {
+                        var _t = _data.data[i];
+                        _c.push({
+                            p: _t.population,
+                            g: _t.guests,
+                            t: (_t.population + _t.guests),
+                            n: _t.name,
+                            d: _t.nsfw ? " (NSFW) " : "",
+                            s: _t.slug
+                        });
+                    }
+                    console.log(_c);
+                    for (var i = 0, l = _c.length; i < l; i++) {
+                        if (_c.length > 1) {
+                            (_c[0].t > _c[_c.length - 1].t) ? _c.pop() : _c.shift();
+                        } else {
+                            console.log(_c[0]);
+                            break;
+                        }
+                    }
+                    _c = _c[0];
+                    bcs.main.addChat(
+                        "<span>"
+                        +    "Most populated room is <b>"
+                        +        _c.n
+                        +    "</b><br />"
+                        +    "<a class='bcs-timestamp'>"
+                        +        _c.t + " users (" + _c.p + " users and " + _c.g + " guests) <br />"
+                        +        bcs.main.utils.time()
+                        +        " | " + _c.d + "</a><a class='bcs-ass-link bcs-timestamp' href='https://plug.dj/" + _c.s + "' target='_blank'>https://plug.dj/" + _c.s + "</a>"
+                        +"</span>", "bcs-mpop-log");
+                },
+                error: function(_data) {
+                    console.log(_data);
+                }
+            });
         }
     },
     {

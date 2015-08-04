@@ -48,8 +48,8 @@ var bcs = {
         "stage": "Alpha v",
         "ultra": "2",
         "major": "3",
-        "minor": "8",
-        "patch": "2",
+        "minor": "9",
+        "patch": "0",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -886,7 +886,7 @@ var bcs = {
                         +    _user.intro
                         +    "<b>"
                         +        _user.username
-                        +    "</b> joined </a><br />"
+                        +    "</b> joined<br />"
                         +    "<a class='bcs-timestamp'>"
                         +        "<b>ID</b> " +        _user.id
                         +        " | " + bcs.main.utils.time()
@@ -947,7 +947,7 @@ var bcs = {
                         +    _user.intro
                         +    "<b>"
                         +        _user.username
-                        +    "</b> left </a><br />"
+                        +    "</b> left<br />"
                         +    "<a class='bcs-timestamp'>"
                         +        "<b>ID</b> " +        _user.id
                         +        " | " + bcs.main.utils.time()

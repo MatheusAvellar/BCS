@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "9",
-        "patch": "0",
+        "patch": "1",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -112,9 +112,9 @@ var bcs = {
             bcs.plugCode.sendChatObj.sendChat = function(message) {
                 if (bcs.settings.unemojify) {
                     message = message.split(":)").join(":‌)")
-                                    .split(":(").join(":‌(")
-                                    .split(":D").join(":‌D")
-                                    .split(":O").join(":‌O");
+                                     .split(":(").join(":‌(")
+                                     .split(":D").join(":‌D")
+                                     .split(":O").join(":‌O");
                 }
                 return bcs.plugCode.sendChatObj._sendChat.apply(this, [message]);
             }

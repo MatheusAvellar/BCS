@@ -270,5 +270,9 @@ var _gifs = [
     {
         keywords: ["attempting", "to", "give", "fuck"],
         url: "http://i.imgur.com/4dC9oPf.gif"
+    },
+    {
+        keywords: ["do", "it", "shia", "motivation", "random"],
+        url: "http://i.imgur.com/Hy6nkLC.gif"
     }
 ];

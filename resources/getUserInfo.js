@@ -84,7 +84,7 @@ function bcs_lookfor(id) {
             case "dinerb-s05":    _i.Badge = "Whipped Cream Dessert"; break;
             case "food-s01":      _i.Badge = "Pizza"; break;
             case "food-s02":      _i.Badge = "Ice Cream"; break;
-            case "food-s03":      _i.Badge = "Donut"; break;
+            case "food-s03":      _i.Badge = "Doughnut"; break;
             case "food-s04":      _i.Badge = "Beef"; break;
             case "hiphopb-s01":   _i.Badge = "Swag Pigeon"; break;
             case "isle-s01":      _i.Badge = "Pink Pirate"; break;
@@ -96,6 +96,12 @@ function bcs_lookfor(id) {
             case "isle-s07":      _i.Badge = "Eyes"; break;
             case "isle-s08":      _i.Badge = "Glowing Palm"; break;
             case "isle-s09":      _i.Badge = "Fairy at Night"; break;
+            case "nycb-s01":      _i.Badge = "Brooklyn Bridge"; break;
+            case "nycb-s02":      _i.Badge = "[?]"; break;
+            case "nycb-s03":      _i.Badge = "One World Trade Center"; break;
+            case "nycb-s04":      _i.Badge = "Sugar Doughnuts"; break;
+            case "nycb-s05":      _i.Badge = "'Red Carpet Rosie' Cocktail"; break;
+            case "nycb-s06":      _i.Badge = "Prometheus Statue"; break;
             case "raveb-s01":     _i.Badge = "Record Player"; break;
             case "raveb-s02":     _i.Badge = "Musical Keyboard"; break;
             case "raveb-s03":     _i.Badge = "Compact Cassette"; break;
@@ -134,6 +140,8 @@ function bcs_lookfor(id) {
             case "hiphopb-e02":   _i.Badge = "Breakdancer"; break;
             case "isle-e01":      _i.Badge = "Squid"; break;
             case "isle-e02":      _i.Badge = "Eye"; break;
+            case "nycb-e01":      _i.Badge = "Empire State Building [gif]"; break;
+            case "nycb-e02":      _i.Badge = "Broadway Show [gif]"; break;
             case "raveb-e01":     _i.Badge = "DJ Booth"; break;
             case "raveb-e02":     _i.Badge = "Rave"; break;
             case "robotb-e01":    _i.Badge = "Laser Robot"; break;
@@ -177,6 +185,11 @@ function bcs_lookfor(id) {
             case "isle08":        _i.Badge = "Leaves Creature"; break;
             case "isle09":        _i.Badge = "Mushroom"; break;
             case "isle10":        _i.Badge = "Waterfall"; break;
+            case "nycb01":        _i.Badge = "Statue of Liberty"; break;
+            case "nycb02":        _i.Badge = "Wall Street Bull"; break;
+            case "nycb03":        _i.Badge = "Hot Dog Cart"; break;
+            case "nycb04":        _i.Badge = "Baseball"; break;
+            case "nycb05":        _i.Badge = "Cosmpolitan Cocktail"; break;
             case "raveb01":       _i.Badge = "Glowsticks"; break;
             case "raveb02":       _i.Badge = "Ferris Wheel"; break;
             case "raveb03":       _i.Badge = "Baloons"; break;

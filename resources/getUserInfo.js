@@ -106,7 +106,7 @@ function bcs_lookfor(id) {
             case "raveb-s02":     _i.Badge = "Musical Keyboard"; break;
             case "raveb-s03":     _i.Badge = "Compact Cassette"; break;
             case "raveb-s04":     _i.Badge = "Disco Ball"; break;
-            case "robotb-s01":    _I.Badge = "Cyborg Woman"; break;
+            case "robotb-s01":    _i.Badge = "Cyborg Woman"; break;
             case "seab-s01":      _i.Badge = "Striped Fish"; break;
             case "seab-s02":      _i.Badge = "Pink Fish"; break;
             case "seab-s03":      _i.Badge = "Divers"; break;

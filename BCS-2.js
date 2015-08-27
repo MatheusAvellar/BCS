@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "9",
-        "patch": "3",
+        "patch": "4",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -116,6 +116,7 @@ var bcs = {
                                      .split(":D").join(":‌D")
                                      .split("D:").join("D‌:")
                                      .split("c:").join("c‌:")
+                                     .split(":o").join(":‌o")
                                      .split(":O").join(":‌O");
                 }
                 return bcs.plugCode.sendChatObj._sendChat.apply(this, [message]);
@@ -1123,3 +1124,75 @@ var bcs = {
 }
 
 bcs.main.init();
+
+/*
+        "<3":"heart",
+        ":o)":"monkey_face",
+        ":*":"kissing",
+        ":-*":"kissing",
+        "<\/3":"broken_heart",
+        "<\\3":"broken_heart",
+        "=)":"smiley",
+        "=-)":"smiley",
+        ":D":"smile",
+        ":-D":"smile",
+        ":->":"laughing",
+        "XD":"laughing",
+        ";)":"wink",
+        ";-)":"wink",
+        ":)":"blush",
+        "(:":"blush",
+        ":-)":"blush",
+        ":s":"confounded",
+        "8)":"sunglasses",
+        "8|":"flushed",
+        ":|":"neutral_face",
+        ":-|":"neutral_face",
+        ":\\":"confused",
+        ":-\\":"confused",
+        ":\/":"confused",
+        ":-\/":"confused",
+        ":p":"stuck_out_tongue",
+        ":-p":"stuck_out_tongue",
+        ":P":"stuck_out_tongue",
+        ":-P":"stuck_out_tongue",
+        ":b":"stuck_out_tongue",
+        ":-b":"stuck_out_tongue",
+        ";p":"stuck_out_tongue_winking_eye",
+        ";-p":"stuck_out_tongue_winking_eye",
+        ";b":"stuck_out_tongue_winking_eye",
+        ";-b":"stuck_out_tongue_winking_eye",
+        ";P":"stuck_out_tongue_winking_eye",
+        ";-P":"stuck_out_tongue_winking_eye",
+        "):":"disappointed",
+        ":(":"disappointed",
+        ":-(":"disappointed",
+        ">:(":"angry",
+        ">:-(":"angry",
+        "D:":"anguished",
+        ":o":"open_mouth",
+        ":-o":"open_mouth",
+        '>XD':"astonished",
+        ':$':"confused",
+        'X$':"confounded",
+        ':~(':"cry",
+        ':[':"disappointed",
+        ':~[':"disappointed_relieved",
+        'XO':"dizzy_face",
+        ':#':"grimacing",
+        '<3)':"heart_eyes",
+        'O:)':"innocent",
+        ':~)':"joy",
+        ':<3':"kissing_heart",
+        'X<3':"kissing_closed_eyes",
+        ':O':"open_mouth",
+        ':-O':"open_mouth",
+        'Z:|':"sleeping",
+        'T_T':"sob",
+        'X-P':"stuck_out_tongue_closed_eyes",
+        'B-)':"sunglasses",
+        '~:(':"sweat",
+        '~:)':"sweat_smile",
+        'XC':"tired_face",
+        '>:/':"unamused"
+*/

@@ -31,9 +31,9 @@ var _commands = {
                 + "<div class='authors'>"
                     + "<br />"
                     + "<p>"
-                       + "Coded by <i class='icon icon-chat-ambassador bcs-flip'></i> <a class='bcs-styles-gRole3' title='4820534' href='https://plug.dj/@/beta-tester' target='_blank'>Beta Tester</a><br />"
-                       + "Help with ideas from <i class='icon icon-chat-subscriber'></i> <a class='bcs-styles-subscriber' title='3639711' href='https://plug.dj/@/dcv' target='_blank'>DCV</a><br />"
-                       + "Initial addChat() from <i class='icon icon-chat-ambassador'></i> <a class='bcs-styles-gRole3' title='3420957' href='https://plug.dj/@/igor' target='_blank'>Igor</a>"
+                       + "Coded by <i class='icon icon-chat-ambassador bcs-flip'></i> <a class='bcs-styles-gRole3' title='4820534' href='../@/beta-tester' target='_blank'>Beta Tester</a><br />"
+                       + "Help with ideas from <i class='icon icon-chat-subscriber'></i> <a class='bcs-styles-subscriber' title='3639711' href='../@/dcv' target='_blank'>DCV</a><br />"
+                       + "Initial addChat() from <i class='icon icon-chat-ambassador'></i> <a class='bcs-styles-gRole3' title='3420957' href='../@/igor' target='_blank'>Igor</a>"
                     + "</p>"
                 + "</div>",
                 "_1",
@@ -475,7 +475,7 @@ var _commands = {
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: "https://plug.dj/_/rooms?limit=5",
+                url: "../_/rooms?limit=5",
                 success: function(_data) {
                     var _c = [];
                     for (var i = 0, l = _data.data.length; i < l; i++) {
@@ -507,7 +507,7 @@ var _commands = {
                         +    "<a class='bcs-timestamp'>"
                         +        _c.t + " users (" + _c.p + " users and " + _c.g + " guests) <br />"
                         +        bcs.main.utils.time()
-                        +        " | " + _c.d + "</a><a class='bcs-ass-link bcs-timestamp' href='https://plug.dj/" + _c.s + "' target='_blank'>https://plug.dj/" + _c.s + "</a>"
+                        +        " | " + _c.d + "</a><a class='bcs-ass-link bcs-timestamp' href='../" + _c.s + "' target='_blank'>plug.dj/" + _c.s + "</a>"
                         +"</span>", "bcs-mpop-log");
                 },
                 error: function(_data) {
@@ -540,8 +540,8 @@ var _commands = {
         cmd: ["cmds", "cmd", "commands"],
         run: function(_arg, _cmd) {
             bcs.main.addChat("<a "
-                            + "src='https://github.com/MatheusAvellar/BCS/blob/master/Commands.md' "
-                            + "target='_blank'>Here you go!</a>");
+                            + "href='https://github.com/MatheusAvellar/BCS/blob/master/Commands.md' "
+                            + "target='_blank'>Here you go!</a><br/>Ew not even some CSS ew ew");
         }
     }
     ]

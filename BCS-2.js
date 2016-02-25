@@ -49,7 +49,7 @@ var bcs = {
         "ultra": "2",
         "major": "3",
         "minor": "9",
-        "patch": "4",
+        "patch": "5",
         "legal": "",
         "_": function() {
             return [bcs.v.ultra, bcs.v.major, bcs.v.minor, bcs.v.patch].join('.');
@@ -184,9 +184,9 @@ var bcs = {
                 + "<div class='authors'>"
                     + "<br />"
                     + "<p>"
-                       + "Coded by <i class='icon icon-chat-ambassador bcs-flip'></i> <a class='bcs-styles-gRole3' title='4820534' href='https://plug.dj/@/beta-tester' target='_blank'>Beta Tester</a><br />"
-                       + "Help with ideas from <i class='icon icon-chat-subscriber'></i> <a class='bcs-styles-subscriber' title='3639711' href='https://plug.dj/@/dcv' target='_blank'>DCV</a><br />"
-                       + "Initial addChat() from <i class='icon icon-chat-ambassador'></i> <a class='bcs-styles-gRole3' title='3420957' href='https://plug.dj/@/igor' target='_blank'>Igor</a>"
+                       + "Coded by <i class='icon icon-chat-ambassador bcs-flip'></i> <a class='bcs-styles-gRole3' title='4820534' href='../@/beta-tester' target='_blank'>Beta Tester</a><br />"
+                       + "Help with ideas from <i class='icon icon-chat-subscriber'></i> <a class='bcs-styles-subscriber' title='3639711' href='../@/dcv' target='_blank'>DCV</a><br />"
+                       + "Initial addChat() from <i class='icon icon-chat-ambassador'></i> <a class='bcs-styles-gRole3' title='3420957' href='../@/igor' target='_blank'>Igor</a>"
                     + "</p>"
                 + "</div>",
                 "_1",
@@ -202,14 +202,14 @@ var bcs = {
                         $.ajax({
                             type: "DELETE",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/chat/" + _cid
+                            url: "../_/chat/" + _cid
                         });
                     },
                     waitList: function() {
                         $.ajax({
                             type: "DELETE",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/booth"
+                            url: "../_/booth"
                         });
                     }
                 },
@@ -218,7 +218,7 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/votes",
+                            url: "../_/votes",
                             data: '{"direction": "1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
                             _console.log("@bcs.main.utils.ajax.post.woot [Status: " + JSON.stringify(msg.status) + "]");
@@ -228,7 +228,7 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/votes",
+                            url: "../_/votes",
                             data: '{"direction": "-1","historyID": "' + _hid + '"}'
                         }).done(function(msg) {
                             _console.log("@bcs.main.utils.ajax.post.meh [" + JSON.stringify(msg) + "]");
@@ -238,7 +238,7 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/bans/add",
+                            url: "../_/bans/add",
                             data: '{"userID":' + _id + ',"reason":1,"duration":"' + _dur + '"}'
                         }).done(function(msg) {
                             _console.log("@bcs.main.utils.ajax.post.ban [" + JSON.stringify(msg) + "]");
@@ -248,7 +248,7 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/mutes",
+                            url: "../_/mutes",
                             data: '{"userID":'+ _id +',"reason":1,"duration":"' + _dur + '"}'
                         }).done(function(msg) {
                             _console.log("@bcs.main.utils.ajax.post.mute [" + JSON.stringify(msg) + "]");
@@ -258,7 +258,7 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/staff/update",
+                            url: "../_/staff/update",
                             data: '{"userID": ' + _id + ', "roleID": ' + _roleID + '}'
                         });
                     },
@@ -266,14 +266,14 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/booth"
+                            url: "../_/booth"
                         });
                     },
                     grab: function(_playlist) {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/grabs",
+                            url: "../_/grabs",
                             data: '{"historyID": "' + bcs.main.utils.ajax.get.aux.historyID
                                 + '", "playlistID": ' + _playlist + '}'
                         });
@@ -282,7 +282,7 @@ var bcs = {
                         $.ajax({
                             type: "POST",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/friends",
+                            url: "../_/friends",
                             data: '{"id": ' + _id + '}'
                         });
                     }
@@ -299,7 +299,7 @@ var bcs = {
                         $.ajax({
                             type: "GET",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/rooms/state",
+                            url: "../_/rooms/state",
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.historyID = msg.data[0].playback.historyID;
                             if (_arg) {  (_arg)();  }
@@ -309,7 +309,7 @@ var bcs = {
                         $.ajax({
                             type: "GET",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/friends"
+                            url: "../_/friends"
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.friendsList = msg.data;
                         });
@@ -318,7 +318,7 @@ var bcs = {
                         $.ajax({
                             type: "GET",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/staff"
+                            url: "../_/staff"
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.staffList = msg.data;
                         });
@@ -327,7 +327,7 @@ var bcs = {
                         $.ajax({
                             type: "GET",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/playlists"
+                            url: "../_/playlists"
                         }).done(function(msg) {
                             bcs.main.utils.ajax.get.aux.playlistIDs = msg.data;
                         });
@@ -336,7 +336,7 @@ var bcs = {
                         $.ajax({
                             type: "GET",
                             contentType: "application/json",
-                            url: "https://plug.dj/_/users/" + id
+                            url: "../_/users/" + id
                         }).done(function(user) {
                             bcs.main.utils.ajax.get.aux.user = msg.data;
                         });

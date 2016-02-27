@@ -9,7 +9,7 @@ function bcs_lookfor(id) {
 
     $.ajax({
         type: "GET",
-        url: "https://plug.dj/_/users/" + id
+        url: "./_/users/" + id
     }).done(function(complete_data) {
         data = complete_data.data[0];
 
@@ -383,7 +383,7 @@ function bcs_lookfor(id) {
                         if (bcs.main.utils.ajax.get.aux.friendsList[i].room.slug == "dashboard") {
                             var _tmp_friendRoom = "<a class='bcs-ass-unavailable'>Dashboard</a>";
                         } else {
-                            var _tmp_friendRoom = "<a class='bcs-ass-link' href='https://plug.dj/" + bcs.main.utils.ajax.get.aux.friendsList[i].room.slug + "'>" + bcs.main.utils.ajax.get.aux.friendsList[i].room.name + "</a>";
+                            var _tmp_friendRoom = "<a class='bcs-ass-link' href='./" + bcs.main.utils.ajax.get.aux.friendsList[i].room.slug + "'>" + bcs.main.utils.ajax.get.aux.friendsList[i].room.name + "</a>";
                         }
                     }
                     _i.Friend = "Yes (<a class='bcs-ass-keyword'>true</a>)";
